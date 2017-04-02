@@ -1,15 +1,17 @@
 import React from 'react';
-import LandingHeader from './main/landing_header';
-import LandingFooter from './main/landing_footer';
+import Navbar from './main/navbar';
+import Footer from './main/footer';
 
 export default (props) => {
 	return(
 		<div>
-			<LandingHeader />
-			<div className="bump-body">
-				{props.children}	
+			<div className="my-header">
+				<Navbar />
 			</div>
-			<LandingFooter />
+				{props.children}
+			<div className="my-footer">
+				<Footer />	
+			</div>
 		</div>
 	)
 }
