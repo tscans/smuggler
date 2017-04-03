@@ -39,7 +39,9 @@ body{
 input { 
     text-align: center !important; 
 }
-
+textarea { 
+    text-align: left !important; 
+}
 .my-card {
   background: #fff;
   border-radius: 2px;

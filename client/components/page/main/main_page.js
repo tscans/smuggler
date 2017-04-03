@@ -1,5 +1,9 @@
 import React, {Component} from 'react';
 import MakePage from './make_page';
+import {browserHistory} from 'react-router';
+import {createContainer} from 'meteor/react-meteor-data';
+import {Profile} from '../../../../imports/collections/profile';
+import {Page} from '../../../../imports/collections/page';
 
 class MainPage extends Component {
     pageSheet(){
@@ -7,6 +11,18 @@ class MainPage extends Component {
         myApp.loginScreen();
     }
     render() {
+        if(!this.props.profile){
+            return(<div></div>)
+        }
+        if(this.props.profile.page){
+            setTimeout(function(){ browserHistory.push("/page/deals/") }, 3000);
+            $("#mytitle").fadeOut(3000);
+            return(
+                <div>
+                    <h1 id="mytitle">Welcome, {this.props.page.pageName}</h1>
+                </div>
+            )
+        }
         return (
         	<div>
         		<h1>Welcome, Make A Page!</h1>
@@ -27,4 +43,11 @@ class MainPage extends Component {
     }
 }
 
-export default MainPage;
+export default createContainer((props)=>{
+    Meteor.subscribe("profile");
+    Meteor.subscribe("ownPage");
+
+    return {profile: Profile.findOne({}), page: Page.findOne({})}
+
+    
+}, MainPage);  

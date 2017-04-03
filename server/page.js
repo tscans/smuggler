@@ -18,19 +18,36 @@ Meteor.methods({
 		if(profile.page){
 			return;
 		}
-		
+		var geo = new GeoCoder({
+		  geocoderProvider: "google",
+		  httpAdapter: "https",
+		  apiKey: 'AIzaSyDiB46mtiODcY3yz9kcWM5eIDcqLAgw3xo'
+		});
+
+		var result;
+		try {
+		  Meteor.wrapAsync(result = geo.geocode(data.address));
+
+		} catch(error) {
+
+		  console.log(error)
+		}
+
+		console.log('making page')
 		Page.insert({
 			metID: user,
 			email: data.email,
 			ownerName: data.ownerName,
-			address: data.address,
-			long: data.long,
-			lat: data.lat,
+			address: result[0].formattedAddress,
+			long: result[0].longitude,
+			lat: result[0].latitude,
 			createdAt: today,
 			pageName: data.pageName,
 			about: data.about,
 			phone: data.phone,
 			website: data.website,
+			online: true,
+			mcfan: [],
 			image: "http://localhost:3000/mainlogo.png"
 		},function(error,data){
 			if(error){
@@ -40,5 +57,6 @@ Meteor.methods({
 				Profile.update(profile._id, {$set: {page:data}})
 			}
 		});
+		console.log('done updating')
 	}
 });

@@ -1,12 +1,16 @@
 import React, {Component} from 'react';
 import {browserHistory} from 'react-router';
 var zipcodes = require('zipcodes');
+import {createContainer} from 'meteor/react-meteor-data';
+import {Profile} from '../../../../imports/collections/profile';
+import {Page} from '../../../../imports/collections/page';
 
 class MakePage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            loading: false
+            loading: false,
+            latlong: null
         }
     }
     closeModal(){
@@ -16,8 +20,8 @@ class MakePage extends Component {
     buttonPlace(){
         if(!this.state.loading){
             return(
-              <li onClick={this.signUp.bind(this)}>
-                <a href="#" className="item-link color-green list-button">Sign Up</a>
+              <li onClick={this.makePage.bind(this)}>
+                <a href="#" className="item-link color-green list-button">Make Page</a>
               </li>
             )
         }
@@ -27,79 +31,87 @@ class MakePage extends Component {
             )
         }
     }
-    signUp(event){
+    makePage(event){
         event.preventDefault();
         this.setState({loading: true});
         var myApp = new Framework7();
 
-        var ema = this.refs.email.value.trim();
-        var pss1 = this.refs.password.value.trim();
-        var pss2 = this.refs.password2.value.trim();
+        var busname = this.refs.busname.value.trim();
+        var email = this.refs.email.value.trim();
         var name = this.refs.name.value.trim();
-        var zip = this.refs.zip.value.trim();
-        if(ema == "" || pss1 == "" || pss2 == "" || name == "" || zip == ""){
-            myApp.alert('Please complete all the fields','Warning!');
+        var address = this.refs.address.value.trim();
+        var phone = this.refs.phone.value.trim();
+        var website = this.refs.website.value.trim();
+        var about = this.refs.about.value.trim();
+        
+        var data = {
+            address: address,
+            pageName: busname,
+            email: email,
+            ownerName: name,
+            about: about,
+            phone: phone,
+            website: website
+        }
+        
+        if(busname == "" || email == "" || name == "" || address == "" || phone == "" || about == ""){
+            myApp.alert('Please complete necessary fields','Warning!');
             console.log("enter data");
             this.setState({loading: false});
             return;
         }
-        else if(pss1 != pss2){
-            myApp.alert(`Passwords don't match`, `Warning!`);
+        if(!phone){
+            myApp.alert(`Can't make page yet`, `Warning!`);
             console.log('mismatch passwords');
             this.setState({loading: false});
             return;
         }
-        
-        else{
-            var zippy = zipcodes.lookup(zip);
-            if(!zippy){
-                myApp.alert(`Please use a real zip code`, `Warning!`);
-                this.setState({loading: false});
-                return;
-            }
-            Accounts.createUser({
-                email: ema,
-                password: pss1
-            },(error)=>{
-                if(error){
-                    myApp.alert(error.reason, `Warning!`);
-                    this.setState({loading: false});
 
-                    console.log(error);
-                    return;
-                }
+        function getLocationData(position, callback) {
+          geocoder = new google.maps.Geocoder();
+          var location = 'Billings,MT';
+
+          if( geocoder ) {
+            geocoder.geocode({ 'address': location }, function (results, status) {
+              if( status == google.maps.GeocoderStatus.OK ) {
+                callback(results[0]);
+              }
             });
-
-            Meteor.loginWithPassword(ema, pss1);
-            Meteor.call('profile.makeUser', name,zip, (error, data)=> {
-                if(error){
-                    myApp.alert(error.reason, `Warning!`);
-                    console.log("There was an error");
-                    console.log(error);
-                    this.setState({loading: false});
-                    Meteor.logout();
-                }
-                else{
-                    console.log(data)
-                    
-                    this.refs.email.value = "";
-                    this.refs.password.value = "";
-                    this.refs.password2.value = "";
-                    this.refs.name.value = "";
-                    this.refs.zip.value = "";
-                    var myApp = new Framework7();
-                    myApp.closeModal();
-                    browserHistory.push('/user/')
-                    myApp.alert(`Be sure to check your email and confirm your account. Welcome to McDeal!`, `Thanks!`);
-                    
-                }
-                
-            })
-            
+          }
         }
+
+        Meteor.call('page.makePage', data, (error, data)=> {
+            if(error){
+                var myApp = new Framework7();
+                myApp.alert(error.reason, `Warning!`);
+                console.log("There was an error");
+                console.log(error);
+                this.setState({loading: false});
+            }
+            else{
+                console.log(data)
+                this.refs.busname.value = "";
+                this.refs.email.value = "";
+                this.refs.name.value = "";
+                this.refs.address.value = "";
+                this.refs.phone.value = "";
+                this.refs.website.value = "";
+                this.refs.about.value = "";
+                
+                var myApp = new Framework7();
+                this.setState({loading: false});
+                myApp.closeModal();
+
+                browserHistory.push('/page/')
+                myApp.alert(`Success! Your page has been made.`, `Thanks!`);
+                
+            }
+            
+        })  
 
     }
     render() {
+        console.log(this.props.profile, this.props.page)
         return (
             <div>
                 <div className="content-block my-no-padding">
@@ -111,52 +123,70 @@ class MakePage extends Component {
                   <div className="my-break-40"></div>
                </div>
                 <form>
-                <h2>Sign Up</h2>
+                <h2>Make Page</h2>
+                <p>* is optional</p>
                   <div className="list-block">
                     <ul>
                       <li className="item-content">
                         <div className="item-inner">
-                          <div className="item-title label">Email</div>
+                          <div className="item-title label">Business Name</div>
                           <div className="item-input">
-                            <input type="email" ref="email" placeholder="Email"/>
+                            <input type="text" ref="busname" placeholder="Business Name"/>
                           </div>
                           
                         </div>
                       </li>
                       <li className="item-content">
                         <div className="item-inner">
-                          <div className="item-title label">Name</div>
+                          <div className="item-title label">Business Email</div>
                           <div className="item-input">
-                            <input type="text" ref="name" placeholder="Your Name"/>
+                            <input type="email" ref="email" placeholder="Business Email"/>
                           </div>
                           
                         </div>
                       </li>
                       <li className="item-content">
                         <div className="item-inner">
-                          <div className="item-title label">Zip Code</div>
+                          <div className="item-title label">Owner Name</div>
                           <div className="item-input">
-                            <input type="text" ref="zip" placeholder="Zip Code"/>
+                            <input type="text" ref="name" placeholder="Owner Name"/>
                           </div>
                           
                         </div>
                       </li>
                       <li className="item-content">
                         <div className="item-inner">
-                          <div className="item-title label">Password</div>
+                          <div className="item-title label">Address</div>
                           <div className="item-input">
-                            <input type="password" ref="password" placeholder="Password"/>
+                            <input type="text" ref="address" placeholder="Address"/>
                           </div>
                           
                         </div>
                       </li>
                       <li className="item-content">
                         <div className="item-inner">
-                          <div className="item-title label">Confirm</div>
+                          <div className="item-title label">Phone</div>
                           <div className="item-input">
-                            <input type="password" ref="password2" placeholder="Confirm Password"/>
+                            <input type="text" ref="phone" placeholder="Phone"/>
                           </div>
                           
+                        </div>
+                      </li>
+                      <li className="item-content">
+                        <div className="item-inner">
+                          <div className="item-title label">*Website</div>
+                          <div className="item-input">
+                            <input type="text" ref="website" placeholder="Website"/>
+                          </div>
+                          
+                        </div>
+                      </li>
+                      <li className="item-content">
+                        <div className="item-inner">
+                          <div className="item-title label">About</div>
+                          <div className="item-input">
+                              <textarea ref="about" placeholder="About (25 char min)"></textarea>
+                          </div>
                         </div>
                       </li>
                     </ul>
@@ -168,9 +198,17 @@ class MakePage extends Component {
                     <div className="my-break-50"></div>
                   </div>
                 </form>
+                <div id="latlong-dom"></div>
             </div>
         );
     }
 }
 
-export default MakePage;
+export default createContainer((props)=>{
+    Meteor.subscribe("profile");
+    Meteor.subscribe("ownPage");
+
+    return {profile: Profile.findOne({}), page: Page.findOne({})}
+
+    
+}, MakePage);  
