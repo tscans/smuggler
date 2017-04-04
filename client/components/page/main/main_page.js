@@ -15,6 +15,9 @@ class MainPage extends Component {
             return(<div></div>)
         }
         if(this.props.profile.page){
+            if(!this.props.page){
+                return<div></div>
+            }
             setTimeout(function(){ browserHistory.push("/page/deals/") }, 3000);
             $("#mytitle").fadeOut(3000);
             return(

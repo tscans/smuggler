@@ -43,7 +43,11 @@ class SignIn extends Component {
 		event.preventDefault();
 		console.log('signIn');
 		var myApp = new Framework7();
-		
+		if(Meteor.userId()){
+			myApp.closeModal();
+			browserHistory.push(this.state.destination)
+			return;
+		}
         this.setState({loading: true});
 		var ema = this.refs.email.value.trim();
         var pss1 = this.refs.pass.value.trim();
@@ -65,6 +69,26 @@ class SignIn extends Component {
 		
 	}
     render() {
+    	if(Meteor.userId()){
+    		return(
+    			<div>
+	    			<div className="content-block my-no-padding">
+				   	  <div className="navbar theme-green my-card-3">
+					    <div className="navbar-inner">
+					    	<div className="right my-left-5"><i onClick={this.closeModal.bind(this)} className="fa fa-times"></i></div>
+					    </div>
+					  </div>
+					  <div className="my-break-40"></div>
+				   </div>
+    				<h2>You are already signed in.</h2>
+    				<div className="list-block" onClick={this.signIn.bind(this)}>
+		                <ul>
+		                  {this.buttonPlace()}
+		                </ul>
+		            </div>
+    			</div>
+    		)
+    	}
         return (
         	<div>
         		<div className="content-block my-no-padding">

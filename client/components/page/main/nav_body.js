@@ -8,18 +8,32 @@ class NavBody extends Component {
 	sendUser(){
 		var myApp = new Framework7();
  
-	    var $$ = Dom7;
 	    myApp.closePanel();
 	    browserHistory.push("/user/");
 	}
 	toDeals(){
-		browserHistory.push("/page/deals/")
+		var myApp = new Framework7();
+ 
+	    myApp.closePanel(false);
+		browserHistory.push("/page/deals/");
 	}
 	toFeedback(){
-		browserHistory.push("/page/feedback/")
+		var myApp = new Framework7();
+ 
+	    myApp.closePanel();
+		browserHistory.push("/page/feedback/");
 	}
 	toManage(){
-		browserHistory.push("/page/manage/")
+		var myApp = new Framework7();
+ 
+	    myApp.closePanel();
+		browserHistory.push("/page/manage/");
+	}
+	toUser(){
+		var myApp = new Framework7();
+ 
+	    myApp.closePanel(false);
+		browserHistory.push("/user/");
 	}
     render() {
     	if(!this.props.profile){
@@ -88,6 +102,8 @@ class NavBody extends Component {
 				    </li>
 				  </ul>
 				  <div className="list-block-label">McDeal Copyright 2017</div>
+
+				  <div className="list-block-label"><a href="#" onClick={this.toUser.bind(this)}>To User</a></div>
 				</div>
 			</div>
         );

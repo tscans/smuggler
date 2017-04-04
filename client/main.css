@@ -1,3 +1,9 @@
+@media screen and (min-width: 768px) {
+    .go-fucking-center{
+    	margin-left: 30%;
+    	margin-right: 30%;
+    }
+}
 body{
 	text-align: center;
 	direction: ltr !important;
@@ -116,6 +122,9 @@ textarea {
 .my-break-50{
 	height: 150px;
 }
+.my-break-100{
+	height: 100px;
+}
 .my-break-40{
 	height: 40;
 }
@@ -135,5 +144,101 @@ textarea {
 .my-red-font{
 	color: red;
 }
+#avatar{
+	width: 80%;
+	border-style: solid;
+}
+.my-center{
+	text-align: center !important;
+}
+.ic-red{
+  color: red;
+}
+.ic-blue{
+  color: blue;
+}
+.ic-green{
+  color: green !important;
+}
+.ic-yellow{
+  color: yellow;
+}
+.ic-orange{
+  color: orange;
+}
+.ic-purple{
+  color: purple;
+}
+.ic-black{
+  color: black;
+}
+.ic-pink{
+  color: pink !important;
+}
+.ic-turquoise{
+  color: turquoise;
+}
+.my-right-push{
+	margin-right: 100px !important;
+}
+.my-invisible{
+	visibility: hidden;
+}
+.my-push-down-10{
+	margin-top: 1vh;
+}
+.demo-card-header-pic .card-header {
+height: 40vw;
+background-size: cover;
+background-position: center;
+}
+.my-vertical-bottom{
+	vertical-align: bottom !important;
+}
+.my-white-on-black{
+	color: black;
+	padding: 2px;
+	background-color: white;
+	border: 2px solid #64B5F6;
+}
+.my-title-buffer{
+	margin-top: 14vh;
+}
+.my-card-margin-bottom{
+	margin-bottom: 3vh;
+}
+.my-card-container {
+   /* Optional - You can set a  min-height : whatever px; for reserving some space*/
+   height: 91vh; /* Fix a height here */
+   overflow: auto; /* Optionally you can also use overflow: scroll; */
+}
+.my-small-font{
+	font-size: 12px;
+}
+.my-delete-button{
+  margin-top: -2vh;
+}
+.my-float-up{
+  margin-bottom: 8vh;
+}
+.my-link-right{
+  width: 100%;
+}
+.my-buttom-half{
+  width: 49% !important;
+}
+.my-container-bottom{
+  margin-bottom: 20vh;
+}
+
+
+
+
+
+
+
+
+
+
 
 

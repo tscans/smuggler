@@ -15,6 +15,12 @@ class NavBody extends Component {
     	browserHistory.push('/');
         myApp.alert(``,`Logged Out`);
     }
+    toPage(){
+		var myApp = new Framework7();
+ 
+	    myApp.closePanel(false);
+		browserHistory.push("/page/");
+	}
     render() {
         return (
         	<div>
@@ -46,6 +52,7 @@ class NavBody extends Component {
 				    </li>
 				  </ul>
 				  <div className="list-block-label">McDeal Copyright 2017</div>
+				  <div className="list-block-label"><a href="#" onClick={this.toPage.bind(this)}>To Page</a></div>
 				</div>
 			</div>
         );
