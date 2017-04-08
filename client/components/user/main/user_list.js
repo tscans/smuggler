@@ -1,9 +1,5 @@
 import React, {Component} from 'react';
 import {browserHistory} from 'react-router';
-import {createContainer} from 'meteor/react-meteor-data';
-import {Profile} from '../../../../imports/collections/profile';
-import {Page} from '../../../../imports/collections/page';
-import {Deal} from '../../../../imports/collections/deal';
 import DealsList from './list/deals_list';
 import PagesList from './list/pages_list';
 
@@ -17,15 +13,21 @@ class UserList extends Component {
 	renderListView(){
 		if(this.state.dealsList){
 			return(
-				<div className="my-push-down-10 my-card-container">
-					<DealsList deals={this.props.deals}/>
+				<div className="my-card-container">
+					<div style={{backgroundColor: "gold"}}>Local Deals</div>
+					<div className="my-push-down-10">
+						<DealsList deals={this.props.deals} profile={this.props.profile}/>
+					</div>
 				</div>
 			)
 		}
 		else{
 			return(
-				<div className="my-push-down-10 my-card-container">
-					<PagesList pages={this.props.pages}/>
+				<div className="my-card-container">
+					<div style={{backgroundColor: "gold"}}>Local Pages</div>
+					<div className="my-push-down-10">
+						<PagesList pages={this.props.pages} profile={this.props.profile}/>
+					</div>
 				</div>
 			)
 		}
@@ -45,15 +47,7 @@ class UserList extends Component {
     }
 }
 
-export default createContainer((props)=>{
-    Meteor.subscribe("profile");
-    Meteor.subscribe("localPages");
-    Meteor.subscribe("localDeals");
-
-    return {profile: Profile.findOne({}), pages: Page.find({}).fetch(), deals: Deal.find({}).fetch()}
-
-    
-}, UserList); 
+export default UserList;
 
 
 

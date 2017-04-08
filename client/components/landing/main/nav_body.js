@@ -30,7 +30,7 @@ class NavBody extends Component {
 				      </a>
 				    </li>
 				  </ul>
-				  <div className="list-block-label">McDeal Copyright 2017</div>
+				  <div className="list-block-label">Veer Copyright 2017</div>
 				  <a href="#" onClick={this.sendUser.bind(this)}>To User</a>
 				</div>
 			</div>

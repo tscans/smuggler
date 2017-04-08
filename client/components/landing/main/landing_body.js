@@ -45,7 +45,7 @@ class LandingBody extends Component {
         	<div>
 			    <div className="page-content my-home-background">
 				    <div className="content-block">
-				    	<h1 className="my-green-text my-home-title">Welcome to McDeal</h1>
+				    	<h1 className="my-green-text my-home-title">Welcome to Veer</h1>
 				    	<div className="my-break-50"></div>
 				    	<div className="row">
 				    		<div className="col-10"></div>

@@ -224,19 +224,30 @@ background-position: center;
 .my-link-right{
   width: 100%;
 }
-.my-buttom-half{
+.my-button-half{
   width: 49% !important;
+
 }
 .my-container-bottom{
   margin-bottom: 20vh;
 }
+.my-footer-height{
+  height: 9vh;
+}
+.my-info-box{
+  margin: 0;
+  color: #6666ff;
+}
+.my-page-box{
+  padding: 0;
 
-
-
-
-
-
-
+  margin: -1vh;
+}
+.my-list-wrap {
+   /* Optional - You can set a  min-height : whatever px; for reserving some space*/
+   height: 30vh; /* Fix a height here */
+   overflow: auto; /* Optionally you can also use overflow: scroll; */
+}
 
 
 

@@ -4,6 +4,8 @@ import Footer from './footer';
 import UserList from './user_list';
 import {createContainer} from 'meteor/react-meteor-data';
 import {Profile} from '../../../../imports/collections/profile';
+import {Page} from '../../../../imports/collections/page';
+import {Deal} from '../../../../imports/collections/deal';
 
 
 class MainUser extends Component {
@@ -16,12 +18,12 @@ class MainUser extends Component {
 	currentView(){
 		if(this.state.mapOn){
 			return(
-				<UserMap />
+				<UserMap profile={this.props.profile} pages={this.props.pages} deals={this.props.deals} pageID={this.props.params.pageID}/>
 			)
 		}
 		else{
 			return(
-				<UserList />
+				<UserList profile={this.props.profile} pages={this.props.pages} deals={this.props.deals}/>
 			)
 		}
 	}
@@ -32,6 +34,10 @@ class MainUser extends Component {
 		this.setState({mapOn: true});
 	}
     render() {
+    	console.log(this.props)
+		if(!this.props.profile){
+			return<div></div>
+		}
         return (
         	<div>
         		{this.currentView()}
@@ -45,8 +51,15 @@ class MainUser extends Component {
 
 export default createContainer((props)=>{
     Meteor.subscribe("profile");
+    Meteor.subscribe('localPages');
+    Meteor.subscribe("localDeals");
 
-    return {profile: Profile.findOne({})}
+    return {profile: Profile.findOne({}), pages: Page.find({}).fetch(), deals: Deal.find({}).fetch()}
 
 	
 }, MainUser);  
+
+
+
+
+

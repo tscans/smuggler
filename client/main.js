@@ -28,6 +28,7 @@ const routes = (
 		</Route>
 		<Route path="/user/" component={User}>
 			<IndexRoute component={MainUser} />
+			<Route path=":pageID/" component={MainUser}/>
 		</Route>
 	</Router>
 );

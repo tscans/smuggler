@@ -90,7 +90,7 @@ class SignUp extends Component {
                     var myApp = new Framework7();
 					myApp.closeModal();
 					browserHistory.push('/user/')
-					myApp.alert(`Be sure to check your email and confirm your account. Welcome to McDeal!`, `Thanks!`);
+					myApp.alert(`Be sure to check your email and confirm your account. Welcome to Veer!`, `Thanks!`);
                     
             	}
             	

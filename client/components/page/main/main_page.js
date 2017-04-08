@@ -32,7 +32,7 @@ class MainPage extends Component {
         		<div className="row">
 	        		<div className="col-10"></div>
 	        		<div className="col-80">
-	        			<p>If you own or represent a business you can sign that business up with the Emerald Arches (McDeal) by clicking this button and following the form.</p>
+	        			<p>If you own or represent a business you can sign that business up with Veer by clicking this button and following the form.</p>
 	        		</div>
 	        		<div className="col-10"></div>
         		</div>

@@ -29,7 +29,7 @@ class NavBody extends Component {
 				    <li>
 				      <a href="#" className="item-link item-content">
 				        <div className="item-inner">
-				          <div className="item-after">My McBook</div>
+				          <div className="item-after">My PlayBook</div>
 				        </div>
 				        <div className="item-media"><i className="icon icon-f7"></i></div>
 				      </a>
@@ -51,7 +51,7 @@ class NavBody extends Component {
 				      </a>
 				    </li>
 				  </ul>
-				  <div className="list-block-label">McDeal Copyright 2017</div>
+				  <div className="list-block-label">Veer Copyright 2017</div>
 				  <div className="list-block-label"><a href="#" onClick={this.toPage.bind(this)}>To Page</a></div>
 				</div>
 			</div>

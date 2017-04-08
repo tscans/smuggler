@@ -66,3 +66,10 @@ export default createContainer((props)=>{
 
     
 }, DealsPage); 
+
+
+
+
+
+
+

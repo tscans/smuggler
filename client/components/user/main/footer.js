@@ -44,7 +44,7 @@ class Footer extends Component {
     render() {
         return (
         	<div>
-			    <div className="my-card-3 toolbar tabbar tabbar-labels">
+			    <div className="toolbar tabbar tabbar-labels my-footer-height">
 				    <div className="toolbar-inner">
 				    	<a href="#" onClick={this.mapIt.bind(this)} className="tab-link active">
 				            <span className="tabbar-label"><i className="fa fa-map"></i> Map</span>

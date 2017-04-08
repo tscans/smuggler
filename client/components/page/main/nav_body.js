@@ -52,7 +52,7 @@ class NavBody extends Component {
 					      </a>
 					    </li>
 					</ul>
-				    <div className="list-block-label">McDeal Copyright 2017</div>
+				    <div className="list-block-label">Veer Copyright 2017</div>
     			</div>
     		)
     	}
@@ -101,7 +101,7 @@ class NavBody extends Component {
 				      </a>
 				    </li>
 				  </ul>
-				  <div className="list-block-label">McDeal Copyright 2017</div>
+				  <div className="list-block-label">Veer Copyright 2017</div>
 
 				  <div className="list-block-label"><a href="#" onClick={this.toUser.bind(this)}>To User</a></div>
 				</div>

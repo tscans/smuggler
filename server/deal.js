@@ -72,6 +72,19 @@ Meteor.methods({
 		}
 		
 		Deal.remove(did);
+	},
+	"deal.upvoteDeal":function(did){
+		const user = this.userId;
+		if(!user){
+			return;
+		}
+		var deal = Deal.findOne({_id: did});
+		if(deal.upvotes.includes(user)){
+			Deal.update(did, {$pull: {upvotes: user}});
+		}
+		else{
+			Deal.update(did, {$push: {upvotes: user}});
+		}
 	}
 });
 

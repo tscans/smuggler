@@ -62,6 +62,12 @@ class DealCreate extends Component {
             }
             else{
                 console.log(data);
+                this.refs.title.value = "";
+                this.refs.details.value = "";
+                document.getElementById('calendar-default').value = "";
+                var myApp = new Framework7();
+                myApp.closeModal();
+
             }
         })
     }
@@ -157,3 +163,9 @@ class DealCreate extends Component {
 }
 
 export default DealCreate;
+
+
+
+
+
+

@@ -27,7 +27,7 @@ class Navbar extends Component {
         	<div>
 	        	<div className="navbar theme-green my-card-3">
 				    <div className="navbar-inner">
-				    	<div onClick={this.goHome.bind(this)} className="right my-nav-left my-clickable">McDeal</div>
+				    	<div onClick={this.goHome.bind(this)} className="right my-nav-left my-clickable">Veer</div>
 				    	<div className="right my-left-5"><i onClick={this.openRight.bind(this)} className="icon my-left-5 size-50 icon-bars"></i></div>
 				    </div>
 				</div>

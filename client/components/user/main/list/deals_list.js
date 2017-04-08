@@ -1,25 +1,6 @@
 import React from 'react';
 
 class DealsList extends React.Component{
-	renderDelete(d){
-		if(this.props.deleting){
-			return(
-				<div className="my-delete-button go-fucking-center" onClick={()=>{this.handleDelete(d)}}>
-					<b><h3 className="ic-red"><a href="#" className="button button-fill color-red">Delete</a></h3></b>
-				</div>
-			)
-		}
-	}
-	handleDelete(d){
-		Meteor.call("deal.deleteDeal", d._id, (error, data)=>{
-			if(error){
-				console.log(error);
-			}
-			else{
-				console.log('success');
-			}
-		})
-	}
 	renderTop(d,divStyle){
 		if(d.picture == ""){
 	        return(
@@ -40,11 +21,31 @@ class DealsList extends React.Component{
     		)
     	}
 	}
+	upvote(did){
+		Meteor.call("deal.upvoteDeal", did, (error,data)=>{
+			if(error){
+				console.log(error)
+			}
+			else{
+				console.log(data)
+			}
+		})
+	}
+	book(did){
+		Meteor.call("profile.book", did, (error,data)=>{
+			if(error){
+				console.log(error)
+			}
+			else{
+				console.log(data)
+			}
+		})
+	}
 	renderCards(){
 		if(this.props.deals.length == 0){
 			return(
 				<div>
-					<h2>You have no deals.</h2>
+					<h2>No Deals.</h2>
 				</div>
 			)
 		}
@@ -60,7 +61,20 @@ class DealsList extends React.Component{
 		            height: "20vh"
 		        }
         	}
-			
+        	var upStyle = {
+        		color: "gray"
+        	}
+        	var bookStyle = {
+        		color: "gray"
+        	}
+			if(this.props.profile.book.includes(d._id)){
+				bookStyle = {}
+			}
+			if(d.upvotes.includes(Meteor.userId())){
+				upStyle = {
+					color: "green"
+				}
+			}
 			return(
 				<div className="my-card-margin-bottom" key={d._id}>
 					<div> 
@@ -74,12 +88,11 @@ class DealsList extends React.Component{
 							    </div>
 							  </div>
 							  <div className="card-footer">
-							    <a href="#" className="my-button-half link ic-green">Upvotes {d.upvotes.length.toString()} <i className="fa fa-arrow-up"></i></a>
-							    <a href="#" className="my-button-half link">McBook <i className="fa fa-bookmark"></i></a>
+							    <a href="#" style={upStyle} className="my-button-half link" onClick={()=>{this.upvote(d._id)}}>Upvotes {d.upvotes.length.toString()} <i className="fa fa-arrow-up"></i></a>
+							    <a href="#" style={bookStyle} className="my-button-half link" onClick={()=>{this.book(d._id)}}>Bookmark <i className="fa fa-bookmark"></i></a>
 							  </div>
 							</div>
 						</div>
-						{this.renderDelete(d)}
 					</div>
 				</div>
 			)

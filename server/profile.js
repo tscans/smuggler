@@ -1,4 +1,5 @@
 import {Profile} from '../imports/collections/profile';
+import {Deal} from '../imports/collections/deal';
 var zipcodes = require('zipcodes');
 import moment from 'moment';
 
@@ -21,7 +22,7 @@ Meteor.methods({
 			email: proEmail,
 			name: name,
 			zip: zip,
-			mcbook: [],
+			book: [],
 			createdAt: today,
 			long: zippy.longitude,
 			lat: zippy.latitude,
@@ -31,4 +32,39 @@ Meteor.methods({
 			page: null,
 		});
 	},
+	"profile.book": function(did){
+		const user = this.userId;
+		if(!user){
+			return;
+		}
+		var deal = Deal.findOne({_id: did});
+		if(!deal){
+			return;
+		}
+		var profile = Profile.findOne({metID: user});
+		if(profile.book.includes(did)){
+			Profile.update(profile._id, {$pull: {book: did}});
+		}
+		else{
+			Profile.update(profile._id, {$push: {book: did}});
+		}
+	},
+	"profile.newLocation":function(data){
+		const user = this.userId;
+		if(!user){
+			return;
+		}
+		var profile = Profile.findOne({metID: user});
+		if(!profile){
+			return;
+		}
+		Profile.update(profile._id, {$set: {long: data.long, lat: data.lat}});
+	}
 });
+
+
+
+
+
+
+
