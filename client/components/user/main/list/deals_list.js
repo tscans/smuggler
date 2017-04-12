@@ -1,6 +1,18 @@
 import React from 'react';
+import DealModal from './deal_modal';
 
 class DealsList extends React.Component{
+	constructor(props) {
+		super(props);
+		var x = false;
+		if(this.props.showModals){
+			x = true;
+		}
+		this.state = {
+			showModals: x,
+			deal: null
+		}
+	}
 	renderTop(d,divStyle){
 		if(d.picture == ""){
 	        return(
@@ -41,6 +53,31 @@ class DealsList extends React.Component{
 			}
 		})
 	}
+	openModal(d){
+		this.setState({deal: d});
+		var myApp = new Framework7();
+
+		myApp.popup('.popup-about');
+
+	}
+	renderModal(){
+		if(this.props.showModals){
+			return(
+				<DealModal deal={this.state.deal}/>
+			)
+		}
+	}
+	renderModalButton(d){
+		if(this.props.showModals){
+			return(
+				<div>
+					<p className="buttons-row" onClick={()=>{this.openModal(d)}}>
+					  <a href="#" className="button button-raised">Show Deal</a>
+					</p>  
+				</div>
+			)
+		}
+	}
 	renderCards(){
 		if(this.props.deals.length == 0){
 			return(
@@ -49,7 +86,21 @@ class DealsList extends React.Component{
 				</div>
 			)
 		}
-        return this.props.deals.map(d=>{
+		var jjj = this.props.deals;
+		var iii = [];
+		if(this.state.showModals){
+			for(var i = 0; i< jjj.length; i++){
+				console.log(jjj[i])
+				if(this.props.profile.book.includes(jjj[i]._id)){
+					iii.push(jjj[i]);
+				}
+			}
+			jjj = iii;
+		}
+		jjj.sort(function(a, b) {
+		    return parseFloat(a.upvotes.length) - parseFloat(b.upvotes.length);
+		});
+        return jjj.reverse().map(d=>{
         	if(d.picture == ""){
         		var divStyle = {
 		            height: "0vh"
@@ -89,8 +140,9 @@ class DealsList extends React.Component{
 							  </div>
 							  <div className="card-footer">
 							    <a href="#" style={upStyle} className="my-button-half link" onClick={()=>{this.upvote(d._id)}}>Upvotes {d.upvotes.length.toString()} <i className="fa fa-arrow-up"></i></a>
-							    <a href="#" style={bookStyle} className="my-button-half link" onClick={()=>{this.book(d._id)}}>Bookmark <i className="fa fa-bookmark"></i></a>
+							    <a href="#" style={bookStyle} className="my-button-half link" onClick={()=>{this.book(d._id)}}>PlayBook <i className="fa fa-bookmark"></i></a>
 							  </div>
+							  {this.renderModalButton(d)}
 							</div>
 						</div>
 					</div>
@@ -99,7 +151,7 @@ class DealsList extends React.Component{
 		})
 	}
 	render(){
-		if(!this.props.deals){
+		if(!this.props.deals || !this.props.profile){
 			return(
 				<div>
 					<img src="/ring.gif" />
@@ -108,6 +160,7 @@ class DealsList extends React.Component{
 		}
 		return(
 			<div>
+				{this.renderModal()}
 				<div className="my-container-bottom">
 					{this.renderCards()}
 				</div>

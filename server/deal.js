@@ -39,19 +39,22 @@ Meteor.methods({
 				console.log(error);
 			}
 			else{
-				cloudinary.config({cloud_name: 'dee8fnpvt' , api_key: '723549153244873' , api_secret: 'rooq670hgNK0JnoOSpxnZ7vFtG8'});
-				cloudinary.v2.uploader.upload("data:image/png;base64,"+data.pic, function(error, result){
-					if(error){
-						console.log(error)
-						return;
-					}
-				},Meteor.bindEnvironment(function (error, result) {
-					
-				  	Deal.update(did, {$set: {
-						picture: result.url,
-						pictureID: result.public_id
-					}})
-				}));
+				if(data.pic != ""){
+					cloudinary.config({cloud_name: 'dee8fnpvt' , api_key: '723549153244873' , api_secret: 'rooq670hgNK0JnoOSpxnZ7vFtG8'});
+					cloudinary.v2.uploader.upload("data:image/png;base64,"+data.pic, function(error, result){
+						if(error){
+							console.log(error)
+							return;
+						}
+					},Meteor.bindEnvironment(function (error, result) {
+						
+					  	Deal.update(did, {$set: {
+							picture: result.url,
+							pictureID: result.public_id
+						}})
+					}));
+				}
+				
 			}
 		})
 		

@@ -21,12 +21,32 @@ class NavBody extends Component {
 	    myApp.closePanel(false);
 		browserHistory.push("/page/");
 	}
+	toMap(){
+		var myApp = new Framework7();
+ 
+	    myApp.closePanel(false);
+		browserHistory.push("/user/");
+	}
+	toBook(){
+		var myApp = new Framework7();
+ 
+	    myApp.closePanel(false);
+		browserHistory.push("/user/book/");
+	}
     render() {
         return (
         	<div>
 				<div className="list-block">
 				  <ul>
-				    <li>
+				  	<li onClick={this.toMap.bind(this)}>
+				      <a href="#" className="item-link item-content">
+				        <div className="item-inner">
+				          <div className="item-after">Map/List</div>
+				        </div>
+				        <div className="item-media"><i className="icon icon-f7"></i></div>
+				      </a>
+				    </li>
+				    <li onClick={this.toBook.bind(this)}>
 				      <a href="#" className="item-link item-content">
 				        <div className="item-inner">
 				          <div className="item-after">My PlayBook</div>

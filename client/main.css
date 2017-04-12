@@ -248,7 +248,9 @@ background-position: center;
    height: 30vh; /* Fix a height here */
    overflow: auto; /* Optionally you can also use overflow: scroll; */
 }
-
+.my-fix-map{
+  overflow: auto; /* Optionally you can also use overflow: scroll; */
+}
 
 
 

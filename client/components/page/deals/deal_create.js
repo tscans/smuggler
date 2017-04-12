@@ -11,7 +11,8 @@ class DealCreate extends Component {
         this.state = {
             randI: randI,
             randC: randC,
-            img64: null
+            img64: null,
+            submitted: false
         }
     }
     closeCreate(){
@@ -41,7 +42,7 @@ class DealCreate extends Component {
     }
     makeDeal(){
         event.preventDefault();
-        this.setState({loading: true});
+        this.setState({submitted: true});
         var myApp = new Framework7();
 
         var title = this.refs.title.value.trim();
@@ -64,6 +65,8 @@ class DealCreate extends Component {
                 console.log(data);
                 this.refs.title.value = "";
                 this.refs.details.value = "";
+                window.myImage = "";
+                this.setState({submitted: false});
                 document.getElementById('calendar-default').value = "";
                 var myApp = new Framework7();
                 myApp.closeModal();
@@ -98,7 +101,23 @@ class DealCreate extends Component {
         handleFileSelect(evt);
    
     }
-    render() {
+    submission(){
+        if(this.state.submitted){
+            return(
+                <div>
+                    <img src="/ring.gif" height="50px"/>
+                </div>
+            )
+        }
+        else{
+            return(
+                <div>
+                    <a href="#" className="button button-fill button-raised" onClick={this.makeDeal.bind(this)}>Make Deal</a> 
+                </div>
+            )
+        }
+    }
+    render(){
         return (
         	<div>
         		<div className="navbar theme-green my-card-3">
@@ -156,7 +175,7 @@ class DealCreate extends Component {
                      
                 </div>
                 <div className="my-break-100"></div>
-                <a href="#" className="button button-fill button-raised" onClick={this.makeDeal.bind(this)}>Make Deal</a> 
+                {this.submission()}
         	</div>
         );
     }

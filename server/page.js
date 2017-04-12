@@ -47,8 +47,8 @@ Meteor.methods({
 			phone: data.phone,
 			website: data.website,
 			online: true,
-			mcfan: [],
-			image: "http://localhost:3000/mainlogo.png"
+			favorites: 0,
+			image: "/mainlogo.png"
 		},function(error,data){
 			if(error){
 				console.log(error);
@@ -58,5 +58,31 @@ Meteor.methods({
 			}
 		});
 		console.log('done updating')
+	},
+	"page.favorite":function(pageID){
+		const user = this.userId;
+		if(!user){
+			return;
+		}
+		var profile = Profile.findOne({metID: user});
+		var page = Page.findOne({_id: pageID});
+		if(!page){
+			return;
+		}
+		if(profile.favorite.includes(page._id)){
+			Profile.update(profile._id, {$pull:{favorite: page._id}});
+			Page.update(pageID, {$inc: {favorites: -1}});
+
+		}
+		else{
+			Profile.update(profile._id, {$push: {favorite: page._id}});
+			Page.update(pageID, {$inc: {favorites: 1}});
+		}
 	}
 });
+
+
+
+
+
+

@@ -35,7 +35,7 @@ class MainUser extends Component {
 	}
     render() {
     	console.log(this.props)
-		if(!this.props.profile){
+		if(!this.props.profile || !this.props.pages || !this.props.deals){
 			return<div></div>
 		}
         return (

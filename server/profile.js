@@ -29,6 +29,7 @@ Meteor.methods({
 			admin: false,
 			code: random,
 			verified: false,
+			favorite: [],
 			page: null,
 		});
 	},
@@ -59,6 +60,14 @@ Meteor.methods({
 			return;
 		}
 		Profile.update(profile._id, {$set: {long: data.long, lat: data.lat}});
+	},
+	"profile.removeOld":function(did){
+		const user = this.userId;
+		if(!user){
+			return;
+		}
+		var profile = Profile.findOne({metID: user});
+		Profile.update(profile._id, {$pull: {book: did}});
 	}
 });
 

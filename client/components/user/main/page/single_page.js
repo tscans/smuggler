@@ -2,13 +2,17 @@ import React from 'react';
 import DealsList from '../list/deals_list';
 import {createContainer} from 'meteor/react-meteor-data';
 import {Deal} from '../../../../../imports/collections/deal';
+import PageInfo from './page_info';
 import moment from 'moment';
 
-function getForDay(arob, day){
+function getForDay(arob, day, pid){
 	var rv = [];
 	for(var i = 0;i<arob.length;i++){
 		if(arob[i].date == day){
-			rv.push(arob[i])
+			console.log(arob[i].pageID, pid)
+			if(arob[i].pageID == pid){
+				rv.push(arob[i])
+			}
 		}
 	}
 	return rv;
@@ -17,9 +21,11 @@ function getForDay(arob, day){
 class SinglePage extends React.Component{
 	constructor(props) {
 		super(props);
+		var d = new Date();
+		var day = moment(d).format("ll");
 		this.state = {
 			currentBody: 'd',
-			currentDay: null
+			currentDay: day
 		}
 	}
 	renderBody(){
@@ -27,20 +33,45 @@ class SinglePage extends React.Component{
 			var myDeals;
 			console.log(this.state.currentDay)
 			console.log(this.props.singleDeals)
+			console.log(this.props.pageID)
 			if(this.state.currentDay){
-				myDeals = getForDay(this.props.singleDeals,this.state.currentDay);
+				myDeals = getForDay(this.props.singleDeals,this.state.currentDay, this.props.pageID);
 			}
 			else{
 				var d = new Date();
 				var day = moment(d).format("ll");
-				myDeals = getForDay(this.props.singleDeals,day)
+				myDeals = getForDay(this.props.singleDeals,day, this.props.pageID)
 			}
+			console.log('these',myDeals)
 			return(
 				<div>
 					<a href="#" className="button button-fill color-yellow" onClick={this.openSchedule.bind(this)}>
-	                	Future Deals <i className="fa fa-calendar" aria-hidden="true"></i>
+	                	{this.state.currentDay} <i className="fa fa-calendar" aria-hidden="true"></i>
 	            	</a>
 					<DealsList deals={myDeals} profile={this.props.profile} currentDay={this.state.currentDay}/>
+				</div>
+			)
+		}
+		else if(this.state.currentBody == "i"){
+			function search(nameKey, myArray){
+			    for (var i=0; i < myArray.length; i++) {
+			        if (myArray[i]._id === nameKey) {
+			            return myArray[i];
+			        }
+			    }
+			}
+
+			var p = search(this.props.pageID, this.props.pages);
+			return(
+				<div>
+					<PageInfo page={p} />
+				</div>
+			)
+		}
+		else if(this.state.currentBody == "f"){
+			return(
+				<div>
+					eh
 				</div>
 			)
 		}
@@ -109,6 +140,9 @@ class SinglePage extends React.Component{
 			}
 
 		var p = search(this.props.pageID, this.props.pages);
+		if(!p){
+			return<div></div>
+		}
 		}
 		var bk = {
 			backgroundImage: 'url(' + p.image + ')',
@@ -147,9 +181,9 @@ class SinglePage extends React.Component{
 					  <div className="card-content">
 					    <div className="toolbar toolbar-bottom">
 						    <div className="toolbar-inner">
-						      <a href="#" className="link">Deals</a>
-						      <a href="#" className="link">Feedback</a>
-						      <a href="#" className="link">Info</a>
+						      <a href="#" className="link" onClick={()=>{this.setState({currentBody: "d"})}}>Deals</a>
+						      <a href="#" className="link" onClick={()=>{this.setState({currentBody: "f"})}}>Feedback</a>
+						      <a href="#" className="link" onClick={()=>{this.setState({currentBody: "i"})}}>Info</a>
 						    </div>
 						</div>
 						{this.renderBody()}

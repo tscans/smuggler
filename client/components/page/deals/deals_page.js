@@ -62,7 +62,7 @@ export default createContainer((props)=>{
     Meteor.subscribe("ownPage");
     Meteor.subscribe("ownDeals");
 
-    return {profile: Profile.findOne({}), page: Page.findOne({}), deals: Deal.find({}).fetch()}
+    return {profile: Profile.findOne({}), page: Page.findOne({}), deals: Deal.find({metID: Meteor.userId()}).fetch()}
 
     
 }, DealsPage); 
