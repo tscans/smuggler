@@ -88,15 +88,18 @@ class DealsList extends React.Component{
 			)
 		}
 		var jjj = this.props.deals;
-		var aaa = [];
-		var d = new Date();
-		var today = moment(d).format("ll");
-		for(var i =0; i < jjj.length; i++){
-			if(jjj[i].date == today){
-				aaa.push(jjj[i]);
+		if(!this.state.showModals){
+			var aaa = [];
+			var d = new Date();
+			var today = moment(d).format("ll");
+			for(var i =0; i < jjj.length; i++){
+				if(jjj[i].date == today){
+					aaa.push(jjj[i]);
+				}
 			}
+			jjj = aaa;
 		}
-		jjj = aaa;
+		
 		var iii = [];
 		if(this.state.showModals){
 			for(var i = 0; i< jjj.length; i++){
