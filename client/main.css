@@ -250,8 +250,21 @@ background-position: center;
 }
 .my-fix-map{
   overflow: auto; /* Optionally you can also use overflow: scroll; */
+  height: 85vh;
 }
-
+.my-playbook{
+  overflow: auto;
+  height: 85vh;
+}
+.my-double-float{
+  margin-bottom: 11vh;
+}
+.my-single-float{
+  margin-bottom: 1vh;
+}
+.my-triple-float{
+  margin-bottom: 17vh;
+}
 
 
 

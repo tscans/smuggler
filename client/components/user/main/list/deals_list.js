@@ -1,5 +1,6 @@
 import React from 'react';
 import DealModal from './deal_modal';
+import moment from 'moment';
 
 class DealsList extends React.Component{
 	constructor(props) {
@@ -87,6 +88,15 @@ class DealsList extends React.Component{
 			)
 		}
 		var jjj = this.props.deals;
+		var aaa = [];
+		var d = new Date();
+		var today = moment(d).format("ll");
+		for(var i =0; i < jjj.length; i++){
+			if(jjj[i].date == today){
+				aaa.push(jjj[i]);
+			}
+		}
+		jjj = aaa;
 		var iii = [];
 		if(this.state.showModals){
 			for(var i = 0; i< jjj.length; i++){
@@ -140,7 +150,7 @@ class DealsList extends React.Component{
 							  </div>
 							  <div className="card-footer">
 							    <a href="#" style={upStyle} className="my-button-half link" onClick={()=>{this.upvote(d._id)}}>Upvotes {d.upvotes.length.toString()} <i className="fa fa-arrow-up"></i></a>
-							    <a href="#" style={bookStyle} className="my-button-half link" onClick={()=>{this.book(d._id)}}>PlayBook <i className="fa fa-bookmark"></i></a>
+							    <a href="#" style={bookStyle} className="my-button-half link" onClick={()=>{this.book(d._id)}}>Favorite <i className="fa fa-bookmark"></i></a>
 							  </div>
 							  {this.renderModalButton(d)}
 							</div>

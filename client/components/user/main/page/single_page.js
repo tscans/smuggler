@@ -45,7 +45,7 @@ class SinglePage extends React.Component{
 			console.log('these',myDeals)
 			return(
 				<div>
-					<a href="#" className="button button-fill color-yellow" onClick={this.openSchedule.bind(this)}>
+					<a href="#" className="button button-fill color-black" onClick={this.openSchedule.bind(this)}>
 	                	{this.state.currentDay} <i className="fa fa-calendar" aria-hidden="true"></i>
 	            	</a>
 					<DealsList deals={myDeals} profile={this.props.profile} currentDay={this.state.currentDay}/>
@@ -84,7 +84,6 @@ class SinglePage extends React.Component{
 				    <div className="toolbar">
 				      <div className="toolbar-inner">
 				        <div className="left"></div>
-				        <div className="right"><a href="#" className="close-picker color-white">Done</a></div>
 				      </div>
 				    </div>
 				    <div className="picker-modal-inner">
@@ -92,19 +91,19 @@ class SinglePage extends React.Component{
 				        <div className="list-block">
 						    <ul>
 						      <li onClick={()=>{this.setState({currentDay: moment(d).add(0,'day').format("ll")})}}>
-						        <a href="#" className="list-button item-link">{moment(d).add(0,'day').format("ll")}</a>
+						        <a href="#" className="close-picker list-button item-link">{moment(d).add(0,'day').format("ll")}</a>
 						      </li>
 						      <li onClick={()=>{this.setState({currentDay: moment(d).add(1,'day').format("ll")})}}>
-						        <a href="#" className="list-button item-link">{moment(d).add(1,'day').format("ll")}</a>
+						        <a href="#" className="close-picker list-button item-link">{moment(d).add(1,'day').format("ll")}</a>
 						      </li>
 						      <li onClick={()=>{this.setState({currentDay: moment(d).add(2,'day').format("ll")})}}>
-						        <a href="#" className="list-button item-link">{moment(d).add(2,'day').format("ll")}</a>
+						        <a href="#" className="close-picker list-button item-link">{moment(d).add(2,'day').format("ll")}</a>
 						      </li>
 						      <li onClick={()=>{this.setState({currentDay: moment(d).add(3,'day').format("ll")})}}>
-						        <a href="#" className="list-button item-link">{moment(d).add(3,'day').format("ll")}</a>
+						        <a href="#" className="close-picker list-button item-link">{moment(d).add(3,'day').format("ll")}</a>
 						      </li>
 						      <li onClick={()=>{this.setState({currentDay: moment(d).add(4,'day').format("ll")})}}>
-						        <a href="#" className="list-button item-link">{moment(d).add(4,'day').format("ll")}</a>
+						        <a href="#" className="close-picker list-button item-link">{moment(d).add(4,'day').format("ll")}</a>
 						      </li>
 						    </ul>
 						</div>
@@ -170,19 +169,22 @@ class SinglePage extends React.Component{
                         		<i className="fa fa-times color-white"></i>
                         	</a>
                         </div>
+                        <div className="right">
+                    		{p.pageName}
+                    	</div>
                     </div>
                 </div>
 				{this.renderPopOver()}
 		        <div className="content-block my-page-box">
 					<div className="card demo-card-header-pic">
 					  <div style={bk} className="card-header color-white no-border">
-					  	<div style={bn}>{p.pageName}</div>
+					  	<div style={bn}>Favorites - {p.favorites.toString()}</div>
 					  </div>
 					  <div className="card-content">
 					    <div className="toolbar toolbar-bottom">
 						    <div className="toolbar-inner">
 						      <a href="#" className="link" onClick={()=>{this.setState({currentBody: "d"})}}>Deals</a>
-						      <a href="#" className="link" onClick={()=>{this.setState({currentBody: "f"})}}>Feedback</a>
+						      <a href="#" className="link" onClick={()=>{this.setState({currentBody: "f"})}}>Reviews</a>
 						      <a href="#" className="link" onClick={()=>{this.setState({currentBody: "i"})}}>Info</a>
 						    </div>
 						</div>

@@ -271,8 +271,13 @@ class UserMap extends React.Component {
         });
         console.log(myProps.pages);
         var idArray = [];
+        var d = new Date();
+        var day = moment(d).format("ll");
         for(var i = 0; i< myProps.deals.length; i++){
-          idArray.push(myProps.deals[i].pageID)
+          if(myProps.deals[i].date == day){
+            idArray.push(myProps.deals[i].pageID)
+          }
+          
         }
 
         myProps.pages.map(p=>{
@@ -426,9 +431,14 @@ class UserMap extends React.Component {
       <div>
         {this.renderPagePop()}
         <div>
-          <div id="mapid" className="my-fix-map" onClick={this.logit.bind(this)}></div>
+          <div className="my-fix-map">
+            <div id="mapid" onClick={this.logit.bind(this)}></div>
+          </div>
           <a href="#" className="floating-button color-yellow my-float-up" onClick={this.search.bind(this)}>
               <i className="fa fa-search" aria-hidden="true"></i>
+          </a>
+          <a href="#" className="floating-button color-blue my-triple-float" onClick={this.search.bind(this)}>
+              <i className="fa fa-calendar" aria-hidden="true"></i>
           </a>
         </div>
       </div>

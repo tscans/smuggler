@@ -1,7 +1,7 @@
 {
 	"galaxy.meteor.com": {
 		"env": {
-			"MONGO_URL": "mongodb://huskiefoxtrot:*nuclear*AC39ATB@ds119380.mlab.com:19380/udeal"
+			"MONGO_URL": "mongodb://huskiefoxtrot:*nuclear*AC39ATB@ds159200.mlab.com:59200/veer"
 			
 		}
 	},

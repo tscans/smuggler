@@ -41,7 +41,7 @@ class NavBody extends Component {
 				  	<li onClick={this.toMap.bind(this)}>
 				      <a href="#" className="item-link item-content">
 				        <div className="item-inner">
-				          <div className="item-after">Map/List</div>
+				          <div className="item-after">Deals</div>
 				        </div>
 				        <div className="item-media"><i className="icon icon-f7"></i></div>
 				      </a>
@@ -49,7 +49,7 @@ class NavBody extends Component {
 				    <li onClick={this.toBook.bind(this)}>
 				      <a href="#" className="item-link item-content">
 				        <div className="item-inner">
-				          <div className="item-after">My PlayBook</div>
+				          <div className="item-after">Favorite Deals</div>
 				        </div>
 				        <div className="item-media"><i className="icon icon-f7"></i></div>
 				      </a>
@@ -57,7 +57,7 @@ class NavBody extends Component {
 				    <li>
 				      <a href="#" className="item-link item-content">
 				        <div className="item-inner">
-				          <div className="item-after">Give Feedback</div>
+				          <div className="item-after">Business Feedback</div>
 				        </div>
 				        <div className="item-media"><i className="icon icon-chevron_right"></i></div>
 				      </a>

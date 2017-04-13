@@ -48,7 +48,7 @@ Meteor.startup(() => {
 			metID: user
 		})
 	});
-	Meteor.publish('localDeals', function(range, day){
+	Meteor.publish('localDeals', function(range){
 		var user = this.userId;
 		if(!user){
 			return;
@@ -63,22 +63,8 @@ Meteor.startup(() => {
 		else{
 			var range = .12;
 		}
-		if(day){
-			var d = new Date();
-			var a = moment(d);
-			var b = moment(day);
-			var c = a.diff(b, 'days')
-			if(c > 4 || c < -4){
-				return;
-			}
-		}
-		else{
-			var d = new Date();
-			day = moment(d).format("ll");
-		}
 		
 		return Deal.find({
-			date: day,
 			long: {$gt: (profile.long-range), $lt: (profile.long+range)}, lat: {$gt: (profile.lat-range), $lt: (profile.lat+range)}
 		})
 	});

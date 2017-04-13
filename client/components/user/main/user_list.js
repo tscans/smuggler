@@ -36,6 +36,14 @@ class UserList extends Component {
 		this.setState({dealsList: !this.state.dealsList});
 	}
     render() {
+    	if(!this.props.deals){
+    		return(
+    			<div>
+    				No Deals Found
+    			</div>
+    		)
+    	}
+    	console.log(this.props.deals)
         return (
         	<div>
 				{this.renderListView()}

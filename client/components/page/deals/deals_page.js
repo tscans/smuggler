@@ -35,20 +35,13 @@ class DealsPage extends Component {
         		<div className="my-push-down-10 my-card-container">
         			<DealList deals={this.props.deals} deleting={this.state.deleteRed}/>
         		</div>
-                <div className="speed-dial">
-                <a href="#" className="floating-button">
-                  <i className="icon icon-plus"></i>
-                  <i className="icon icon-close"></i>
+                <a href="#" className="floating-button color-red my-single-float" style={this.state.deleteStyle} onClick={this.handleDelete.bind(this)}>
+                    <i className="fa fa-minus-circle"></i>
                 </a>
-                <div className="speed-dial-buttons">
-                  <a href="#" style={this.state.deleteStyle} onClick={this.handleDelete.bind(this)}>
-                    <i className="fa fa-minus-circle" aria-hidden="true"></i>
-                  </a>
-                  <a href="#" onClick={this.openCreate.bind(this)}>
-                    <i className="fa fa-plus-circle" aria-hidden="true"></i>
-                  </a>
-                </div>
-              </div>
+                <a href="#" className="floating-button color-blue my-double-float" onClick={this.openCreate.bind(this)}>
+                    <i className="fa fa-plus-circle"></i>
+                </a>
+                
 				<div className="login-screen">
 				    <DealCreate />
 				</div>
