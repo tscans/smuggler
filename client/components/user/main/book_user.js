@@ -56,8 +56,8 @@ class BookUser extends React.Component{
 		this.checkMissing();
 		return(
 			<div>
-				<div className="my-playbook">
-					<h1>Favorite Deals</h1>
+				<div>
+					<h3>Favorite Specials</h3>
 					<DealsList deals={this.props.deals} profile={this.props.profile} showModals={true}/>
 				</div>
 			</div>

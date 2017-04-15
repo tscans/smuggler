@@ -1,5 +1,6 @@
 import {Profile} from '../imports/collections/profile';
 import {Page} from '../imports/collections/page';
+import {Message} from '../imports/collections/message';
 import moment from 'moment';
 var cloudinary = require('cloudinary');
 
@@ -46,6 +47,8 @@ Meteor.methods({
 			about: data.about,
 			phone: data.phone,
 			website: data.website,
+			selectedMessages: [],
+			surveys: [],
 			online: true,
 			favorites: 0,
 			image: "/mainlogo.png"
@@ -78,8 +81,54 @@ Meteor.methods({
 			Profile.update(profile._id, {$push: {favorite: page._id}});
 			Page.update(pageID, {$inc: {favorites: 1}});
 		}
+	},
+	"page.selectedMessageAdd":function(messageID){
+		const user = this.userId;
+		if(!user){
+			return;
+		}
+		var message = Message.findOne({_id: messageID});
+		if(!message){
+			return;
+		}
+		var page = Page.findOne({metID: user});
+		if(!page){return;}
+		if(page.selectedMessages.length > 4){
+			throw new Meteor.Error(511, 'Only 5 Reviews per page');
+			return;
+		}
+		
+		Page.update(page._id, {$push: {selectedMessages: message}});
+		Message.remove(message._id);
+	},
+	"page.selectedMessageRemove":function(messageID){
+		const user = this.userId;
+		if(!user){
+			return;
+		}
+		var page = Page.findOne({metID: user});
+		if(!page){return;}
+		var message;
+		for(var i = 0; i<page.selectedMessages.length;i++){
+			if(messageID == page.selectedMessages[i]._id){
+				message = page.selectedMessages[i];
+				break;
+			}
+		}
+		Page.update(page._id,{$pull: {selectedMessages: message}});
 	}
 });
+
+
+
+
+
+
+
+
+
+
+
 
 
 

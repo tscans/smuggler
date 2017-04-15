@@ -14,35 +14,8 @@ class DealsList extends React.Component{
 			deal: null
 		}
 	}
-	renderTop(d,divStyle){
-		if(d.picture == ""){
-	        return(
-	        	<div style={{backgroundColor: "#E3F2FD",marginBottom: "-4vh"}}>
-					<h3>{d.title} - <span className="color-gray my-small-font">{d.pageName}</span></h3>
-	        	</div>
-	        )
-    	}
-    	else{
-    		return(
-    			<div style={divStyle} className="card-header color-white no-border">
-    				<div className="my-white-on-black my-title-buffer">
-    					<span className="color-gray my-small-font">{d.pageName}</span>
-    					<br/>
-    					{d.title}
-    				</div>
-    			</div>
-    		)
-    	}
-	}
 	upvote(did){
-		Meteor.call("deal.upvoteDeal", did, (error,data)=>{
-			if(error){
-				console.log(error)
-			}
-			else{
-				console.log(data)
-			}
-		})
+		
 	}
 	book(did){
 		Meteor.call("profile.book", did, (error,data)=>{
@@ -51,6 +24,14 @@ class DealsList extends React.Component{
 			}
 			else{
 				console.log(data)
+				Meteor.call("deal.upvoteDeal", did, (error,data)=>{
+					if(error){
+						console.log(error)
+					}
+					else{
+						console.log(data)
+					}
+				})
 			}
 		})
 	}
@@ -73,7 +54,7 @@ class DealsList extends React.Component{
 			return(
 				<div>
 					<p className="buttons-row" onClick={()=>{this.openModal(d)}}>
-					  <a href="#" className="button button-raised">Show Deal</a>
+					  <a href="#" className="button button-raised">Show Special</a>
 					</p>  
 				</div>
 			)
@@ -83,7 +64,7 @@ class DealsList extends React.Component{
 		if(this.props.deals.length == 0){
 			return(
 				<div>
-					<h2>No Deals.</h2>
+					<h2>No Special.</h2>
 				</div>
 			)
 		}
@@ -114,51 +95,58 @@ class DealsList extends React.Component{
 		    return parseFloat(a.upvotes.length) - parseFloat(b.upvotes.length);
 		});
         return jjj.reverse().map(d=>{
-        	if(d.picture == ""){
-        		var divStyle = {
-		            height: "0vh"
-		        }
-        	}
-        	else{
-        		var divStyle = {
-		            backgroundImage: 'url(' + d.picture + ')',
-		            height: "20vh"
-		        }
-        	}
+    		var divStyle = {
+	            height: "10vh",
+	            padding: "0px",
+	            margin: "0px"
+	        }
+        	
         	var upStyle = {
         		color: "gray"
         	}
-        	var bookStyle = {
-        		color: "gray"
+        	var info = {
+        		textAlign: "left",
+        		padding: "0px",
+        		paddingTop: "1px"
         	}
-			if(this.props.profile.book.includes(d._id)){
-				bookStyle = {}
-			}
+        	var test = {
+        		height: "10vh",
+        		paddingTop: "2vh",
+        		borderRadius: "0px",
+				border: "1px solid gray"
+        	}
 			if(d.upvotes.includes(Meteor.userId())){
 				upStyle = {
-					color: "green"
+					color: "#2196F3"
 				}
+				test = {
+	        		height: "10vh",
+	        		paddingTop: "2vh",
+	        		borderRadius: "0px",
+					border: "1px solid #2196F3"
+	        	}
 			}
 			return(
-				<div className="my-card-margin-bottom" key={d._id}>
-					<div> 
-						<div className="go-fucking-center">
-							<div className="card demo-card-header-pic">
-							  {this.renderTop(d, divStyle)}
-							  <div className="card-content">
-							    <div className="card-content-inner">
-							      <p className="color-gray">{d.date}</p>
-							      <p>{d.details}</p>
+				<div key={d._id}>
+					<div className="card">
+					    <div className="card-content">
+				            <div className="row">
+							    <div className="col-30">
+							    	<img src={d.picture} style={divStyle}/>
 							    </div>
-							  </div>
-							  <div className="card-footer">
-							    <a href="#" style={upStyle} className="my-button-half link" onClick={()=>{this.upvote(d._id)}}>Upvotes {d.upvotes.length.toString()} <i className="fa fa-arrow-up"></i></a>
-							    <a href="#" style={bookStyle} className="my-button-half link" onClick={()=>{this.book(d._id)}}>Favorite <i className="fa fa-bookmark"></i></a>
-							  </div>
-							  {this.renderModalButton(d)}
+							    <div className="col-50">
+							    	<div className="card-content-inner" style={info}>
+							    	  {d.title}
+							    	  <div className="color-gray my-small-gray">{d.pageName}</div>
+							    	  <div className="color-gray my-small-gray">{d.date}</div>
+								    </div>
+							    </div>
+							    <div className="col-20 my-clickable" style={test} onClick={()=>{this.book(d._id)}}>
+									<a href="#" style={upStyle}>Favorite {d.upvotes.length.toString()} <i className="fa fa-bookmark"></i></a>
+							    </div>
 							</div>
-						</div>
-					</div>
+					    </div>
+					</div> 
 				</div>
 			)
 		})
@@ -174,8 +162,10 @@ class DealsList extends React.Component{
 		return(
 			<div>
 				{this.renderModal()}
-				<div className="my-container-bottom">
-					{this.renderCards()}
+				<div>
+					<div className="go-fucking-center">
+						{this.renderCards()}
+					</div>
 				</div>
 			</div>
 		)

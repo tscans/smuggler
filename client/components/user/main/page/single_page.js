@@ -4,6 +4,7 @@ import {createContainer} from 'meteor/react-meteor-data';
 import {Deal} from '../../../../../imports/collections/deal';
 import PageInfo from './page_info';
 import moment from 'moment';
+import PageReviews from './page_reviews';
 
 function getForDay(arob, day, pid){
 	var rv = [];
@@ -69,9 +70,18 @@ class SinglePage extends React.Component{
 			)
 		}
 		else if(this.state.currentBody == "f"){
+			function search(nameKey, myArray){
+			    for (var i=0; i < myArray.length; i++) {
+			        if (myArray[i]._id === nameKey) {
+			            return myArray[i];
+			        }
+			    }
+			}
+
+			var p = search(this.props.pageID, this.props.pages);
 			return(
 				<div>
-					eh
+					<PageReviews page={p}/>
 				</div>
 			)
 		}

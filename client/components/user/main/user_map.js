@@ -4,6 +4,8 @@ import {browserHistory} from 'react-router';
 import SinglePage from './page/single_page';
 import {Page} from '../../../../imports/collections/page';
 import moment from 'moment';
+import {Profile} from '../../../../imports/collections/profile';
+import {Deal} from '../../../../imports/collections/deal';
 
 const myStyle = [
     {
@@ -255,12 +257,14 @@ class UserMap extends React.Component {
       changes: 0
     }
   }
-  componentDidMount() {
+  componentDidUpdate() {
     console.log('received')
+    console.log(this.state.mapLoaded)
     function initMap(myProps) {
         //@41.6971549,-87.7086321
         //"profile.newLocation"
         console.log('new map')
+        console.log(myProps)
         var myLocation = {lat: myProps.profile.lat, lng: myProps.profile.long};
         window.map = new google.maps.Map(document.getElementById('mapid'), {
           zoom: 13,
@@ -314,11 +318,15 @@ class UserMap extends React.Component {
           });
           marker.addListener('click', function() {
             myApp.actions(buttons);
-            browserHistory.push('/user/p/'+p._id+"/")
+            browserHistory.push('/user/map/p/'+p._id+"/")
           });
         })
         
       }
+      if(!this.props.profile || this.state.mapLoaded){
+        return;
+      }
+      this.setState({mapLoaded: true});
       initMap(this.props);
   }
   search(){
@@ -417,28 +425,38 @@ class UserMap extends React.Component {
           });
           marker.addListener('click', function() {
             myApp.actions(buttons);
-            browserHistory.push('/user/p/'+p._id+"/")
+            browserHistory.push('/user/map/p/'+p._id+"/")
           });
         })
       }
     })
    }
-  render() {
-    if(!this.props.profile || !this.props.pages || !this.props.deals){
-      return(<div></div>)
+   toList(){
+    browserHistory.push("/user/")
+   }
+   updateChanges(){
+    if(this.state.changes == 0){
+      this.setState({changes: 1});
     }
+    
+   }
+  render(){
+    if(!this.props.profile || !this.props.pages || !this.props.deals){
+      return null
+    }
+    this.updateChanges();
     return (
       <div>
         {this.renderPagePop()}
         <div>
-          <div className="my-fix-map">
+          <div>
             <div id="mapid" onClick={this.logit.bind(this)}></div>
           </div>
-          <a href="#" className="floating-button color-yellow my-float-up" onClick={this.search.bind(this)}>
+          <a href="#" className="floating-button color-yellow my-float-top" onClick={this.search.bind(this)}>
               <i className="fa fa-search" aria-hidden="true"></i>
           </a>
-          <a href="#" className="floating-button color-blue my-triple-float" onClick={this.search.bind(this)}>
-              <i className="fa fa-calendar" aria-hidden="true"></i>
+          <a href="#" className="floating-button color-green" onClick={this.toList.bind(this)}>
+              <i className="fa fa-list" aria-hidden="true"></i>
           </a>
         </div>
       </div>
@@ -447,9 +465,11 @@ class UserMap extends React.Component {
 }
 
 export default createContainer((props)=>{
-    Meteor.subscribe("localPages");
-
-    return {pages: Page.find({}).fetch()}
+    Meteor.subscribe("profile");
+    Meteor.subscribe('localPages');
+    Meteor.subscribe("localDeals");
+    //profile={this.props.profile} pages={this.props.pages} deals={this.props.deals} pageID={this.props.params.pageID}
+    return {pages: Page.find({}).fetch(), deals: Deal.find({}).fetch(), profile: Profile.findOne({}), pageID: props.params.pageID}
 
   
 }, UserMap);  

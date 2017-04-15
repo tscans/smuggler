@@ -27,11 +27,11 @@ class NavBody extends Component {
 	    myApp.closePanel(false);
 		browserHistory.push("/user/");
 	}
-	toBook(){
+	toFeedback(){
 		var myApp = new Framework7();
  
 	    myApp.closePanel(false);
-		browserHistory.push("/user/book/");
+		browserHistory.push("/user/feedback/");	
 	}
     render() {
         return (
@@ -41,20 +41,12 @@ class NavBody extends Component {
 				  	<li onClick={this.toMap.bind(this)}>
 				      <a href="#" className="item-link item-content">
 				        <div className="item-inner">
-				          <div className="item-after">Deals</div>
+				          <div className="item-after">Specials</div>
 				        </div>
 				        <div className="item-media"><i className="icon icon-f7"></i></div>
 				      </a>
 				    </li>
-				    <li onClick={this.toBook.bind(this)}>
-				      <a href="#" className="item-link item-content">
-				        <div className="item-inner">
-				          <div className="item-after">Favorite Deals</div>
-				        </div>
-				        <div className="item-media"><i className="icon icon-f7"></i></div>
-				      </a>
-				    </li>
-				    <li>
+				    <li onClick={this.toFeedback.bind(this)}>
 				      <a href="#" className="item-link item-content">
 				        <div className="item-inner">
 				          <div className="item-after">Business Feedback</div>

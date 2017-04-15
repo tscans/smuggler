@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { Profile } from '../imports/collections/profile';
 import { Page } from '../imports/collections/page';
 import { Deal } from '../imports/collections/deal';
+import { Message } from '../imports/collections/message';
 import moment from 'moment';
 
 Meteor.startup(() => {
@@ -104,7 +105,27 @@ Meteor.startup(() => {
 		var profile = Profile.findOne({metID: user});
 		return Deal.find({_id: {$in: profile.book}});
 	});
+	Meteor.publish('pageMessages', function(){
+		var user = this.userId;
+		if(!user){
+			return;
+		}
+		var page = Page.findOne({metID: user});
+		return Message.find({pageID: page._id});
+	})
 });
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -12,8 +12,11 @@ import FeedbackPage from './components/page/feedback/feedback_page';
 import ManagePage from './components/page/manage/manage_page';
 
 import User from './components/user/user';
+import UserMap from './components/user/main/user_map';
 import MainUser from './components/user/main/main_user';
 import BookUser from './components/user/main/book_user';
+import FeedbackUser from './components/user/main/feedback_user';
+import FeedbackUserPage from './components/user/main/feedback_user_page';
 
 const routes = (
 	<Router history={browserHistory}>
@@ -28,8 +31,11 @@ const routes = (
 		</Route>
 		<Route path="/user/" component={User}>
 			<IndexRoute component={MainUser} />
-			<Route path="p/:pageID/" component={MainUser}/>
+			<Route path="map/" component={UserMap} />
+			<Route path="map/p/:pageID/" component={UserMap}/>
 			<Route path="book/" component={BookUser}/>
+			<Route path="feedback/" component={FeedbackUser}/>
+			<Route path="feedback/:pageID/" component={FeedbackUserPage}/>
 		</Route>
 	</Router>
 );

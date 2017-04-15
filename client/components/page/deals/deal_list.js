@@ -75,8 +75,7 @@ class DealList extends React.Component{
 							    </div>
 							  </div>
 							  <div className="card-footer">
-							    <a href="#" className="link ic-green">Upvotes {d.upvotes.length.toString()} <i className="fa fa-arrow-up"></i></a>
-							    <a href="#" className="link">Bookmark <i className="fa fa-bookmark"></i></a>
+							    <a href="#" className="link ic-blue">Bookmarks {d.upvotes.length.toString()} <i className="fa fa-bookmark"></i></a>
 							  </div>
 							</div>
 						</div>
