@@ -270,4 +270,32 @@ background-position: center;
 .my-small-gray{
   font-size:12px;
 }
+.my-nav-right{
+  margin-left: 70vw;
+}
+.my-btn-80{
+  width: 80% !important;
+}
+.my-btn-20{
+  width:20% !important;
+}
+.my-btn-5{
+  margin-left: 3%;
+
+}
+.my-question-buffer{
+  margin-top: 5vh;
+}
+.my-input-5{
+  margin-left: 5%;
+  margin-right: 5%;
+}
+.my-floating-btn-left{
+  margin-right: 75vw;
+}
+
+
+
+
+
 

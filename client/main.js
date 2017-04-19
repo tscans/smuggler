@@ -10,6 +10,7 @@ import MainPage from './components/page/main/main_page';
 import DealsPage from './components/page/deals/deals_page';
 import FeedbackPage from './components/page/feedback/feedback_page';
 import ManagePage from './components/page/manage/manage_page';
+import CreateSurvey from './components/page/feedback/create_survey';
 
 import User from './components/user/user';
 import UserMap from './components/user/main/user_map';
@@ -17,6 +18,7 @@ import MainUser from './components/user/main/main_user';
 import BookUser from './components/user/main/book_user';
 import FeedbackUser from './components/user/main/feedback_user';
 import FeedbackUserPage from './components/user/main/feedback_user_page';
+import SurveyUser from './components/user/main/survey_user'
 
 const routes = (
 	<Router history={browserHistory}>
@@ -27,6 +29,7 @@ const routes = (
 			<IndexRoute component={MainPage} />
 			<Route path="deals/" component={DealsPage} />
 			<Route path="feedback/" component={FeedbackPage} />
+			<Route path="feedback/:surveyID/" component={CreateSurvey} />
 			<Route path="manage/" component={ManagePage} />
 		</Route>
 		<Route path="/user/" component={User}>
@@ -36,11 +39,11 @@ const routes = (
 			<Route path="book/" component={BookUser}/>
 			<Route path="feedback/" component={FeedbackUser}/>
 			<Route path="feedback/:pageID/" component={FeedbackUserPage}/>
+			<Route path="feedback/:pageID/survey/:surveyID/" component={SurveyUser}/>
 		</Route>
 	</Router>
 );
 
 Meteor.startup(() => {
-	Stripe.setPublishableKey(Meteor.settings.public.StripePub);
 	ReactDOM.render(routes, document.querySelector('.render-target'));
 });

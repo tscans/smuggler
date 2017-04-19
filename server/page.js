@@ -48,7 +48,6 @@ Meteor.methods({
 			phone: data.phone,
 			website: data.website,
 			selectedMessages: [],
-			surveys: [],
 			online: true,
 			favorites: 0,
 			image: "/mainlogo.png"

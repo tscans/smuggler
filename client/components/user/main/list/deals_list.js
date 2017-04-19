@@ -1,17 +1,24 @@
 import React from 'react';
 import DealModal from './deal_modal';
 import moment from 'moment';
+import {createContainer} from 'meteor/react-meteor-data';
+import {Deal} from '../../../../../imports/collections/deal';
 
 class DealsList extends React.Component{
 	constructor(props) {
 		super(props);
 		var x = false;
+		var y = false;
 		if(this.props.showModals){
 			x = true;
 		}
+		if(this.props.removeFavorites){
+			y = true;
+		}
 		this.state = {
 			showModals: x,
-			deal: null
+			deal: null,
+			removeFavorites: y
 		}
 	}
 	upvote(did){
@@ -68,7 +75,14 @@ class DealsList extends React.Component{
 				</div>
 			)
 		}
-		var jjj = this.props.deals;
+		if(this.state.removeFavorites){
+			var jjj = this.props.partDeals;
+		}
+		else{
+			var jjj = this.props.deals;
+		}
+		
+		
 		if(!this.state.showModals){
 			var aaa = [];
 			var d = new Date();
@@ -172,7 +186,12 @@ class DealsList extends React.Component{
 	}
 }
 
-export default DealsList;
+export default createContainer((props)=>{
+	Meteor.subscribe("localDeals");
+
+    return {partDeals: Deal.find({_id: { $nin: props.profile.book }}).fetch()}
+	
+}, DealsList);  
 
 
 

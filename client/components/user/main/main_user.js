@@ -22,7 +22,7 @@ class MainUser extends Component {
 					<BookUser />
 					<h3>Local Specials</h3>
 					<div className="my-container-bottom">
-						<DealsList profile={this.props.profile} pages={this.props.pages} deals={this.props.deals}/>
+						<DealsList profile={this.props.profile} pages={this.props.pages} deals={this.props.deals} removeFavorites={true}/>
 					</div>
 				</div>
 			</div>

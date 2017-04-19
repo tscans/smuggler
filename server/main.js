@@ -3,6 +3,9 @@ import { Profile } from '../imports/collections/profile';
 import { Page } from '../imports/collections/page';
 import { Deal } from '../imports/collections/deal';
 import { Message } from '../imports/collections/message';
+import { Survey } from '../imports/collections/survey';
+import { Question } from '../imports/collections/question';
+import { Response } from '../imports/collections/response';
 import moment from 'moment';
 
 Meteor.startup(() => {
@@ -113,6 +116,34 @@ Meteor.startup(() => {
 		var page = Page.findOne({metID: user});
 		return Message.find({pageID: page._id});
 	})
+	Meteor.publish("ownSurveys", function(){
+		var user = this.userId;
+		if(!user){
+			return;
+		}
+		return Survey.find({metID: user});
+	});
+	Meteor.publish("oneSurvey", function(surveyID){
+		var user = this.userId;
+		if(!user){
+			return;
+		}
+		return Survey.find({_id: surveyID});
+	});
+	Meteor.publish("pageSurveys", function(pageID){
+		var user = this.userId;
+		if(!user){
+			return;
+		}
+		return Survey.find({pageID: pageID});
+	});
+	Meteor.publish("surveyQuestions", function(surveyID){
+		var user = this.userId;
+		if(!user){
+			return;
+		}
+		return Question.find({surveyID: surveyID});
+	});
 });
 
 

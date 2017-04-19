@@ -3,14 +3,26 @@ import {browserHistory} from 'react-router';
 import {createContainer} from 'meteor/react-meteor-data';
 import {Profile} from '../../../../imports/collections/profile';
 import {Page} from '../../../../imports/collections/page';
+import {Survey} from '../../../../imports/collections/survey';
 
 class FeedbackUserPage extends React.Component{
 	listSurveys(){
-		return(
-			<div>
-				No Surveys at This Time
-			</div>
-		)
+		if(this.props.surveys.length == 0){
+			return(
+				<div>
+					No Surveys at This Time
+				</div>
+			)
+		}
+		return this.props.surveys.map(s=>{
+			return(
+				<div key={s._id}>
+					<p className="buttons-row my-crunch-btn">
+					  <a href="#" className="button button-raised color-green" onClick={()=>{browserHistory.push("/user/feedback/"+this.props.params.pageID+"/survey/"+s._id+"/")}}>{s.surveyName}</a>
+					</p>
+				</div>
+			)
+		})
 	}
 	sendMessage(p){
 		//pageid, message are params
@@ -81,19 +93,18 @@ class FeedbackUserPage extends React.Component{
 				break;
 			}
 		}
-		if(!p){
+		if(!p || !this.props.surveys){
 			return<div></div>
 		}
 		return(
 			<div>
 				<p className="buttons-row my-btn-up">
-				  <a href="#" className="button button-fill color-blue" onClick={()=>{browserHistory.push("/user/feedback/")}}>Go Back</a>
+				  <a href="#" className="button button-raised color-green" onClick={()=>{browserHistory.push("/user/feedback/")}}>Go Back</a>
 				</p>
 				<h2>{p.pageName}</h2>
-				<h3>Drop a Note</h3>
 				{this.messagePop(p)}
 				<p className="buttons-row my-crunch-btn">
-				  <a onClick={()=>{this.popMessage(p)}} href="#" className="button button-fill color-green">Note</a>
+				  <a onClick={()=>{this.popMessage(p)}} href="#" className="button button-fill color-green">Drop a Note</a>
 				</p>
 				<h3>Take a Survey</h3>
 				{this.listSurveys()}
@@ -106,8 +117,14 @@ class FeedbackUserPage extends React.Component{
 export default createContainer((props)=>{
     Meteor.subscribe("localPages")
     Meteor.subscribe('profile');
+    Meteor.subscribe("pageSurveys", props.params.pageID);
 
-    return {profile: Profile.findOne({}), pages: Page.find({}).fetch()}
+    return {profile: Profile.findOne({}), pages: Page.find({}).fetch(), surveys: Survey.find({}).fetch()}
 
 	
-}, FeedbackUserPage);  
+}, FeedbackUserPage); 
+
+
+
+
+ 
