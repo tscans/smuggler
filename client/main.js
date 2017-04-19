@@ -11,6 +11,7 @@ import DealsPage from './components/page/deals/deals_page';
 import FeedbackPage from './components/page/feedback/feedback_page';
 import ManagePage from './components/page/manage/manage_page';
 import CreateSurvey from './components/page/feedback/create_survey';
+import ManageData from './components/page/manage/manage_data';
 
 import User from './components/user/user';
 import UserMap from './components/user/main/user_map';
@@ -31,6 +32,7 @@ const routes = (
 			<Route path="feedback/" component={FeedbackPage} />
 			<Route path="feedback/:surveyID/" component={CreateSurvey} />
 			<Route path="manage/" component={ManagePage} />
+			<Route path="manage/data/:surveyID/" component={ManageData} />
 		</Route>
 		<Route path="/user/" component={User}>
 			<IndexRoute component={MainUser} />

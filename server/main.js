@@ -130,12 +130,26 @@ Meteor.startup(() => {
 		}
 		return Survey.find({_id: surveyID});
 	});
+	Meteor.publish("oneSurveyUser", function(surveyID){
+		var user = this.userId;
+		if(!user){
+			return;
+		}
+		return Survey.find({_id: surveyID, published: true});
+	});
 	Meteor.publish("pageSurveys", function(pageID){
 		var user = this.userId;
 		if(!user){
 			return;
 		}
 		return Survey.find({pageID: pageID});
+	});
+	Meteor.publish("pageSurveysUser", function(pageID){
+		var user = this.userId;
+		if(!user){
+			return;
+		}
+		return Survey.find({pageID: pageID, published: true});
 	});
 	Meteor.publish("surveyQuestions", function(surveyID){
 		var user = this.userId;
@@ -144,6 +158,18 @@ Meteor.startup(() => {
 		}
 		return Question.find({surveyID: surveyID});
 	});
+	Meteor.publish("surveyResponses", function(surveyID){
+		var user = this.userId;
+		if(!user){
+			return;
+		}
+		var survey = Survey.findOne({_id: surveyID});
+		if(survey.metID != user){
+			return;
+		}
+		return Response.find({surveyID: survey._id});
+	});
+
 });
 
 

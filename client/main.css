@@ -17,7 +17,7 @@ body{
     background-position: center; 
 }
 .my-center{
-	text-align: center;
+	text-align: center !important;
 }
 .my-footer {
    position:fixed;

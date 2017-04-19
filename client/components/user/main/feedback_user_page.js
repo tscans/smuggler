@@ -15,6 +15,15 @@ class FeedbackUserPage extends React.Component{
 			)
 		}
 		return this.props.surveys.map(s=>{
+			if(s.userResponders.includes(Meteor.userId())){
+				return(
+					<div key={s._id}>
+						<p className="buttons-row my-crunch-btn">
+						  <a href="#" className="button button-raised button-fill color-red">{s.surveyName} - Taken</a>
+						</p>
+					</div>
+				)
+			}
 			return(
 				<div key={s._id}>
 					<p className="buttons-row my-crunch-btn">
@@ -104,7 +113,7 @@ class FeedbackUserPage extends React.Component{
 				<h2>{p.pageName}</h2>
 				{this.messagePop(p)}
 				<p className="buttons-row my-crunch-btn">
-				  <a onClick={()=>{this.popMessage(p)}} href="#" className="button button-fill color-green">Drop a Note</a>
+				  <a onClick={()=>{this.popMessage(p)}} href="#" className="button button-fill button-raised color-green">Drop a Note</a>
 				</p>
 				<h3>Take a Survey</h3>
 				{this.listSurveys()}
@@ -117,7 +126,7 @@ class FeedbackUserPage extends React.Component{
 export default createContainer((props)=>{
     Meteor.subscribe("localPages")
     Meteor.subscribe('profile');
-    Meteor.subscribe("pageSurveys", props.params.pageID);
+    Meteor.subscribe("pageSurveysUser", props.params.pageID);
 
     return {profile: Profile.findOne({}), pages: Page.find({}).fetch(), surveys: Survey.find({}).fetch()}
 
@@ -127,4 +136,3 @@ export default createContainer((props)=>{
 
 
 
- 

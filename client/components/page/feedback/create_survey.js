@@ -229,7 +229,7 @@ class CreateSurvey extends React.Component{
                             Survey
                         </div>
                     </div>
-                </div>
+                    </div>
                     <div className="content-block">
                     ...Loading
                     </div>

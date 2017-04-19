@@ -34,7 +34,7 @@ class SurveyUser extends React.Component{
                         <div className="item-content">
                             <div className="item-inner">
                               <div className="item-input my-input-5">
-                                <input type="text" placeholder="Response"/>
+                                <input type="text" placeholder="Response" id={"q"+q._id}/>
                               </div>
                             </div>
                         </div>
@@ -57,8 +57,8 @@ class SurveyUser extends React.Component{
                             </div>
                         </div>
                         <div>
-                            <p className="buttons-row">
-                              <a href="#" className="button color-green" onClick={()=>{this.pickSat(q._id);this.setState({qid: q._id})}}>{saying}</a>
+                            <p className="buttons-row my-crunch-btn">
+                              <a href="#" className="button button-raised color-green" onClick={()=>{this.pickSat(q._id);this.setState({qid: q._id})}}>{saying}</a>
                             </p>
                         </div>
                         <div className="my-question-buffer"></div>
@@ -124,31 +124,60 @@ class SurveyUser extends React.Component{
         myApp.pickerModal('.picker-info')
     }
     submit(){
-
+    	var myApp = new Framework7();
+    	var newArray = this.state.responses.slice();
+    	for(var i = 0; i < this.props.questions.length; i++){
+    		if(document.getElementById("q"+this.props.questions[i]._id)){
+    			if(document.getElementById("q"+this.props.questions[i]._id).value != ""){
+    				newArray.push({
+		    			qid: this.props.questions[i]._id,
+				    	answer: document.getElementById("q"+this.props.questions[i]._id).value,
+				    	type: "o"
+		    		})
+    			}
+    		}
+    	}
+    	console.log(newArray)
+    	if(newArray.length < this.props.questions.length){
+    		var myApp = new Framework7();
+    		myApp.alert('Please answer every question!','Warning!');
+    		return;
+    	}
+    	Meteor.call("response.submitSurvey", this.props.params.pageID, this.props.params.surveyID, newArray, (error,data)=>{
+    		if(error){
+    			console.log(error);
+    		}
+    		else{
+    			console.log(data);
+    			browserHistory.push("/user/feedback/"+this.props.params.pageID+"/");
+    			myApp.alert("Thank you for submitting the survey.", "Success!");
+    		}
+    	})
+    	
     }
 	render(){
 		if(!this.props.survey || !this.props.questions){
 			console.log(this.props)
 			return(
 				<div>
-				<div className="navbar theme-white my-card-3">
-                    <div className="navbar-inner">
-                        <div className="left my-left-5">
-                        	<a href="#" onClick={()=>{browserHistory.push("/user/feedback/"+this.props.params.pageID+"/")}}>
-                        		<i className="fa fa-arrow-left color-green"></i>
-                        	</a>
-                        </div>
-                        <div className="my-nav-right color-green">
-                            Survey
-                        </div>
-                    </div>
-                </div>
+					<div className="navbar theme-white my-card-3">
+	                    <div className="navbar-inner">
+	                        <div className="left my-left-5">
+	                        	<a href="#" onClick={()=>{browserHistory.push("/user/feedback/"+this.props.params.pageID+"/")}}>
+	                        		<i className="fa fa-arrow-left color-green"></i>
+	                        	</a>
+	                        </div>
+	                        <div className="my-nav-right color-green">
+	                            Survey
+	                        </div>
+	                    </div>
+	                </div>
                 ...Loading
                 </div>
 			)
 		}
 		return(
-			<div>
+			<div className="my-card-container">
 				{this.renderPicker()}
 				<div className="navbar theme-white my-card-3">
                     <div className="navbar-inner">
@@ -173,10 +202,11 @@ class SurveyUser extends React.Component{
 }
 
 export default createContainer((props)=>{
-    Meteor.subscribe("oneSurvey", props.params.surveyID);
+    Meteor.subscribe("oneSurveyUser", props.params.surveyID);
     Meteor.subscribe("surveyQuestions", props.params.surveyID);
 
     return {survey: Survey.findOne({}), questions: Question.find({}).fetch()}
 
 	
 }, SurveyUser);
+
