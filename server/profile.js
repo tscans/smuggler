@@ -45,9 +45,11 @@ Meteor.methods({
 		var profile = Profile.findOne({metID: user});
 		if(profile.book.includes(did)){
 			Profile.update(profile._id, {$pull: {book: did}});
+			Deal.update(did, {$pull: {upvotes: user}});
 		}
 		else{
 			Profile.update(profile._id, {$push: {book: did}});
+			Deal.update(did, {$push: {upvotes: user}});
 		}
 	},
 	"profile.newLocation":function(data){

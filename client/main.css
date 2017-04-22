@@ -293,7 +293,12 @@ background-position: center;
 .my-floating-btn-left{
   margin-right: 75vw;
 }
-
+.my-float-2nd{
+  margin-right: 70px;
+}
+.my-font-small{
+  font-size: 12px;
+}
 
 
 

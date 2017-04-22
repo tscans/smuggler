@@ -287,25 +287,6 @@ class UserMap extends React.Component {
         myProps.pages.map(p=>{
           var myApp = new Framework7();
  
-          var buttons = [
-              {
-                  text: p.pageName,
-                  label: true
-              },
-              {
-                  text: "Open "+p.pageName,
-                  onClick: function () {
-                      myApp.popup('.popup-about');
-                  }
-              },
-              {
-                  text: 'Cancel',
-                  color: 'red',
-                  onClick: function () {
-                      null
-                  }
-              },
-          ];
           var color = "#aaaaaa";
           if(idArray.includes(p._id)){
             color = "#00ff00"
@@ -317,8 +298,8 @@ class UserMap extends React.Component {
             animation: google.maps.Animation.DROP
           });
           marker.addListener('click', function() {
-            myApp.actions(buttons);
             browserHistory.push('/user/map/p/'+p._id+"/")
+            myApp.popup('.popup-about');
           });
         })
         
@@ -394,26 +375,7 @@ class UserMap extends React.Component {
         }
         cube3.map(p=>{
           var myApp = new Framework7();
- 
-          var buttons = [
-              {
-                  text: p.pageName,
-                  label: true
-              },
-              {
-                  text: "Open "+p.pageName,
-                  onClick: function () {
-                      myApp.popup('.popup-about');
-                  }
-              },
-              {
-                  text: 'Cancel',
-                  color: 'red',
-                  onClick: function () {
-                      null
-                  }
-              },
-          ];
+
           var color = "#aaaaaa";
           if(idArray.includes(p._id)){
             color = "#00ff00"
@@ -424,8 +386,8 @@ class UserMap extends React.Component {
             icon: pinSymbol(color)
           });
           marker.addListener('click', function() {
-            myApp.actions(buttons);
-            browserHistory.push('/user/map/p/'+p._id+"/")
+            browserHistory.push('/user/map/p/'+p._id+"/");
+            myApp.popup('.popup-about');
           });
         })
       }
@@ -452,7 +414,7 @@ class UserMap extends React.Component {
           <div>
             <div id="mapid" onClick={this.logit.bind(this)}></div>
           </div>
-          <a href="#" className="floating-button color-yellow my-float-top" onClick={this.search.bind(this)}>
+          <a href="#" className="floating-button color-yellow my-float-2nd" onClick={this.search.bind(this)}>
               <i className="fa fa-search" aria-hidden="true"></i>
           </a>
           <a href="#" className="floating-button color-green" onClick={this.toList.bind(this)}>

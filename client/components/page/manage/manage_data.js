@@ -25,10 +25,6 @@ class ManageData extends React.Component{
 				responses.push(this.props.responses[i]);
 			}
 		}
-		console.log(question, responses)
-		if(question.type == "o"){
-			return;
-		}
 		google.charts.load('current', {packages: ['corechart']});
 		google.charts.setOnLoadCallback(drawBasic);
 		
@@ -85,6 +81,9 @@ class ManageData extends React.Component{
 	}
 	renderQuestions(){
 		return this.props.questions.map(q=>{
+				if(q.type == "o"){
+					return;
+				}
 				return(
 					<div key={q._id}>
 						<p className="buttons-row my-crunch-btn">

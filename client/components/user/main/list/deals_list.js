@@ -27,18 +27,10 @@ class DealsList extends React.Component{
 	book(did){
 		Meteor.call("profile.book", did, (error,data)=>{
 			if(error){
-				console.log(error)
+				console.log(error);
 			}
 			else{
-				console.log(data)
-				Meteor.call("deal.upvoteDeal", did, (error,data)=>{
-					if(error){
-						console.log(error)
-					}
-					else{
-						console.log(data)
-					}
-				})
+				console.log(data);
 			}
 		})
 	}
@@ -116,7 +108,8 @@ class DealsList extends React.Component{
 	        }
         	
         	var upStyle = {
-        		color: "gray"
+        		color: "gray",
+				fontSize: "3vh"
         	}
         	var info = {
         		textAlign: "left",
@@ -125,19 +118,16 @@ class DealsList extends React.Component{
         	}
         	var test = {
         		height: "10vh",
-        		paddingTop: "2vh",
-        		borderRadius: "0px",
-				border: "1px solid gray"
+        		paddingTop: "3vh"
         	}
 			if(d.upvotes.includes(Meteor.userId())){
 				upStyle = {
-					color: "#2196F3"
+					color: "#2196F3",
+					fontSize: "3vh"
 				}
 				test = {
 	        		height: "10vh",
-	        		paddingTop: "2vh",
-	        		borderRadius: "0px",
-					border: "1px solid #2196F3"
+	        		paddingTop: "3vh"
 	        	}
 			}
 			return(
@@ -156,7 +146,7 @@ class DealsList extends React.Component{
 								    </div>
 							    </div>
 							    <div className="col-20 my-clickable" style={test} onClick={()=>{this.book(d._id)}}>
-									<a href="#" style={upStyle}>Favorite {d.upvotes.length.toString()} <i className="fa fa-bookmark"></i></a>
+									<a href="#" style={upStyle}>{d.upvotes.length.toString()} <i className="fa fa-thumbs-o-up"></i></a>
 							    </div>
 							</div>
 					    </div>
