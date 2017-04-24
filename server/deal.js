@@ -24,7 +24,6 @@ Meteor.methods({
 			pageID: page._id,
 			pageName: page.pageName,
 			title: data.title,
-			details: data.details,
 			date: date,
 			picture: "/mainlogo.png",
 			address: page.address,
@@ -39,6 +38,9 @@ Meteor.methods({
 				console.log(error);
 			}
 			else{
+				if(!data.pic){
+					return;
+				}
 				if(data.pic.length > 50){
 					cloudinary.config({cloud_name: 'dee8fnpvt' , api_key: '723549153244873' , api_secret: 'rooq670hgNK0JnoOSpxnZ7vFtG8'});
 					cloudinary.v2.uploader.upload("data:image/png;base64,"+data.pic, function(error, result){

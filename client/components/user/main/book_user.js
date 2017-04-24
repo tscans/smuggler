@@ -1,8 +1,6 @@
 import React from 'react';
 import DealsList from './list/deals_list';
-import {createContainer} from 'meteor/react-meteor-data';
-import {Deal} from '../../../../imports/collections/deal';
-import {Profile} from '../../../../imports/collections/profile';
+import DealLi from './list/deal_li';
 
 class BookUser extends React.Component{
 	checkMissing(){
@@ -49,6 +47,15 @@ class BookUser extends React.Component{
 		}
 		
 	}
+	renderBook(){
+		return this.props.deals.map(d=>{
+			return(
+				<div key={d._id}>
+					<DealLi deal={d}/>
+				</div>
+			)
+		})
+	}
 	render(){
 		if(!this.props.deals || !this.props.profile){
 			return<div></div>
@@ -56,20 +63,10 @@ class BookUser extends React.Component{
 		this.checkMissing();
 		return(
 			<div>
-				<div>
-					<h3>Favorite Specials</h3>
-					<DealsList deals={this.props.deals} profile={this.props.profile} showModals={true}/>
-				</div>
+				{this.renderBook()}
 			</div>
 		)
 	}
 }
 
-export default createContainer((props)=>{
-    Meteor.subscribe("bookDeals");
-    Meteor.subscribe('profile');
-
-    return {deals: Deal.find({}).fetch(), profile: Profile.findOne({})}
-
-	
-}, BookUser);  
+export default BookUser; 

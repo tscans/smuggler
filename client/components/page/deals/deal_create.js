@@ -46,12 +46,10 @@ class DealCreate extends Component {
         var myApp = new Framework7();
 
         var title = this.refs.title.value.trim();
-        var details = this.refs.details.value.trim();
         var cal = document.getElementById('calendar-default').value;
         var data = {
             pic: window.myImage,
             title: title,
-            details: details,
             randomicon: this.state.randI,
             randomcolor: this.state.randC,
             date: cal
@@ -60,11 +58,13 @@ class DealCreate extends Component {
         Meteor.call('deal.makeDeal', data, (error,data)=>{
             if(error){
                 console.log(error);
+                this.setState({submitted: false});
+                var myApp = new Framework7();
+                myApp.alert("Deal not created","Warning!");
             }
             else{
                 console.log(data);
                 this.refs.title.value = "";
-                this.refs.details.value = "";
                 window.myImage = "";
                 this.setState({submitted: false});
                 document.getElementById('calendar-default').value = "";
@@ -112,7 +112,7 @@ class DealCreate extends Component {
         else{
             return(
                 <div>
-                    <a href="#" className="button button-fill button-raised" onClick={this.makeDeal.bind(this)}>Make Deal</a> 
+                    <a href="#" className="button button-fill color-green button-raised my-crunch-btn" onClick={this.makeDeal.bind(this)}>Make Deal</a> 
                 </div>
             )
         }
@@ -130,19 +130,10 @@ class DealCreate extends Component {
                     <ul>
                       <li className="item-content">
                         <div className="item-inner">
-                          <div className="item-title label">Deal Title</div>
                           <div className="item-input">
-                            <input type="text" ref="title" placeholder="Deal Title"/>
+                            <input type="text" ref="title" placeholder="Daily Special"/>
                           </div>
                           
-                        </div>
-                      </li>
-                      <li className="item-content">
-                        <div className="item-inner">
-                          <div className="item-title label">Details</div>
-                          <div className="item-input">
-                              <textarea ref="details" placeholder="About (25 char min)"></textarea>
-                          </div>
                         </div>
                       </li>
                       <div className="my-break-40"></div>
@@ -151,7 +142,7 @@ class DealCreate extends Component {
                             <div className="item-inner">
 
                               <div className="item-input">
-                                <input className="not-empty-state" type="text" placeholder="Select Day for Deal" readOnly id="calendar-default"/>
+                                <input className="not-empty-state" type="text" placeholder="Click to Choose Date" readOnly id="calendar-default"/>
                               </div>
                             </div>
                           </div>

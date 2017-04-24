@@ -56,7 +56,7 @@ Meteor.methods({
 				console.log(error);
 			}
 			else{
-				Profile.update(profile._id, {$set: {page:data}})
+				Profile.update(profile._id, {$set: {page:data}});
 			}
 		});
 		console.log('done updating')
@@ -79,6 +79,46 @@ Meteor.methods({
 		else{
 			Profile.update(profile._id, {$push: {favorite: page._id}});
 			Page.update(pageID, {$inc: {favorites: 1}});
+		}
+	},
+	"page.addImage":function(data){
+		const user = this.userId;
+		if(!user){
+			return;
+		}
+
+		var page = Page.findOne({metID: user});
+
+		if(!page){
+			console.log('here1')
+			return;
+		}
+		if(page.imageID){
+			console.log('here2')
+			cloudinary.config({cloud_name: 'dee8fnpvt' , api_key: '723549153244873' , api_secret: 'rooq670hgNK0JnoOSpxnZ7vFtG8'});
+			cloudinary.uploader.destroy(page.imageID, function(result) { null }, 
+                            { invalidate: true });
+		}
+		console.log(data.image.length);
+		if(data.image.length > 50){
+			console.log('here3')
+			cloudinary.config({cloud_name: 'dee8fnpvt' , api_key: '723549153244873' , api_secret: 'rooq670hgNK0JnoOSpxnZ7vFtG8'});
+			cloudinary.v2.uploader.upload("data:image/png;base64,"+data.image, function(error, result){
+				if(error){
+					console.log(error)
+					return;
+				}
+			},Meteor.bindEnvironment(function (error, result) {
+				Page.update(page._id, {$set:{
+					image: result.url,
+					imageID: result.public_id
+
+				}});
+			}));
+		}
+		else{
+			throw new Meteor.Error(513, 'Image error');
+			return;
 		}
 	},
 	"page.selectedMessageAdd":function(messageID){
@@ -115,6 +155,62 @@ Meteor.methods({
 			}
 		}
 		Page.update(page._id,{$pull: {selectedMessages: message}});
+	},
+	"page.updatePageName":function(pageName){
+		const user = this.userId;
+		if(!user){
+			return;
+		}
+		var page = Page.findOne({metID: user});
+		Page.update(page._id,{$set:{pageName: pageName}});
+	},
+	"page.updateEmail":function(email){
+		const user = this.userId;
+		if(!user){
+			return;
+		}
+		var page = Page.findOne({metID: user});
+		Page.update(page._id,{$set:{email: email}});
+	},
+	"page.updateOwnerName":function(ownerName){
+		const user = this.userId;
+		if(!user){
+			return;
+		}
+		var page = Page.findOne({metID: user});
+		Page.update(page._id,{$set:{ownerName: ownerName}});
+	},
+	"page.updateAddress":function(address){
+		const user = this.userId;
+		if(!user){
+			return;
+		}
+		var page = Page.findOne({metID: user});
+		Page.update(page._id,{$set:{address: address}});
+	},
+	"page.updatePhone":function(phone){
+		const user = this.userId;
+		if(!user){
+			return;
+		}
+		var page = Page.findOne({metID: user});
+		Page.update(page._id,{$set:{phone: phone}});
+	},
+	"page.updateWebsite":function(website){
+		const user = this.userId;
+		if(!user){
+			return;
+		}
+		var page = Page.findOne({metID: user});
+		Page.update(page._id,{$set:{website: website}});
+	},
+	"page.updateAbout":function(about){
+		const user = this.userId;
+		if(!user){
+			return;
+		}
+		var page = Page.findOne({metID: user});
+		Page.update(page._id,{$set:{about: about}});
 	}
 });
 

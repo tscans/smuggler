@@ -6,50 +6,20 @@ import PageInfo from './page_info';
 import moment from 'moment';
 import PageReviews from './page_reviews';
 
-function getForDay(arob, day, pid){
-	var rv = [];
-	for(var i = 0;i<arob.length;i++){
-		if(arob[i].date == day){
-			console.log(arob[i].pageID, pid)
-			if(arob[i].pageID == pid){
-				rv.push(arob[i])
-			}
-		}
-	}
-	return rv;
-}
-
 class SinglePage extends React.Component{
 	constructor(props) {
 		super(props);
-		var d = new Date();
-		var day = moment(d).format("ll");
 		this.state = {
-			currentBody: 'd',
-			currentDay: day
+			currentBody: 'd'
 		}
 	}
 	renderBody(){
 		if(this.state.currentBody == 'd'){
-			var myDeals;
-			console.log(this.state.currentDay)
-			console.log(this.props.singleDeals)
-			console.log(this.props.pageID)
-			if(this.state.currentDay){
-				myDeals = getForDay(this.props.singleDeals,this.state.currentDay, this.props.pageID);
-			}
-			else{
-				var d = new Date();
-				var day = moment(d).format("ll");
-				myDeals = getForDay(this.props.singleDeals,day, this.props.pageID)
-			}
-			console.log('these',myDeals)
+			var myDeals = this.props.singleDeals;
+			console.log(myDeals);
 			return(
 				<div>
-					<a href="#" className="button button-fill color-black" onClick={this.openSchedule.bind(this)}>
-	                	{this.state.currentDay} <i className="fa fa-calendar" aria-hidden="true"></i>
-	            	</a>
-					<DealsList deals={myDeals} profile={this.props.profile} currentDay={this.state.currentDay}/>
+					<DealsList deals={myDeals} profile={this.props.profile} onePage={true}/>
 				</div>
 			)
 		}
@@ -86,43 +56,6 @@ class SinglePage extends React.Component{
 			)
 		}
 	}
-	renderPopOver(){
-		var d = new Date();
-		return(
-			<div>
-				<div className="picker-modal picker-info">
-				    <div className="toolbar">
-				      <div className="toolbar-inner">
-				        <div className="left"></div>
-				      </div>
-				    </div>
-				    <div className="picker-modal-inner">
-				      <div className="content-block my-list-wrap">
-				        <div className="list-block">
-						    <ul>
-						      <li onClick={()=>{this.setState({currentDay: moment(d).add(0,'day').format("ll")})}}>
-						        <a href="#" className="close-picker list-button item-link">{moment(d).add(0,'day').format("ll")}</a>
-						      </li>
-						      <li onClick={()=>{this.setState({currentDay: moment(d).add(1,'day').format("ll")})}}>
-						        <a href="#" className="close-picker list-button item-link">{moment(d).add(1,'day').format("ll")}</a>
-						      </li>
-						      <li onClick={()=>{this.setState({currentDay: moment(d).add(2,'day').format("ll")})}}>
-						        <a href="#" className="close-picker list-button item-link">{moment(d).add(2,'day').format("ll")}</a>
-						      </li>
-						      <li onClick={()=>{this.setState({currentDay: moment(d).add(3,'day').format("ll")})}}>
-						        <a href="#" className="close-picker list-button item-link">{moment(d).add(3,'day').format("ll")}</a>
-						      </li>
-						      <li onClick={()=>{this.setState({currentDay: moment(d).add(4,'day').format("ll")})}}>
-						        <a href="#" className="close-picker list-button item-link">{moment(d).add(4,'day').format("ll")}</a>
-						      </li>
-						    </ul>
-						</div>
-				      </div>
-				    </div>
-				  </div>
-			</div>
-		)
-	}
 	openSchedule(){
 		var myApp = new Framework7();
 		myApp.pickerModal('.picker-info')
@@ -155,7 +88,7 @@ class SinglePage extends React.Component{
 		}
 		var bk = {
 			backgroundImage: 'url(' + p.image + ')',
-		    height: "40vh"
+		    height: "35vh"
 		}
 		var bn = {
 			color: "#444444",
@@ -184,22 +117,17 @@ class SinglePage extends React.Component{
                     	</div>
                     </div>
                 </div>
-				{this.renderPopOver()}
 		        <div className="content-block my-page-box">
 					<div className="card demo-card-header-pic">
 					  <div style={bk} className="card-header color-white no-border">
 					  	<div style={bn}>Favorites - {p.favorites.toString()}</div>
 					  </div>
-					  <div className="card-content">
-					    <div className="toolbar toolbar-bottom">
-						    <div className="toolbar-inner">
-						      <a href="#" className="link" onClick={()=>{this.setState({currentBody: "d"})}}>Deals</a>
-						      <a href="#" className="link" onClick={()=>{this.setState({currentBody: "f"})}}>Reviews</a>
-						      <a href="#" className="link" onClick={()=>{this.setState({currentBody: "i"})}}>Info</a>
-						    </div>
-						</div>
+					  	<p className="buttons-row my-btn-5">
+					  	  <a href="#" className="button color-red" onClick={()=>{this.setState({currentBody: "d"})}}>Deals</a><hr width="1" size="5%"/>
+						  <a href="#" className="button color-green" onClick={()=>{this.setState({currentBody: "f"})}}>Reviews</a><hr width="1" size="5%"/>
+						  <a href="#" className="button color-blue" onClick={()=>{this.setState({currentBody: "i"})}}>Info</a>
+						</p>
 						{this.renderBody()}
-					  </div>
 					</div>
 		          </div>
 		        </div>

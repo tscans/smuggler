@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {createContainer} from 'meteor/react-meteor-data';
+import {browserHistory} from 'react-router';
 import {Profile} from '../../../../imports/collections/profile';
 import {Page} from '../../../../imports/collections/page';
 import {Deal} from '../../../../imports/collections/deal';
@@ -30,6 +31,9 @@ class DealsPage extends Component {
     	if(!this.props.profile){
     		return<div></div>
     	}
+        if(!this.props.profile.page){
+            browserHistory.push("/page/")
+        }
         return (
         	<div>
         		<div className="my-push-down-10 my-card-container">

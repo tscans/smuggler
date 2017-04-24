@@ -35,76 +35,62 @@ class NavBody extends Component {
 	    myApp.closePanel(false);
 		browserHistory.push("/user/");
 	}
+	toUpdate(){
+		var myApp = new Framework7();
+ 
+	    myApp.closePanel();
+		browserHistory.push("/page/update/");
+	}
+	logout(event){
+        event.preventDefault();
+        var myApp = new Framework7();
+	    myApp.closePanel(false);
+	    myApp.closeModal();
+        Meteor.logout();
+        this.handleLogoutPush();
+    }
+    handleLogoutPush(){
+    	var myApp = new Framework7();
+    	browserHistory.push('/');
+        myApp.alert(``,`Logged Out`);
+    }
     render() {
+
     	if(!this.props.profile){
     		return(<div></div>)
     	}
     	if(!this.props.profile.page){
     		return(
     			<div>
-    				<ul>
-    					<li>
-					      <a href="#" className="item-link item-content">
-					        <div className="item-inner">
-					          <div className="item-after my-red-font">Logout</div>
-					        </div>
-					        <div className="item-media"><i className="icon icon-chevron_right"></i></div>
-					      </a>
-					    </li>
-					</ul>
+    				<p className="buttons-row">
+					  <a href="#" className="button" onClick={this.logout.bind(this)}>Logout</a>
+					</p>   
 				    <div className="list-block-label">Veer Copyright 2017</div>
     			</div>
     		)
     	}
         return (
         	<div>
-				<div className="list-block">
-				  <ul>
-				    <li>
-				      <a href="#" className="item-link item-content" onClick={this.toDeals.bind(this)}>
-				        <div className="item-inner">
-				          <div className="item-after">Deals</div>
-				        </div>
-				        <div className="item-media"><i className="icon icon-chevron_right"></i></div>
-				      </a>
-				    </li>
-				    <li>
-				      <a href="#" className="item-link item-content" onClick={this.toFeedback.bind(this)}>
-				        <div className="item-inner">
-				          <div className="item-after">Feedback</div>
-				        </div>
-				        <div className="item-media"><i className="icon icon-chevron_right"></i></div>
-				      </a>
-				    </li>
-				    <li>
-				      <a href="#" className="item-link item-content" onClick={this.toManage.bind(this)}>
-				        <div className="item-inner">
-				          <div className="item-after">Manage</div>
-				        </div>
-				        <div className="item-media"><i className="icon icon-chevron_right"></i></div>
-				      </a>
-				    </li>
-				    <li>
-				      <a href="#" className="item-link item-content">
-				        <div className="item-inner">
-				          <div className="item-after">Update Info</div>
-				        </div>
-				        <div className="item-media"><i className="icon icon-f7"></i></div>
-				      </a>
-				    </li>
-				    <li>
-				      <a href="#" className="item-link item-content">
-				        <div className="item-inner">
-				          <div className="item-after my-red-font">Logout</div>
-				        </div>
-				        <div className="item-media"><i className="icon icon-chevron_right"></i></div>
-				      </a>
-				    </li>
-				  </ul>
-				  <div className="list-block-label">Veer Copyright 2017</div>
-
-				  <div className="list-block-label"><a href="#" onClick={this.toUser.bind(this)}>To User</a></div>
-				</div>
+        		<p className="buttons-row">
+				  <a href="#" className="button" onClick={this.toDeals.bind(this)}>Deals</a>
+				</p>
+				<p className="buttons-row">
+				  <a href="#" className="button" onClick={this.toFeedback.bind(this)}>Feedback</a>
+				</p> 
+				<p className="buttons-row">
+				  <a href="#" className="button" onClick={this.toManage.bind(this)}>Manage</a>
+				</p> 
+				<p className="buttons-row">
+				  <a href="#" className="button" onClick={this.toUpdate.bind(this)}>Update Info</a>
+				</p> 
+				<p className="buttons-row">
+				  <a href="#" className="button" onClick={this.toUser.bind(this)}>Back to User</a>
+				</p> 
+				<p className="buttons-row">
+				  <a href="#" className="button" onClick={this.logout.bind(this)}>Logout</a>
+				</p>   
+				<div className="list-block-label">Veer Copyright 2017</div>
+				
 			</div>
         );
     }

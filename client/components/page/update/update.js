@@ -4,8 +4,9 @@ var zipcodes = require('zipcodes');
 import {createContainer} from 'meteor/react-meteor-data';
 import {Profile} from '../../../../imports/collections/profile';
 import {Page} from '../../../../imports/collections/page';
+import UpdateImage from './update_image';
 
-class MakePage extends Component {
+class Update extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -13,15 +14,11 @@ class MakePage extends Component {
             latlong: null
         }
     }
-    closeModal(){
-        var myApp = new Framework7();
-        myApp.closeModal();
-    }
     buttonPlace(){
         if(!this.state.loading){
             return(
-              <li onClick={this.makePage.bind(this)}>
-                <a href="#" className="item-link color-green list-button">Make Page</a>
+              <li onClick={this.updatePage.bind(this)}>
+                <a href="#" className="item-link color-green list-button">Update Page</a>
               </li>
             )
         }
@@ -31,7 +28,7 @@ class MakePage extends Component {
             )
         }
     }
-    makePage(event){
+    updatePage(event){
         event.preventDefault();
         this.setState({loading: true});
         var myApp = new Framework7();
@@ -53,6 +50,7 @@ class MakePage extends Component {
             phone: phone,
             website: website
         }
+        var oldData = this.props.page;
         
         if(busname == "" || email == "" || name == "" || address == "" || phone == "" || about == ""){
             myApp.alert('Please complete necessary fields','Warning!');
@@ -60,51 +58,73 @@ class MakePage extends Component {
             this.setState({loading: false});
             return;
         }
-
-        Meteor.call('page.makePage', data, (error, data)=> {
-            if(error){
-                var myApp = new Framework7();
-                myApp.alert(error.reason, `Warning!`);
-                console.log("There was an error");
-                console.log(error);
-                this.setState({loading: false});
-            }
-            else{
-                console.log(data)
-                this.refs.busname.value = "";
-                this.refs.email.value = "";
-                this.refs.name.value = "";
-                this.refs.address.value = "";
-                this.refs.phone.value = "";
-                this.refs.website.value = "";
-                this.refs.about.value = "";
-                
-                var myApp = new Framework7();
-                this.setState({loading: false});
-                myApp.closeModal();
-
-                browserHistory.push('/page/')
-                myApp.alert(`Success! Your page has been made.`, `Thanks!`);
-                
-            }
+        var myError = false;
+        if(data.pageName != oldData.pageName){
+        	Meteor.call('page.updatePageName', data.pageName, (error, data)=> {
+	            if(error){myError = true}
+	        })  
+        }
+        if(data.email != oldData.email){
+        	Meteor.call('page.updateEmail', data.email, (error, data)=> {
+	            if(error){myError = true}
+	        })  
+        }
+        if(data.ownerName != oldData.ownerName){
+        	Meteor.call('page.updateOwnerName', data.ownerName, (error, data)=> {
+	            if(error){myError = true}
+	        })  
+        }
+        if(data.address != oldData.address){
+        	Meteor.call('page.updateAddress', data.address, (error, data)=> {
+	            if(error){myError = true}
+	        })  
+        }
+        if(data.phone != oldData.phone){
+        	Meteor.call('page.updatePhone', data, (error, data)=> {
+	            if(error){myError = true}
+	        })  
+        }
+        if(data.website != oldData.website){
+        	Meteor.call('page.updateWebsite', data.website, (error, data)=> {
+	            if(error){myError = true}
+	        })  
+        }
+        if(data.about != oldData.about){
+        	Meteor.call('page.updateAbout', data.about, (error, data)=> {
+	            if(error){myError = true}
+	        })  
+        }
+        
+        if(myError){
+            var myApp = new Framework7();
+            myApp.alert(error.reason, `Warning!`);
+            console.log("There was an error");
+            console.log(error);
+            this.setState({loading: false});
+        }
+        else{
+            console.log(data)
             
-        })  
+            var myApp = new Framework7();
+            this.setState({loading: false});
+            myApp.alert(`Saved!`, `Thanks!`);
+            
+        }
 
+    }
+    openModal(){
+    	var myApp = new Framework7();
+    	myApp.popup('.popup-about');
     }
     render() {
         console.log(this.props.profile, this.props.page)
+        if(!this.props.page){
+        	return<div></div>
+        }
         return (
             <div>
-                <div className="content-block my-no-padding">
-                  <div className="navbar theme-green my-card-3">
-                    <div className="navbar-inner">
-                        <div className="right my-left-5"><i onClick={this.closeModal.bind(this)} className="fa fa-times"></i></div>
-                    </div>
-                  </div>
-                  <div className="my-break-40"></div>
-               </div>
                 <form>
-                <h2>Make Page</h2>
+                <h2>Update Info</h2>
                 <p>* is optional</p>
                   <div className="list-block">
                     <ul>
@@ -112,7 +132,7 @@ class MakePage extends Component {
                         <div className="item-inner">
                           <div className="item-title label">Business Name</div>
                           <div className="item-input">
-                            <input type="text" ref="busname" placeholder="Business Name"/>
+                            <input type="text" ref="busname" placeholder="Business Name" defaultValue={this.props.page.pageName}/>
                           </div>
                           
                         </div>
@@ -121,7 +141,7 @@ class MakePage extends Component {
                         <div className="item-inner">
                           <div className="item-title label">Business Email</div>
                           <div className="item-input">
-                            <input type="email" ref="email" placeholder="Business Email"/>
+                            <input type="email" ref="email" placeholder="Business Email" defaultValue={this.props.page.email}/>
                           </div>
                           
                         </div>
@@ -130,7 +150,7 @@ class MakePage extends Component {
                         <div className="item-inner">
                           <div className="item-title label">Owner Name</div>
                           <div className="item-input">
-                            <input type="text" ref="name" placeholder="Owner Name"/>
+                            <input type="text" ref="name" placeholder="Owner Name" defaultValue={this.props.page.ownerName}/>
                           </div>
                           
                         </div>
@@ -139,7 +159,7 @@ class MakePage extends Component {
                         <div className="item-inner">
                           <div className="item-title label">Address</div>
                           <div className="item-input">
-                            <input type="text" ref="address" placeholder="Address"/>
+                            <input type="text" ref="address" placeholder="Address" defaultValue={this.props.page.address}/>
                           </div>
                           
                         </div>
@@ -148,7 +168,7 @@ class MakePage extends Component {
                         <div className="item-inner">
                           <div className="item-title label">Phone</div>
                           <div className="item-input">
-                            <input type="text" ref="phone" placeholder="Phone"/>
+                            <input type="text" ref="phone" placeholder="Phone" defaultValue={this.props.page.phone}/>
                           </div>
                           
                         </div>
@@ -157,7 +177,7 @@ class MakePage extends Component {
                         <div className="item-inner">
                           <div className="item-title label">*Website</div>
                           <div className="item-input">
-                            <input type="text" ref="website" placeholder="Website"/>
+                            <input type="text" ref="website" placeholder="Website" defaultValue={this.props.page.website}/>
                           </div>
                           
                         </div>
@@ -166,9 +186,12 @@ class MakePage extends Component {
                         <div className="item-inner">
                           <div className="item-title label">About</div>
                           <div className="item-input">
-                              <textarea ref="about" placeholder="About (25 char min)"></textarea>
+                              <textarea ref="about" placeholder="About (25 char min)" defaultValue={this.props.page.about}></textarea>
                           </div>
                         </div>
+                      </li>
+                      <li onClick={this.openModal.bind(this)}>
+                      	<a href="#" className="item-link color-black list-button">Update Image</a>
                       </li>
                     </ul>
                   </div>
@@ -179,6 +202,9 @@ class MakePage extends Component {
                     <div className="my-break-50"></div>
                   </div>
                 </form>
+                <div className="popup popup-about">
+				    <UpdateImage/>
+				</div>
                 <div id="latlong-dom"></div>
             </div>
         );
@@ -192,4 +218,4 @@ export default createContainer((props)=>{
     return {profile: Profile.findOne({}), page: Page.findOne({})}
 
     
-}, MakePage);  
+}, Update);  

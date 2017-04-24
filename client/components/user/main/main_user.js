@@ -19,17 +19,19 @@ class MainUser extends Component {
 		return(
 			<div className="my-card-container">
 				<div className="my-push-down-10">
-					<BookUser />
+
 					<h3>Local Specials</h3>
+					<BookUser deals={this.props.bookDeals} profile={this.props.profile}/>
+					<hr/>
 					<div className="my-container-bottom">
-						<DealsList profile={this.props.profile} pages={this.props.pages} deals={this.props.deals} removeFavorites={true}/>
+						<h3>Favorite Specials</h3>
+						<DealsList deals={this.props.deals} profile={this.props.profile}/>
 					</div>
 				</div>
 			</div>
 		)
 	}
     render() {
-    	console.log(this.props)
 		if(!this.props.profile || !this.props.pages || !this.props.deals){
 			return<div></div>
 		}
@@ -48,8 +50,9 @@ export default createContainer((props)=>{
     Meteor.subscribe("profile");
     Meteor.subscribe('localPages');
     Meteor.subscribe("localDeals");
+    Meteor.subscribe("bookDeals");
 
-    return {profile: Profile.findOne({}), pages: Page.find({}).fetch(), deals: Deal.find({}).fetch()}
+    return {profile: Profile.findOne({}), pages: Page.find({}).fetch(), deals: Deal.find({upvotes: {$not:Meteor.userId()}}).fetch(),bookDeals:Deal.find({upvotes:Meteor.userId() }).fetch()}
 
 	
 }, MainUser);  
