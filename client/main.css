@@ -10,7 +10,7 @@ body{
 }
 #mapid {
 	width: 100%;
-	height:93vh;
+	height:91vh;
 	background: white url("./ring.gif");
 	background-size: 200px 200px;
     background-repeat: no-repeat;
@@ -103,7 +103,7 @@ textarea {
 }
 .my-home-background{
 	height:90vh;
-	background: #ffffff url("https://s-media-cache-ak0.pinimg.com/originals/b3/54/7b/b3547b93947ad60ad8d20254a96b5505.jpg") no-repeat fixed center;
+	background: #ffffff url("/ny.jpg") no-repeat fixed center;
 	padding:0;
 }
 .my-green-text{

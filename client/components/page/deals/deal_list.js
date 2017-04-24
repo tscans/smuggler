@@ -50,34 +50,52 @@ class DealList extends React.Component{
 			)
 		}
         return this.props.deals.map(d=>{
-        	if(d.picture == ""){
-        		var divStyle = {
-		            height: "0vh"
-		        }
-        	}
-        	else{
-        		var divStyle = {
-		            backgroundImage: 'url(' + d.picture + ')',
-		            height: "20vh"
-		        }
+        	var divStyle = {
+	            height: "10vh",
+	            padding: "0px",
+	            margin: "0px"
+	        }
+	    	var info = {
+	    		textAlign: "left",
+	    		padding: "0px",
+	    		paddingTop: "1px"
+	    	}
+	    	var test = {
+	    		height: "10vh",
+	    		paddingTop: "3vh"
+	    	}
+			var upStyle = {
+				color: "#2196F3",
+				fontSize: "3vh"
+			}
+			var test = {
+        		height: "10vh",
+        		paddingTop: "3vh"
         	}
 			
 			return(
 				<div className="my-card-margin-bottom" key={d._id}>
 					<div> 
 						<div className="go-fucking-center">
-							<div className="card demo-card-header-pic">
-							  {this.renderTop(d, divStyle)}
-							  <div className="card-content">
-							    <div className="card-content-inner">
-							      <p className="color-gray">{d.date}</p>
-							      <p>{d.details}</p>
+							<div className="card">
+							    <div className="card-content">
+						            <div className="row">
+									    <div className="col-30">
+									    	<img src={d.picture} style={divStyle}/>
+									    </div>
+									    <div className="col-50">
+									    	<div className="card-content-inner" style={info}>
+									    	  {d.title}
+									    	  <div className="color-gray my-small-gray">{d.pageName}</div>
+									    	  <div className="color-gray my-small-gray">{d.date}</div>
+										    </div>
+									    </div>
+									    <div className="col-20 my-clickable" style={test} onClick={()=>{this.book(d._id)}}>
+											<a href="#" style={upStyle}>{d.upvotes.length.toString()} <i className="fa fa-thumbs-o-up"></i></a>
+									    </div>
+									</div>
 							    </div>
-							  </div>
-							  <div className="card-footer">
-							    <a href="#" className="link ic-blue">Bookmarks {d.upvotes.length.toString()} <i className="fa fa-bookmark"></i></a>
-							  </div>
-							</div>
+							</div> 
 						</div>
 						{this.renderDelete(d)}
 					</div>

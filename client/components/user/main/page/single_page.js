@@ -117,18 +117,20 @@ class SinglePage extends React.Component{
                     	</div>
                     </div>
                 </div>
-		        <div className="content-block my-page-box">
-					<div className="card demo-card-header-pic">
-					  <div style={bk} className="card-header color-white no-border">
-					  	<div style={bn}>Favorites - {p.favorites.toString()}</div>
-					  </div>
-					  	<p className="buttons-row my-btn-5">
-					  	  <a href="#" className="button color-red" onClick={()=>{this.setState({currentBody: "d"})}}>Deals</a><hr width="1" size="5%"/>
-						  <a href="#" className="button color-green" onClick={()=>{this.setState({currentBody: "f"})}}>Reviews</a><hr width="1" size="5%"/>
-						  <a href="#" className="button color-blue" onClick={()=>{this.setState({currentBody: "i"})}}>Info</a>
-						</p>
-						{this.renderBody()}
-					</div>
+                <div className="my-card-container">
+			        <div className="content-block my-page-box">
+						<div className="card demo-card-header-pic">
+						  <div style={bk} className="card-header color-white no-border">
+						  	<div style={bn}>Favorites - {p.favorites.toString()}</div>
+						  </div>
+						  	<p className="buttons-row my-btn-5">
+						  	  <a href="#" className="button color-red" onClick={()=>{this.setState({currentBody: "d"})}}>Deals</a><hr width="1" size="5%"/>
+							  <a href="#" className="button color-green" onClick={()=>{this.setState({currentBody: "f"})}}>Reviews</a><hr width="1" size="5%"/>
+							  <a href="#" className="button color-blue" onClick={()=>{this.setState({currentBody: "i"})}}>Info</a>
+							</p>
+							{this.renderBody()}
+						</div>
+			          </div>
 		          </div>
 		        </div>
 			</div>
@@ -140,7 +142,7 @@ export default createContainer((props)=>{
 	console.log(props.pageID)
     Meteor.subscribe("singleLocalDeals", props.pageID);
 
-    return {singleDeals: Deal.find({}).fetch()}
+    return {singleDeals: Deal.find({pageID: props.pageID}).fetch()}
 
 	
 }, SinglePage);  

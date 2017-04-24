@@ -29,29 +29,89 @@ class DealsList extends React.Component{
 			)
 		}
 	}
-	renderCards(){
-		if(this.props.deals.length == 0){
-			return(
-				<div>
-					<h2>No Special.</h2>
-				</div>
-			)
-		}
-
+	renderToday(){
 		var jjj = this.props.deals;
-		jjj.sort(function(a, b) {
+		jjj.sort(function(b,a) {
 		    return parseFloat(a.upvotes.length) - parseFloat(b.upvotes.length);
 		});
-
-        return jjj.reverse().map(d=>{
-
+		var d = new Date();
+		var today = moment(d).format("ll");
+		var tomorrow = moment(d).add(1,"day").format("ll");
+		var twotomorrow = moment(d).add(2,"day").format("ll");
+		var iii = [];
+		for(var i = 0; i < jjj.length;i++){
+			if(jjj[i].date == today){
+				iii.push(jjj[i]);
+			}
+		}
+        return iii.map(d=>{
         	return(
         		<div key={d._id}>
         			<DealLi deal={d}/>
         		</div>
         	)
-        	
     	})
+	}
+	renderTomorrow(){
+		var jjj = this.props.deals;
+		jjj.sort(function(b,a) {
+		    return parseFloat(a.upvotes.length) - parseFloat(b.upvotes.length);
+		});
+		var d = new Date();
+		var tomorrow = moment(d).add(1,"day").format("ll");
+		var iii = [];
+		for(var i = 0; i < jjj.length;i++){
+			if(jjj[i].date == tomorrow){
+				iii.push(jjj[i]);
+			}
+		}
+        return iii.map(d=>{
+        	return(
+        		<div key={d._id}>
+        			<DealLi deal={d}/>
+        		</div>
+        	)
+    	})
+	}
+	renderTwoTomorrow(){
+		var jjj = this.props.deals;
+		jjj.sort(function(b,a) {
+		    return parseFloat(a.upvotes.length) - parseFloat(b.upvotes.length);
+		});
+		var d = new Date();
+		var twotomorrow = moment(d).add(2,"day").format("ll");
+		var iii = [];
+		for(var i = 0; i < jjj.length;i++){
+			if(jjj[i].date == twotomorrow){
+				iii.push(jjj[i]);
+			}
+		}
+        return iii.map(d=>{
+        	return(
+        		<div key={d._id}>
+        			<DealLi deal={d}/>
+        		</div>
+        	)
+    	})
+	}
+	renderCards(){
+		if(this.props.deals.length == 0){
+			return(
+				<div>
+					<h2>No Specials.</h2>
+				</div>
+			)
+		}
+		return(
+			<div>
+				<p>Today</p>
+				{this.renderToday()}
+				<p>Tomorrow</p>
+				{this.renderTomorrow()}
+				<p>{moment(new Date()).add(2,"day").format("ll")}</p>
+				{this.renderTwoTomorrow()}
+			</div>
+		)
 	}
 	render(){
 		if(!this.props.deals || !this.props.profile){
