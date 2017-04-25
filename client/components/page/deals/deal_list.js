@@ -90,7 +90,7 @@ class DealList extends React.Component{
 									    	  <div className="color-gray my-small-gray">{d.date}</div>
 										    </div>
 									    </div>
-									    <div className="col-20 my-clickable" style={test} onClick={()=>{this.book(d._id)}}>
+									    <div className="col-20 my-clickable" style={test}>
 											<a href="#" style={upStyle}>{d.upvotes.length.toString()} <i className="fa fa-thumbs-o-up"></i></a>
 									    </div>
 									</div>

@@ -283,7 +283,7 @@ class UserMap extends React.Component {
           }
           
         }
-
+        
         myProps.pages.map(p=>{
           var myApp = new Framework7();
  
@@ -309,6 +309,10 @@ class UserMap extends React.Component {
       }
       this.setState({mapLoaded: true});
       initMap(this.props);
+      var self = this;
+      window.map.addListener('dragend', function() {
+        self.logit();
+      });
   }
   search(){
     var myApp = new Framework7();
@@ -412,7 +416,7 @@ class UserMap extends React.Component {
         {this.renderPagePop()}
         <div>
           <div>
-            <div id="mapid" onClick={this.logit.bind(this)}></div>
+            <div id="mapid"></div>
           </div>
           <a href="#" className="floating-button color-yellow my-float-2nd" onClick={this.search.bind(this)}>
               <i className="fa fa-search" aria-hidden="true"></i>

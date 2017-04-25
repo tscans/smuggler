@@ -2,6 +2,9 @@ import React from 'react';
 
 class PageReviews extends React.Component{
 	renderReviews(){
+		if(!this.props.page.selectedMessages){
+			return(<div></div>)
+		}
 		if(this.props.page.selectedMessages.length == 0){
 			return<div>This page has no reviews</div>
 		}

@@ -20,11 +20,10 @@ class MainUser extends Component {
 			<div className="my-card-container">
 				<div className="my-push-down-10">
 
-					<h3>Local Specials</h3>
+					<h3>Favorite Specials</h3>
 					<BookUser deals={this.props.bookDeals} profile={this.props.profile}/>
 					<hr/>
 					<div className="my-container-bottom">
-						<h3>Favorite Specials</h3>
 						<DealsList deals={this.props.deals} profile={this.props.profile}/>
 					</div>
 				</div>

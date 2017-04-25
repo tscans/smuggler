@@ -43,13 +43,14 @@ Meteor.methods({
 			return;
 		}
 		var profile = Profile.findOne({metID: user});
-		if(profile.book.includes(did)){
-			Profile.update(profile._id, {$pull: {book: did}});
+		console.log()
+		if(deal.upvotes.includes(user)){
 			Deal.update(did, {$pull: {upvotes: user}});
+			Profile.update(profile._id, {$pull: {book: did}});
 		}
 		else{
-			Profile.update(profile._id, {$push: {book: did}});
 			Deal.update(did, {$push: {upvotes: user}});
+			Profile.update(profile._id, {$push: {book: did}});
 		}
 	},
 	"profile.newLocation":function(data){

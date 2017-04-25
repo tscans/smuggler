@@ -104,7 +104,7 @@ class DealsList extends React.Component{
 		}
 		return(
 			<div>
-				<p>Today</p>
+				{<p>Today</p>}
 				{this.renderToday()}
 				<p>Tomorrow</p>
 				{this.renderTomorrow()}
