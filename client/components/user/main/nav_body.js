@@ -27,28 +27,22 @@ class NavBody extends Component {
 	    myApp.closePanel(false);
 		browserHistory.push("/user/");
 	}
-	toFeedback(){
-		var myApp = new Framework7();
- 
-	    myApp.closePanel(false);
-		browserHistory.push("/user/feedback/");	
-	}
     render() {
+    	var pageStyle = {
+    		marginTop: "45vh"
+    	}
         return (
         	<div>
         		<p className="buttons-row">
 				  <a href="#" className="button" onClick={this.toMap.bind(this)}>Specials</a>
 				</p>
 				<p className="buttons-row">
-				  <a href="#" className="button" onClick={this.toFeedback.bind(this)}>Business Feedback</a>
-				</p> 
-				<p className="buttons-row">
-				  <a href="#" className="button" onClick={this.toPage.bind(this)}>My Business</a>
-				</p> 
-				<p className="buttons-row">
-				  <a href="#" className="button" onClick={this.logout.bind(this)}>Logout</a>
+				  <a href="#" className="button color-green" onClick={this.logout.bind(this)}>Logout</a>
 				</p>   
 				<div className="list-block-label">Veer Copyright 2017</div>
+				<p className="buttons-row" style={pageStyle}>
+				  <a href="#" className="button color-red" onClick={this.toPage.bind(this)}>My Business</a>
+				</p> 
 			</div>
         );
     }

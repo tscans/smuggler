@@ -26,11 +26,10 @@ Meteor.methods({
 			title: data.title,
 			date: date,
 			picture: "/mainlogo.png",
+			pageImage: page.image,
 			address: page.address,
 			upvotes: [],
 			createdAt: today,
-			randomicon: data.randomicon,
-			randomcolor: data.randomcolor,
 			long: page.long,
 			lat: page.lat
 		},function(error,did){

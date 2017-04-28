@@ -1,5 +1,10 @@
 import React from 'react';
 import SinglePage from '../page/single_page';
+import {createContainer} from 'meteor/react-meteor-data';
+import {Profile} from '../../../../../imports/collections/profile';
+import {Page} from '../../../../../imports/collections/page';
+import {Deal} from '../../../../../imports/collections/deal';
+import SubNav from '../external/sub_nav';
 
 class PagesList extends React.Component{
 	constructor(props) {
@@ -69,6 +74,7 @@ class PagesList extends React.Component{
 	render(){
 		return(
 			<div>
+				<SubNav />
 				{this.renderPage()}
 				{this.renderList()}
 			</div>
@@ -76,6 +82,16 @@ class PagesList extends React.Component{
 	}
 }
 
-export default PagesList;
+export default createContainer((props)=>{
+    Meteor.subscribe("profile");
+    Meteor.subscribe('localPages');
+    Meteor.subscribe("localDeals");
+
+    return {profile: Profile.findOne({}), pages: Page.find({}).fetch(),
+     deals: Deal.find({}).fetch()
+ 	}
+
+	
+}, PagesList); 
 
 

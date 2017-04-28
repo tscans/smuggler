@@ -1,4 +1,5 @@
 import React from 'react';
+import {browserHistory} from 'react-router';
 
 class DealLi extends React.Component{
 	book(did){
@@ -10,6 +11,15 @@ class DealLi extends React.Component{
 				console.log(data);
 			}
 		})
+	}
+	openModal(did){
+		if(location.pathname.includes('/user/map')){
+			return;
+		}
+		browserHistory.push("/user/d/"+did+"/");
+		var myApp = new Framework7();
+		myApp.popup('.popup-about');
+		
 	}
 	render(){
 		if(!this.props.deal){
@@ -52,9 +62,9 @@ class DealLi extends React.Component{
 					    <div className="card-content">
 				            <div className="row">
 							    <div className="col-30">
-							    	<img src={d.picture} style={divStyle}/>
+							    	<img src={d.pageImage} style={divStyle}/>
 							    </div>
-							    <div className="col-50">
+							    <div className="col-50" onClick={()=>{this.openModal(d._id)}}>
 							    	<div className="card-content-inner" style={info}>
 							    	  {d.title}
 							    	  <div className="color-gray my-small-gray">{d.pageName}</div>

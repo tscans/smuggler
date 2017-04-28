@@ -10,16 +10,12 @@ import MainPage from './components/page/main/main_page';
 import DealsPage from './components/page/deals/deals_page';
 import FeedbackPage from './components/page/feedback/feedback_page';
 import ManagePage from './components/page/manage/manage_page';
-import CreateSurvey from './components/page/feedback/create_survey';
-import ManageData from './components/page/manage/manage_data';
 import Update from './components/page/update/update';
 
 import User from './components/user/user';
+import PagesList from './components/user/main/list/pages_list';
 import UserMap from './components/user/main/user_map';
 import MainUser from './components/user/main/main_user';
-import FeedbackUser from './components/user/main/feedback_user';
-import FeedbackUserPage from './components/user/main/feedback_user_page';
-import SurveyUser from './components/user/main/survey_user'
 
 const routes = (
 	<Router history={browserHistory}>
@@ -30,18 +26,17 @@ const routes = (
 			<IndexRoute component={MainPage} />
 			<Route path="deals/" component={DealsPage} />
 			<Route path="feedback/" component={FeedbackPage} />
-			<Route path="feedback/:surveyID/" component={CreateSurvey} />
 			<Route path="manage/" component={ManagePage} />
-			<Route path="manage/data/:surveyID/" component={ManageData} />
 			<Route path="update/" component={Update}/>
 		</Route>
 		<Route path="/user/" component={User}>
 			<IndexRoute component={MainUser} />
+			<Route path="d/" component={MainUser}/>
+			<Route path="d/:dealID/" component={MainUser}/>
+			<Route path="p/" component={PagesList}/>
+			<Route path="p/:pageID/" component={PagesList}/>
 			<Route path="map/" component={UserMap} />
 			<Route path="map/p/:pageID/" component={UserMap}/>
-			<Route path="feedback/" component={FeedbackUser}/>
-			<Route path="feedback/:pageID/" component={FeedbackUserPage}/>
-			<Route path="feedback/:pageID/survey/:surveyID/" component={SurveyUser}/>
 		</Route>
 	</Router>
 );

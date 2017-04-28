@@ -69,6 +69,9 @@ class NavBody extends Component {
     			</div>
     		)
     	}
+    	var userStyle = {
+    		marginTop: "30vh"
+    	}
         return (
         	<div>
         		<p className="buttons-row">
@@ -84,13 +87,12 @@ class NavBody extends Component {
 				  <a href="#" className="button" onClick={this.toUpdate.bind(this)}>Update Info</a>
 				</p> 
 				<p className="buttons-row">
-				  <a href="#" className="button" onClick={this.toUser.bind(this)}>Back to User</a>
-				</p> 
-				<p className="buttons-row">
-				  <a href="#" className="button" onClick={this.logout.bind(this)}>Logout</a>
+				  <a href="#" className="button color-green" onClick={this.logout.bind(this)}>Logout</a>
 				</p>   
 				<div className="list-block-label">Veer Copyright 2017</div>
-				
+				<p className="buttons-row" style={userStyle}>
+				  <a href="#" className="button color-red" onClick={this.toUser.bind(this)}>Back to User</a>
+				</p> 
 			</div>
         );
     }
