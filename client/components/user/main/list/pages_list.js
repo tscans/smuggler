@@ -5,6 +5,7 @@ import {Profile} from '../../../../../imports/collections/profile';
 import {Page} from '../../../../../imports/collections/page';
 import {Deal} from '../../../../../imports/collections/deal';
 import SubNav from '../external/sub_nav';
+import {browserHistory} from 'react-router';
 
 class PagesList extends React.Component{
 	constructor(props) {
@@ -12,6 +13,10 @@ class PagesList extends React.Component{
 		this.state = {
 			pageID: null
 		}
+	}
+	toMap(){
+		browserHistory.push("/user/map/");
+		this.forceUpdate();
 	}
 	favorite(pid){
 		Meteor.call("page.favorite",pid,(error,data)=>{
@@ -77,6 +82,9 @@ class PagesList extends React.Component{
 				<SubNav />
 				{this.renderPage()}
 				{this.renderList()}
+				<a href="#" className="floating-button color-green" onClick={this.toMap.bind(this)}>
+		            <i className="fa fa-map" aria-hidden="true"></i>
+		        </a>
 			</div>
 		)
 	}

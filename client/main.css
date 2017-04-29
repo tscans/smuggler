@@ -10,7 +10,7 @@ body{
 }
 #mapid {
 	width: 100%;
-	height:91vh;
+	height:82vh;
 	background: white url("./ring.gif");
 	background-size: 200px 200px;
     background-repeat: no-repeat;
@@ -295,6 +295,9 @@ background-position: center;
 }
 .my-float-2nd{
   margin-right: 70px;
+}
+.my-float-3rd{
+  margin-right: 140px;
 }
 .my-font-small{
   font-size: 12px;

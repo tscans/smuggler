@@ -70,7 +70,7 @@ class NavBody extends Component {
     		)
     	}
     	var userStyle = {
-    		marginTop: "30vh"
+    		marginTop: "15vh"
     	}
         return (
         	<div>

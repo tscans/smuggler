@@ -50,7 +50,7 @@ Meteor.methods({
 			selectedMessages: [],
 			online: true,
 			favorites: 0,
-			image: "/mainlogo.png"
+			image: "/sbl.png"
 		},function(error,data){
 			if(error){
 				console.log(error);

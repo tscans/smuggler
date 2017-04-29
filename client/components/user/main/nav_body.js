@@ -29,7 +29,7 @@ class NavBody extends Component {
 	}
     render() {
     	var pageStyle = {
-    		marginTop: "45vh"
+    		marginTop: "15vh"
     	}
         return (
         	<div>

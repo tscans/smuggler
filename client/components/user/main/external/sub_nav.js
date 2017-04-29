@@ -10,11 +10,11 @@ class SubNav extends React.Component{
 		}
 		var green = "";
 		var blue = "";
-		if(location.pathname.includes("/user/d/")){
-			green = "button-fill";
+		if(location.pathname.includes("/user/p/")){
+			blue = "button-fill";
 		}
 		else{
-			blue = "button-fill"
+			green = "button-fill"
 		}
 		return(
 			<div>

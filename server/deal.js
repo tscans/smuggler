@@ -25,7 +25,7 @@ Meteor.methods({
 			pageName: page.pageName,
 			title: data.title,
 			date: date,
-			picture: "/mainlogo.png",
+			picture: "/vsln.png",
 			pageImage: page.image,
 			address: page.address,
 			upvotes: [],

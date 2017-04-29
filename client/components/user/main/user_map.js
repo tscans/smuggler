@@ -406,6 +406,33 @@ class UserMap extends React.Component {
     }
     
    }
+   findMe(){
+    var myApp = new Framework7();
+    myApp.showPreloader('Finding Your Location...')
+    function showPosition(position) {
+        var data = {
+          long: position.coords.longitude,
+          lat: position.coords.latitude
+        }
+        window.map.setCenter(new google.maps.LatLng(data.lat, data.long));
+        window.map.setZoom(13);
+        
+        Meteor.call("profile.newLocation", data, (error,data)=>{
+          if(error){
+            console.log(error)
+            myApp.hidePreloader();
+          }
+          else{
+            console.log('ok')
+            myApp.hidePreloader();
+            
+          }
+        })
+    }
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+    } 
+   }
   render(){
     if(!this.props.profile || !this.props.pages || !this.props.deals){
       return null
@@ -418,6 +445,9 @@ class UserMap extends React.Component {
           <div>
             <div id="mapid"></div>
           </div>
+          <a href="#" className="floating-button color-blue my-float-3rd" onClick={this.findMe.bind(this)}>
+              <i className="fa fa-location-arrow" aria-hidden="true"></i>
+          </a>
           <a href="#" className="floating-button color-yellow my-float-2nd" onClick={this.search.bind(this)}>
               <i className="fa fa-search" aria-hidden="true"></i>
           </a>
