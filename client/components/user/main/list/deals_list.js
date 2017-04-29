@@ -3,6 +3,12 @@ import moment from 'moment';
 import DealLi from './deal_li';
 
 class DealsList extends React.Component{
+	constructor(props) {
+		super(props);
+		this.state = {
+			dayPoint: 0
+		}
+	}
 	renderToday(){
 		var jjj = this.props.deals;
 		jjj.sort(function(b,a) {
@@ -68,6 +74,32 @@ class DealsList extends React.Component{
         	)
     	})
 	}
+	renderDateArrows(){
+		var large = {
+			fontSize: "20px"
+		}
+		if(this.state.dayPoint == 0){
+			return(
+				<div>
+					<p className="color-green" style={large}> Today <i className="fa fa-arrow-right" aria-hidden="true" onClick={()=>{this.setState({dayPoint: this.state.dayPoint+1})}}></i></p>
+				</div>
+			)
+		}
+		else if(this.state.dayPoint == 1){
+			return(
+				<div>
+					<p className="color-green" style={large}><i className="fa fa-arrow-left" aria-hidden="true" onClick={()=>{this.setState({dayPoint: this.state.dayPoint-1})}}></i> Tomorrow <i className="fa fa-arrow-right" aria-hidden="true" onClick={()=>{this.setState({dayPoint: this.state.dayPoint+1})}}></i></p>
+				</div>
+			)
+		}
+		else{
+			return(
+				<div>
+					<p className="color-green" style={large}><i className="fa fa-arrow-left" aria-hidden="true" onClick={()=>{this.setState({dayPoint: this.state.dayPoint-1})}}></i> {moment(new Date()).add(2,"day").format("ll")} </p>
+				</div>
+			)
+		}
+	}
 	renderCards(){
 		if(this.props.deals.length == 0){
 			return(
@@ -76,19 +108,30 @@ class DealsList extends React.Component{
 				</div>
 			)
 		}
-		var large = {
-			fontSize: "20px"
+		if(this.state.dayPoint == 0){
+			return(
+				<div>
+					{this.renderDateArrows()}
+					{this.renderToday()}
+				</div>
+			)
 		}
-		return(
-			<div>
-				<p className="color-green" style={large}><i className="fa fa-arrow-left" aria-hidden="true"></i> Today <i className="fa fa-arrow-right" aria-hidden="true"></i></p>
-				{this.renderToday()}
-				<p className="color-green">Tomorrow</p>
-				{this.renderTomorrow()}
-				<p className="color-green">{moment(new Date()).add(2,"day").format("ll")}</p>
-				{this.renderTwoTomorrow()}
-			</div>
-		)
+		else if(this.state.dayPoint == 1){
+			return(
+				<div>
+					{this.renderDateArrows()}
+					{this.renderTomorrow()}
+				</div>
+			)
+		}
+		else{
+			return(
+				<div>
+					{this.renderDateArrows()}
+					{this.renderTwoTomorrow()}
+				</div>
+			)
+		}
 	}
 	render(){
 		if(!this.props.deals || !this.props.profile){

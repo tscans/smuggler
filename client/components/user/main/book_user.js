@@ -1,6 +1,7 @@
 import React from 'react';
 import DealsList from './list/deals_list';
 import DealLi from './list/deal_li';
+import moment from 'moment';
 
 class BookUser extends React.Component{
 	checkMissing(){
@@ -49,9 +50,13 @@ class BookUser extends React.Component{
 	}
 	renderBook(){
 		return this.props.deals.map(d=>{
+			var red = false;
+			if(d.date == moment(new Date()).add(-1,"day").format("ll")){
+				red = true;
+			}
 			return(
 				<div key={d._id}>
-					<DealLi deal={d}/>
+					<DealLi deal={d} red={red}/>
 				</div>
 			)
 		})

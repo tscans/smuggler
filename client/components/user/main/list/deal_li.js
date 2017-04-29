@@ -55,10 +55,22 @@ class DealLi extends React.Component{
         		paddingTop: "3vh"
         	}
 		}
+		var color = {};
+		if(this.props.red){
+			color = {
+				background: `repeating-linear-gradient(
+				  -55deg,
+				  #FFEBEE,
+				  #FFEBEE 10px,
+				  #F44336 10px,
+				  #F44336 20px
+				)`
+			}
+		}
 		return(
 			<div>
 				<div key={d._id}>
-					<div className="card">
+					<div className="card" style={color}>
 					    <div className="card-content">
 				            <div className="row">
 							    <div className="col-30">
