@@ -19,7 +19,7 @@ class MainUser extends Component {
 	}
 	currentView(){
 		return(
-			<div className="my-card-container">
+			<div className="my-card-container2">
 				<div className="my-push-down-10">
 
 					<h3 className="color-blue">Liked Specials</h3>

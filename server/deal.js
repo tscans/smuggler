@@ -18,6 +18,12 @@ Meteor.methods({
 		var today = moment(d).format("ll");
 		var date = moment(data.date).format("ll");
 		var page = Page.findOne({metID: user});
+		if(!page){
+			return;
+		}
+		if(!page.online){
+			return;
+		}
 
 		Deal.insert({
 			metID: user,

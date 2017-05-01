@@ -238,12 +238,12 @@ const myStyle = [
     }
 ]
 
-function pinSymbol(color) {
+function pinSymbol(color,border) {
     return {
         path: 'M 0,0 C -2,-20 -10,-22 -10,-30 A 10,10 0 1,1 10,-30 C 10,-22 2,-20 0,0 z M -2,-30 a 2,2 0 1,1 4,0 2,2 0 1,1 -4,0',
         fillColor: color,
         fillOpacity: 1,
-        strokeColor: '#999',
+        strokeColor: border,
         strokeWeight: 2,
         scale: 1,
    };
@@ -288,13 +288,17 @@ class UserMap extends React.Component {
           var myApp = new Framework7();
  
           var color = "#aaaaaa";
+          var border = "#999";
           if(idArray.includes(p._id)){
             color = "#00ff00"
+          }
+          if(myProps.profile.favorite.includes(p._id)){
+            border = "#00bbff";
           }
           var marker = new google.maps.Marker({
             position: {lat:p.lat,lng:p.long},
             map: window.map,
-            icon: pinSymbol(color),
+            icon: pinSymbol(color, border),
             animation: google.maps.Animation.DROP
           });
           marker.addListener('click', function() {
@@ -344,7 +348,6 @@ class UserMap extends React.Component {
         });
 
     });
-    console.log('logged')
   }
   renderPagePop(){
     return(
@@ -354,12 +357,10 @@ class UserMap extends React.Component {
     )
   }
   logit(){
-    console.log('LOGIT')
     var latlong = {
       long: window.map.getCenter().lng(),
       lat: window.map.getCenter().lat()
     }
-    console.log(latlong)
     Meteor.call("profile.newLocation", latlong, (error,data)=>{
       if(error){
         console.log(error);
@@ -381,13 +382,17 @@ class UserMap extends React.Component {
           var myApp = new Framework7();
 
           var color = "#aaaaaa";
+          var border = "#999";
           if(idArray.includes(p._id)){
             color = "#00ff00"
+          }
+          if(this.props.profile.favorite.includes(p._id)){
+            border = "#00bbff";
           }
           var marker = new google.maps.Marker({
             position: {lat:p.lat,lng:p.long},
             map: window.map,
-            icon: pinSymbol(color)
+            icon: pinSymbol(color,border)
           });
           marker.addListener('click', function() {
             browserHistory.push('/user/map/p/'+p._id+"/");

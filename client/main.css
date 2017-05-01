@@ -212,6 +212,11 @@ background-position: center;
    height: 91vh; /* Fix a height here */
    overflow: auto; /* Optionally you can also use overflow: scroll; */
 }
+.my-card-container2 {
+   /* Optional - You can set a  min-height : whatever px; for reserving some space*/
+   height: 85vh; /* Fix a height here */
+   overflow: auto; /* Optionally you can also use overflow: scroll; */
+}
 .my-small-font{
 	font-size: 12px;
 }
@@ -302,7 +307,12 @@ background-position: center;
 .my-font-small{
   font-size: 12px;
 }
-
+.my-gray-outline{
+  color: gray !important;
+}
+.my-red-outline{
+  color: red !important;
+}
 
 
 

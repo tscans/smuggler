@@ -33,7 +33,13 @@ Meteor.methods({
 
 		  console.log(error)
 		}
-
+		var online;
+		if(profile.businessCard){
+			online = true;
+		}
+		else{
+			online = false;
+		}
 		console.log('making page')
 		Page.insert({
 			metID: user,
@@ -48,7 +54,7 @@ Meteor.methods({
 			phone: data.phone,
 			website: data.website,
 			selectedMessages: [],
-			online: true,
+			online: online,
 			favorites: 0,
 			image: "/sbl.png"
 		},function(error,data){
@@ -211,6 +217,21 @@ Meteor.methods({
 		}
 		var page = Page.findOne({metID: user});
 		Page.update(page._id,{$set:{about: about}});
+	},
+	"page.suspensionToggle":function(pid){
+		const user = this.userId;
+		if(!user){
+			return;
+		}
+		var profile = Profile.findOne({metID: user});
+		if(!profile.admin){
+			return;
+		}
+		var page = Page.findOne({_id: pid});
+		if(!page){
+			return;
+		}
+		Page.update(pid,{$set: {online: !page.online}});
 	}
 });
 

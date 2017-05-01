@@ -97,7 +97,7 @@ Meteor.startup(() => {
 		}
 
 		return Page.find({
-			long: {$gt: (profile.long-range), $lt: (profile.long+range)}, lat: {$gt: (profile.lat-range), $lt: (profile.lat+range)}
+			online: true, long: {$gt: (profile.long-range), $lt: (profile.long+range)}, lat: {$gt: (profile.lat-range), $lt: (profile.lat+range)}
 		})
 	});
 	Meteor.publish('bookDeals', function(){
@@ -115,59 +115,23 @@ Meteor.startup(() => {
 		}
 		var page = Page.findOne({metID: user});
 		return Message.find({pageID: page._id});
-	})
-	Meteor.publish("ownSurveys", function(){
-		var user = this.userId;
-		if(!user){
-			return;
-		}
-		return Survey.find({metID: user});
 	});
-	Meteor.publish("oneSurvey", function(surveyID){
+	//db.movies.find({genres: 'comedy'}).sort('boxOffice.budget': 1).skip(50).limit(25) 
+	Meteor.publish("pageSearch", function(pageName){
 		var user = this.userId;
 		if(!user){
 			return;
 		}
-		return Survey.find({_id: surveyID});
-	});
-	Meteor.publish("oneSurveyUser", function(surveyID){
-		var user = this.userId;
-		if(!user){
+		var profile = Profile.findOne({metID: user});
+		if(!profile){
 			return;
 		}
-		return Survey.find({_id: surveyID, published: true});
-	});
-	Meteor.publish("pageSurveys", function(pageID){
-		var user = this.userId;
-		if(!user){
+		if(!profile.admin){
 			return;
 		}
-		return Survey.find({pageID: pageID});
-	});
-	Meteor.publish("pageSurveysUser", function(pageID){
-		var user = this.userId;
-		if(!user){
-			return;
-		}
-		return Survey.find({pageID: pageID, published: true});
-	});
-	Meteor.publish("surveyQuestions", function(surveyID){
-		var user = this.userId;
-		if(!user){
-			return;
-		}
-		return Question.find({surveyID: surveyID});
-	});
-	Meteor.publish("surveyResponses", function(surveyID){
-		var user = this.userId;
-		if(!user){
-			return;
-		}
-		var survey = Survey.findOne({_id: surveyID});
-		if(survey.metID != user){
-			return;
-		}
-		return Response.find({surveyID: survey._id});
+		var yo = Page.find({"pageName" : {$regex : ".*"+pageName+".*", '$options' : 'i'}}).fetch();
+		console.log(yo.length)
+		return Page.find({"pageName" : {$regex : ".*"+pageName+".*", '$options' : 'i'}});
 	});
 
 });

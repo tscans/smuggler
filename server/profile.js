@@ -1,5 +1,6 @@
 import {Profile} from '../imports/collections/profile';
 import {Deal} from '../imports/collections/deal';
+import {Page} from '../imports/collections/page';
 var zipcodes = require('zipcodes');
 import moment from 'moment';
 
@@ -8,7 +9,6 @@ Meteor.methods({
 		const user = Meteor.users.findOne(this.userId)._id;
 		var profile = Profile.findOne({ownerId: user});
 		if(profile){
-			console.log("User already exists")
 			throw new Meteor.Error(510, 'User with email already exists.');
 			return;
 		}
@@ -30,6 +30,7 @@ Meteor.methods({
 			code: random,
 			verified: false,
 			favorite: [],
+			businessCard: null,
 			page: null,
 		});
 	},
@@ -43,7 +44,6 @@ Meteor.methods({
 			return;
 		}
 		var profile = Profile.findOne({metID: user});
-		console.log()
 		if(deal.upvotes.includes(user)){
 			Deal.update(did, {$pull: {upvotes: user}});
 			Profile.update(profile._id, {$pull: {book: did}});
@@ -71,6 +71,50 @@ Meteor.methods({
 		}
 		var profile = Profile.findOne({metID: user});
 		Profile.update(profile._id, {$pull: {book: did}});
+	},
+	"profile.businessVerify":function(cardToken){
+		const user = this.userId;
+		if(!user){
+			return;
+		}
+		var stripe = StripeAPI(Meteor.settings.StripePri);
+		var page = Page.findOne({metID: user});
+	    var profile = Profile.findOne({metID: user});
+	    if(profile.businessCard == null){
+	      var custCreate = Async.runSync(function(done){
+	        stripe.customers.create({
+	          source: cardToken
+	        }, function(error, response){
+	          done(error, response);
+	        })
+	      })
+
+	      if(custCreate.error){
+	        throw new Meteor.Error(500, "stripe-error", custCreate.error.message);
+	      }else{
+	        Profile.update(profile._id, {$set: {businessCard: custCreate.result.id}});
+	        if(page){
+	        	Page.update(page._id,{$set:{online:true}});
+	        }
+	        
+	        return;
+	      }
+	    }else{
+	      var custUpdate = Async.runSync(function(done){
+	        stripe.customers.update(profile.businessCard,{
+	          source: cardToken
+	        }, function(error, result) {
+	          done(error, result);
+	        })
+	      })
+
+	      if(custUpdate.error){
+	        throw new Meteor.Error(500, "stripe-error", custUpdate.error.message);
+	      }else{
+	        return
+	      }
+	    }
+
 	}
 });
 

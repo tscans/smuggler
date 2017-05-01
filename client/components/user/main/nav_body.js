@@ -34,7 +34,7 @@ class NavBody extends Component {
         return (
         	<div>
         		<p className="buttons-row">
-				  <a href="#" className="button" onClick={this.toMap.bind(this)}>Specials</a>
+				  <a href="#" className="button" onClick={this.toMap.bind(this)}>Specials/Businesses</a>
 				</p>
 				<p className="buttons-row">
 				  <a href="#" className="button color-green" onClick={this.logout.bind(this)}>Logout</a>

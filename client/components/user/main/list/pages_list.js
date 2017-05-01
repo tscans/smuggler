@@ -29,21 +29,58 @@ class PagesList extends React.Component{
 		})
 	}
 	renderList(){
-		var jjj = this.props.pages;
+		var notfav = Page.find({_id: {$nin:this.props.profile.favorite}}).fetch();
+		var jjj = notfav;
 
-		jjj.sort(function(a, b) {
+		jjj.sort(function(b,a) {
 		    return parseFloat(a.favorites) - parseFloat(b.favorites);
 		});
-		return jjj.reverse().map(p=>{
+		return jjj.map(p=>{
 			var myStyle = {
 				backgroundImage: 'url(' + p.image + ')',
 				width: "40%",
-				height: "15vh",
+				height: "12vh",
 				float: "left"
 			}
 			var myStyle2 = {
 				width: "59%",
-				height: "15vh",
+				height: "12vh",
+				float: "right"
+			}
+			return(
+				<div className="go-fucking-center" key={p._id}>
+					<div className="card demo-card-header-pic">
+					  <div onClick={()=>{this.pageUp(p._id)}}>
+						  <div style={myStyle} className="card-header color-white no-border"></div>
+						  <div style={myStyle2}>
+						  	<h3>{p.pageName}</h3>
+						  </div>
+					  </div>
+					  <div className="card-footer">
+					    <a onClick={()=>{this.favorite(p._id)}} href="#" className="link my-link-right my-gray-outline">Favorite {p.favorites.toString()} <i className="fa fa-star" aria-hidden="true"></i></a>
+					  </div>
+					</div>
+				</div>
+			)
+		})
+	}
+	renderFavorites(){
+		var fav = Page.find({_id: {$in:this.props.profile.favorite}}).fetch();
+		var jjj = fav;
+
+		jjj.sort(function(b,a) {
+		    return parseFloat(a.favorites) - parseFloat(b.favorites);
+		});
+		return jjj.map(p=>{
+			var myStyle = {
+				backgroundImage: 'url(' + p.image + ')',
+				width: "40%",
+				height: "12vh",
+				float: "left"
+			}
+			var myStyle2 = {
+				width: "59%",
+				height: "12vh",
 				float: "right"
 			}
 			return(
@@ -62,9 +99,9 @@ class PagesList extends React.Component{
 				</div>
 			)
 		})
+		
 	}
 	pageUp(pid){
-		console.log('clicked',pid);
 		this.setState({pageID: pid});
 		var myApp = new Framework7();
 		myApp.popup('.popup-about');
@@ -77,11 +114,24 @@ class PagesList extends React.Component{
 		)
 	}
 	render(){
+		if(!this.props.profile){
+			return<div></div>
+		}
+		var m50 = {
+			marginTop: "50px"
+		}
 		return(
 			<div>
 				<SubNav />
-				{this.renderPage()}
-				{this.renderList()}
+				<div className="my-card-container2">
+					<h3 className="color-blue">Favorite Businesses</h3>
+					{this.renderFavorites()}
+					<hr/>
+					<h3 className="color-green">Local Businesses</h3>
+					{this.renderPage()}
+					{this.renderList()}
+					<div style={m50}></div>
+				</div>
 				<a href="#" className="floating-button color-green" onClick={this.toMap.bind(this)}>
 		            <i className="fa fa-map" aria-hidden="true"></i>
 		        </a>

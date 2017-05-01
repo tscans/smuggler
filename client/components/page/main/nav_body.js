@@ -35,6 +35,12 @@ class NavBody extends Component {
 	    myApp.closePanel(false);
 		browserHistory.push("/user/");
 	}
+	toVerify(){
+		var myApp = new Framework7();
+ 
+	    myApp.closePanel(false);
+		browserHistory.push("/page/verify/");
+	}
 	toUpdate(){
 		var myApp = new Framework7();
  
@@ -59,18 +65,24 @@ class NavBody extends Component {
     	if(!this.props.profile){
     		return(<div></div>)
     	}
-    	if(!this.props.profile.page){
-    		return(
-    			<div>
-    				<p className="buttons-row">
-					  <a href="#" className="button" onClick={this.logout.bind(this)}>Logout</a>
-					</p>   
-				    <div className="list-block-label">Veer Copyright 2017</div>
-    			</div>
-    		)
-    	}
     	var userStyle = {
     		marginTop: "15vh"
+    	}
+    	if(!this.props.profile.page || !this.props.profile.businessCard){
+    		return(
+    			<div>
+	    			<p className="buttons-row">
+					  <a href="#" className="button" onClick={this.toVerify.bind(this)}>Verify</a>
+					</p>
+    				<p className="buttons-row">
+					  <a href="#" className="button color-green" onClick={this.logout.bind(this)}>Logout</a>
+					</p>   
+				    <div className="list-block-label">Veer Copyright 2017</div>
+				    <p className="buttons-row" style={userStyle}>
+					  <a href="#" className="button color-red" onClick={this.toUser.bind(this)}>Back to User</a>
+					</p> 
+    			</div>
+    		)
     	}
         return (
         	<div>

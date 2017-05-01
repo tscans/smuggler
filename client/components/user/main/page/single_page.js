@@ -92,10 +92,11 @@ class SinglePage extends React.Component{
 			color: "#444444",
 			padding: "3px",
 			marginTop: "30vh",
-			marginLeft: "3vw",
+			marginLeft: "-4vw",
 			backgroundSize: "cover",
     		backgroundPosition: "center",
-    		fontSize: "25px"
+    		fontSize: "25px",
+    		backgroundColor: "white"
 		}
 		var fl = {
 			position: "fixed"

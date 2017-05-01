@@ -1,16 +1,9 @@
 import React, {Component} from 'react';
 
-const RANDICONS = [" fa-university"," fa-bell"," fa-bicycle"," fa-calculator"," fa-bullhorn"," fa-cube"," fa-diamond"," fa-coffee"," fa-bolt"," fa-gamepad"," fa-gift"," fa-hand-peace-o"," fa-fighter-jet"," fa-car"," fa-train"," fa-cog"," fa-money"," fa-wrench"," fa-tachometer"," fa-signal"," fa-music"," fa-heart"," fa-futbol-o"," fa-beer"," fa-cloud"," fa-bug"," fa-flag-checkered"," fa-gavel"," fa-newspaper-o"," fa-magnet"," fa-hand-rock-o","fa-anchor","fa-bullseye","fa-balance-scale","fa-binoculars","fa-cubes","fa-thumbs-up", "fa-spoon","fa-shield "];
-const RANDCOLORS = ["red","blue", "green", "yellow", "orange", "purple", "black", "pink", "turquoise"];
-
 class DealCreate extends Component {
     constructor(props) {
         super(props);
-        var randI = RANDICONS[Math.floor(Math.random() * RANDICONS.length)];
-        var randC = RANDCOLORS[Math.floor(Math.random() * RANDCOLORS.length)];
         this.state = {
-            randI: randI,
-            randC: randC,
             img64: null,
             submitted: false
         }
@@ -35,11 +28,6 @@ class DealCreate extends Component {
         $$('#avatarCapture').on('change', gotPic);
 
     }   
-    randomIC(){
-        var randI = RANDICONS[Math.floor(Math.random() * RANDICONS.length)];
-        var randC = RANDCOLORS[Math.floor(Math.random() * RANDCOLORS.length)];
-        this.setState({randI: randI, randC: randC});
-    }
     makeDeal(){
         event.preventDefault();
         this.setState({submitted: true});
@@ -50,8 +38,6 @@ class DealCreate extends Component {
         var data = {
             pic: window.myImage,
             title: title,
-            randomicon: this.state.randI,
-            randomcolor: this.state.randC,
             date: cal
         }
         console.log(data)
@@ -125,48 +111,41 @@ class DealCreate extends Component {
                         <div className="right my-left-5"><i onClick={this.closeCreate.bind(this)} className="fa fa-times"></i></div>
                     </div>
                 </div>
-                <h2>Create Deal</h2>
-                <div className="list-block">
-                    <ul>
-                      <li className="item-content">
-                        <div className="item-inner">
-                          <div className="item-input">
-                            <input type="text" ref="title" placeholder="Daily Special"/>
-                          </div>
-                          
-                        </div>
-                      </li>
-                      <div className="my-break-40"></div>
-                      <li>
-                          <div className="item-content">
+                <div className="my-card-container">
+                    <h2>Create Deal</h2>
+                    <div className="list-block">
+                        <ul>
+                          <li className="item-content">
                             <div className="item-inner">
-
                               <div className="item-input">
-                                <input className="not-empty-state" type="text" placeholder="Click to Choose Date" readOnly id="calendar-default"/>
+                                <input type="text" ref="title" placeholder="Daily Special"/>
                               </div>
+                              
                             </div>
-                          </div>
-                      </li>
-                      <li className="item-content">
-                        <div className="col-20"></div>
-                        <div className="col-20">
-                            <a href="#" className="button button-fill button-raised" onClick={this.randomIC.bind(this)}>Choose Random Icon</a> 
-                        </div>
-                        <div className="col-60">
-                            <h1><i className={"my-right-push fa "+this.state.randI+" icon-super-large "+ " ic-"+this.state.randC}></i></h1>
-                        </div>
-                      </li>  
-                      <div className="my-break-40">Choose Image</div>
-                      <li>
-                        <input type="file" capture="camera" name="myHiddenField" accept="image/*" id="avatarCapture" onChange={this.onDrop.bind(this)}/>
-                        <img id="avatar"/>    
-                      </li>
-                      <div className="my-break-40"></div>   
-                    </ul>
-                     
+                          </li>
+                          <div className="my-break-40"></div>
+                          <li>
+                              <div className="item-content">
+                                <div className="item-inner">
+
+                                  <div className="item-input">
+                                    <input className="not-empty-state" type="text" placeholder="Click to Choose Date" readOnly id="calendar-default"/>
+                                  </div>
+                                </div>
+                              </div>
+                          </li>
+                          <div className="my-break-40">Choose Image</div>
+                          <li>
+                            <input type="file" name="myHiddenField" accept="image/*" id="avatarCapture" onChange={this.onDrop.bind(this)}/>
+                            <img id="avatar"/>    
+                          </li>
+                          <div className="my-break-40"></div>   
+                        </ul>
+                         
+                    </div>
+                    <div className="my-break-100"></div>
+                    {this.submission()}
                 </div>
-                <div className="my-break-100"></div>
-                {this.submission()}
         	</div>
         );
     }

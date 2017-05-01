@@ -40,12 +40,14 @@ class MakePage extends Component {
         var email = this.refs.email.value.trim();
         var name = this.refs.name.value.trim();
         var address = this.refs.address.value.trim();
+        var city = this.refs.city.value.trim();
+        var state = this.refs.state.value.trim();
         var phone = this.refs.phone.value.trim();
         var website = this.refs.website.value.trim();
         var about = this.refs.about.value.trim();
         
         var data = {
-            address: address,
+            address: address + " " + city + " " + state,
             pageName: busname,
             email: email,
             ownerName: name,
@@ -82,9 +84,16 @@ class MakePage extends Component {
                 var myApp = new Framework7();
                 this.setState({loading: false});
                 myApp.closeModal();
-
-                browserHistory.push('/page/')
                 myApp.alert(`Success! Your page has been made.`, `Thanks!`);
+                if(this.props.profile.businessCard){
+                  browserHistory.push("/page/deals/")
+                }
+                else{
+                  browserHistory.push('/page/verify/');
+                
+                  myApp.alert(`Please verify your page by completing the following.`, `One Last Thing!`);
+                }
+                
                 
             }
             
@@ -105,12 +114,12 @@ class MakePage extends Component {
                </div>
                 <form>
                 <h2>Make Page</h2>
-                <p>* is optional</p>
+                <p>* required</p>
                   <div className="list-block">
                     <ul>
                       <li className="item-content">
                         <div className="item-inner">
-                          <div className="item-title label">Business Name</div>
+                          <div className="item-title label">*Business Name</div>
                           <div className="item-input">
                             <input type="text" ref="busname" placeholder="Business Name"/>
                           </div>
@@ -119,7 +128,7 @@ class MakePage extends Component {
                       </li>
                       <li className="item-content">
                         <div className="item-inner">
-                          <div className="item-title label">Business Email</div>
+                          <div className="item-title label">*Business Email</div>
                           <div className="item-input">
                             <input type="email" ref="email" placeholder="Business Email"/>
                           </div>
@@ -128,7 +137,7 @@ class MakePage extends Component {
                       </li>
                       <li className="item-content">
                         <div className="item-inner">
-                          <div className="item-title label">Owner Name</div>
+                          <div className="item-title label">*Owner Name</div>
                           <div className="item-input">
                             <input type="text" ref="name" placeholder="Owner Name"/>
                           </div>
@@ -137,7 +146,7 @@ class MakePage extends Component {
                       </li>
                       <li className="item-content">
                         <div className="item-inner">
-                          <div className="item-title label">Address</div>
+                          <div className="item-title label">*Address</div>
                           <div className="item-input">
                             <input type="text" ref="address" placeholder="Address"/>
                           </div>
@@ -146,7 +155,25 @@ class MakePage extends Component {
                       </li>
                       <li className="item-content">
                         <div className="item-inner">
-                          <div className="item-title label">Phone</div>
+                          <div className="item-title label">*City</div>
+                          <div className="item-input">
+                            <input type="text" ref="city" placeholder="City"/>
+                          </div>
+                          
+                        </div>
+                      </li>
+                      <li className="item-content">
+                        <div className="item-inner">
+                          <div className="item-title label">*State</div>
+                          <div className="item-input">
+                            <input type="text" ref="state" placeholder="State"/>
+                          </div>
+                          
+                        </div>
+                      </li>
+                      <li className="item-content">
+                        <div className="item-inner">
+                          <div className="item-title label">*Phone</div>
                           <div className="item-input">
                             <input type="text" ref="phone" placeholder="Phone"/>
                           </div>
@@ -155,7 +182,7 @@ class MakePage extends Component {
                       </li>
                       <li className="item-content">
                         <div className="item-inner">
-                          <div className="item-title label">*Website</div>
+                          <div className="item-title label">Website</div>
                           <div className="item-input">
                             <input type="text" ref="website" placeholder="Website"/>
                           </div>
@@ -164,7 +191,7 @@ class MakePage extends Component {
                       </li>
                       <li className="item-content">
                         <div className="item-inner">
-                          <div className="item-title label">About</div>
+                          <div className="item-title label">*About</div>
                           <div className="item-input">
                               <textarea ref="about" placeholder="About (25 char min)"></textarea>
                           </div>

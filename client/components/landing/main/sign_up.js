@@ -35,9 +35,10 @@ class SignUp extends Component {
 		var ema = this.refs.email.value.trim();
         var pss1 = this.refs.password.value.trim();
         var pss2 = this.refs.password2.value.trim();
-        var name = this.refs.name.value.trim();
+        var name1 = this.refs.name1.value.trim();
+        var name2 = this.refs.name2.value.trim();
         var zip = this.refs.zip.value.trim();
-        if(ema == "" || pss1 == "" || pss2 == "" || name == "" || zip == ""){
+        if(ema == "" || pss1 == "" || pss2 == "" || name1 == "" || zip == "" || name2 == ""){
             myApp.alert('Please complete all the fields','Warning!');
             console.log("enter data");
             this.setState({loading: false});
@@ -69,7 +70,7 @@ class SignUp extends Component {
                     return;
                 }
             });
-
+            var name = name1 + " " + name2;
             Meteor.loginWithPassword(ema, pss1);
             Meteor.call('profile.makeUser', name,zip, (error, data)=> {
             	if(error){
@@ -125,9 +126,18 @@ class SignUp extends Component {
 	                  </li>
 	                  <li className="item-content">
 	                    <div className="item-inner">
-	                      <div className="item-title label">Name</div>
+	                      <div className="item-title label">First Name</div>
 	                      <div className="item-input">
-	                        <input type="text" ref="name" placeholder="Your Name"/>
+	                        <input type="text" ref="name1" placeholder="First Name"/>
+	                      </div>
+	                      
+	                    </div>
+	                  </li>
+	                  <li className="item-content">
+	                    <div className="item-inner">
+	                      <div className="item-title label">Last Name</div>
+	                      <div className="item-input">
+	                        <input type="text" ref="name2" placeholder="Last Name"/>
 	                      </div>
 	                      
 	                    </div>

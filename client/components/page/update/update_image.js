@@ -110,7 +110,7 @@ class UpdateImage extends React.Component{
                </div>
                <div className="my-break-40">Choose Image</div>
 
-                <input type="file" capture="camera" name="myHiddenField" accept="image/*" id="avatarCapture" onChange={this.onDrop.bind(this)}/>
+                <input type="file" name="myHiddenField" accept="image/*" id="avatarCapture" onChange={this.onDrop.bind(this)}/>
                 <img id="avatar"/>    
                 {this.submission()}
 			</div>
