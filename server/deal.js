@@ -54,9 +54,9 @@ Meteor.methods({
 							return;
 						}
 					},Meteor.bindEnvironment(function (error, result) {
-						
+						console.log(result)
 					  	Deal.update(did, {$set: {
-							picture: result.url,
+							picture: result.secure_url,
 							pictureID: result.public_id
 						}})
 					}));

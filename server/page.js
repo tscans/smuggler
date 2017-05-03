@@ -116,7 +116,7 @@ Meteor.methods({
 				}
 			},Meteor.bindEnvironment(function (error, result) {
 				Page.update(page._id, {$set:{
-					image: result.url,
+					image: result.secure_url,
 					imageID: result.public_id
 
 				}});

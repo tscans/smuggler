@@ -71,7 +71,10 @@ class SignUp extends Component {
                 }
             });
             var name = name1 + " " + name2;
+            console.log(name);
+
             Meteor.loginWithPassword(ema, pss1);
+
             Meteor.call('profile.makeUser', name,zip, (error, data)=> {
             	if(error){
                     myApp.alert(error.reason, `Warning!`);
@@ -86,7 +89,8 @@ class SignUp extends Component {
             		this.refs.email.value = "";
                     this.refs.password.value = "";
                     this.refs.password2.value = "";
-                    this.refs.name.value = "";
+                    this.refs.name1.value = "";
+                    this.refs.name2.value = "";
                     this.refs.zip.value = "";
                     var myApp = new Framework7();
 					myApp.closeModal();
