@@ -352,7 +352,7 @@ class UserMap extends React.Component {
   renderPagePop(){
     return(
       <div>
-        <SinglePage pageID={this.props.pageID} pages={this.props.pages} profile={this.props.profile}/>
+        <SinglePage pageID={this.props.pageID} dealID={this.props.dealID} pages={this.props.pages} profile={this.props.profile}/>
       </div>
     )
   }
@@ -436,7 +436,12 @@ class UserMap extends React.Component {
     }
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(showPosition);
-    } 
+    }
+    else{
+      myApp.hidePreloader();
+      myApp.alert("Unable to find location.","Warning");
+
+    }
    }
   render(){
     if(!this.props.profile || !this.props.pages || !this.props.deals){
@@ -470,7 +475,7 @@ export default createContainer((props)=>{
     Meteor.subscribe('localPages');
     Meteor.subscribe("localDeals");
     //profile={this.props.profile} pages={this.props.pages} deals={this.props.deals} pageID={this.props.params.pageID}
-    return {pages: Page.find({}).fetch(), deals: Deal.find({}).fetch(), profile: Profile.findOne({}), pageID: props.params.pageID}
+    return {pages: Page.find({}).fetch(), deals: Deal.find({}).fetch(), profile: Profile.findOne({}), pageID: props.params.pageID,dealID:props.params.dealID}
 
   
 }, UserMap);  

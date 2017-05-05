@@ -13,13 +13,17 @@ class DealLi extends React.Component{
 		})
 	}
 	openModal(did){
-		if(location.pathname.includes('/user/map')){
+		if(location.pathname.includes('/user/map') || location.pathname.includes("/user/p/")){
+			this.props.getDeal(did);
+			var myApp = new Framework7();
+			myApp.popup('.popup-services');
 			return;
 		}
-		browserHistory.push("/user/d/"+did+"/");
-		var myApp = new Framework7();
-		myApp.popup('.popup-about');
-		
+		else{
+			browserHistory.push("/user/d/"+did+"/");
+			var myApp = new Framework7();
+			myApp.popup('.popup-services');
+		}
 	}
 	render(){
 		if(!this.props.deal){

@@ -3,20 +3,19 @@ import React from 'react';
 class DealModal extends React.Component{
 	close(){
         var myApp = new Framework7();
-        myApp.closeModal();
+        myApp.closeModal(".popup-services");
     }
 	render(){
 		if(!this.props.deals || !this.props.did){
 			return(
 				<div>
-					<div className="popup popup-about">
+					<div className="popup popup-services">
 						<div className="navbar theme-green my-card-3">
 		                    <div className="navbar-inner">
 		                        <div className="right my-left-5"><i onClick={this.close.bind(this)} className="fa fa-times"></i></div>
 		                    </div>
 		                </div>
 					    <div className="content-block">
-					      
 			                <p>Loading...</p>
 					    </div>
 					</div>
@@ -25,11 +24,27 @@ class DealModal extends React.Component{
 		}
 		var all = this.props.deals;
 		var did = this.props.did;
-		var d;
+		var d = null;
 		for(var i = 0; i< all.length;i++){
 			if(all[i]._id == did){
 				d = all[i];
 			}
+		}
+		if(!d){
+			return(
+				<div>
+					<div className="popup popup-services">
+						<div className="navbar theme-green my-card-3">
+		                    <div className="navbar-inner">
+		                        <div className="right my-left-5"><i onClick={this.close.bind(this)} className="fa fa-times"></i></div>
+		                    </div>
+		                </div>
+					    <div className="content-block">
+			                <p>Loading...</p>
+					    </div>
+					</div>
+				</div>
+			)
 		}
 		var bk = {
 			backgroundImage: 'url(' + d.picture + ')',
@@ -47,7 +62,7 @@ class DealModal extends React.Component{
 		}
 		return(
 			<div>
-				<div className="popup popup-about">
+				<div className="popup popup-services">
 					<div className="navbar theme-green my-card-3">
 	                    <div className="navbar-inner">
 	                        <div className="right my-left-5"><i onClick={this.close.bind(this)} className="fa fa-times"></i></div>

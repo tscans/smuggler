@@ -102,9 +102,9 @@ textarea {
 	cursor: pointer;
 }
 .my-home-background{
-	height:90vh;
-	background: #ffffff url("/ny.jpg") no-repeat fixed center;
-	padding:0;
+	height:100vh;
+	background: #ffffff url("/veerback.png") no-repeat fixed center;
+  background-size: cover;
 }
 .my-green-text{
 	color:	#4cd964;

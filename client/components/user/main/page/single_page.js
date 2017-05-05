@@ -5,21 +5,26 @@ import {Deal} from '../../../../../imports/collections/deal';
 import PageInfo from './page_info';
 import moment from 'moment';
 import PageReviews from './page_reviews';
+import DealModal from '../list/deal_modal';
 
 class SinglePage extends React.Component{
 	constructor(props) {
 		super(props);
 		this.state = {
-			currentBody: 'd'
+			currentBody: 'd',
+			currentDeal: null
 		}
+	}
+	getDeal(did){
+		this.setState({currentDeal: did});
 	}
 	renderBody(){
 		if(this.state.currentBody == 'd'){
 			var myDeals = this.props.singleDeals;
-			console.log(myDeals);
 			return(
 				<div>
-					<DealsList deals={myDeals} profile={this.props.profile} noModals={true}/>
+					<DealModal deals={myDeals} did={this.state.currentDeal}/>
+					<DealsList deals={myDeals} profile={this.props.profile} getDeal={this.getDeal.bind(this)}/>
 				</div>
 			)
 		}
@@ -131,13 +136,13 @@ class SinglePage extends React.Component{
                 <div className="my-card-container">
 			        <div className="content-block my-page-box">
 						<div className="card demo-card-header-pic">
-						  <div style={bk} className="card-header color-white no-border">
-						  	<div style={bn}>{p.favorites.toString()} <i className="fa fa-star color-yellow" aria-hidden="true"></i></div>
-						  </div>
+						    <div style={bk} className="card-header color-white no-border">
+						  		<div style={bn}>{p.favorites.toString()} <i className="fa fa-star color-yellow" aria-hidden="true"></i></div>
+						    </div>
 						  	<p className="buttons-row my-btn-5">
-						  	  <a href="#" className={"button color-red "+d} onClick={()=>{this.setState({currentBody: "d"})}}>Deals</a><hr width="1" size="5%"/>
-							  <a href="#" className={"button color-green "+f} onClick={()=>{this.setState({currentBody: "f"})}}>Reviews</a><hr width="1" size="5%"/>
-							  <a href="#" className={"button color-blue "+i} onClick={()=>{this.setState({currentBody: "i"})}}>Info</a>
+						  	    <a href="#" className={"button color-red "+d} onClick={()=>{this.setState({currentBody: "d"})}}>Deals</a><hr width="1" size="5%"/>
+							    <a href="#" className={"button color-green "+f} onClick={()=>{this.setState({currentBody: "f"})}}>Reviews</a><hr width="1" size="5%"/>
+							    <a href="#" className={"button color-blue "+i} onClick={()=>{this.setState({currentBody: "i"})}}>Info</a>
 							</p>
 							{this.renderBody()}
 						</div>

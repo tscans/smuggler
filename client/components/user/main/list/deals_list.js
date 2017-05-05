@@ -27,7 +27,7 @@ class DealsList extends React.Component{
         return iii.map(d=>{
         	return(
         		<div key={d._id}>
-        			<DealLi deal={d}/>
+        			<DealLi deal={d} getDeal={this.props.getDeal}/>
         		</div>
         	)
     	})
@@ -48,7 +48,7 @@ class DealsList extends React.Component{
         return iii.map(d=>{
         	return(
         		<div key={d._id}>
-        			<DealLi deal={d}/>
+        			<DealLi deal={d} getDeal={this.props.getDeal}/>
         		</div>
         	)
     	})
@@ -69,7 +69,7 @@ class DealsList extends React.Component{
         return iii.map(d=>{
         	return(
         		<div key={d._id}>
-        			<DealLi deal={d}/>
+        			<DealLi deal={d} getDeal={this.props.getDeal}/>
         		</div>
         	)
     	})
@@ -132,6 +132,9 @@ class DealsList extends React.Component{
 				</div>
 			)
 		}
+	}
+	giveDeal(d){
+		this.props.getDeal(d);
 	}
 	render(){
 		if(!this.props.deals || !this.props.profile){
