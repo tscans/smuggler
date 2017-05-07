@@ -42,7 +42,6 @@ class Navbar extends Component {
 					  <div className="my-break-40">
 				      
 				      </div>
-				      <h2>User</h2>
 				      <NavBody />
 				   </div>
 				</div>

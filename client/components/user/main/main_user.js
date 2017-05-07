@@ -9,19 +9,22 @@ import {Page} from '../../../../imports/collections/page';
 import {Deal} from '../../../../imports/collections/deal';
 import BookUser from './book_user';
 import DealModal from './list/deal_modal';
-import SubNav from './external/sub_nav';
-
 
 class MainUser extends Component {
 	toMap(){
-		browserHistory.push("/user/map/");
-		this.forceUpdate();
+		var w = window.location.pathname;
+	    if(w.includes("/user/blist/")){
+	      browserHistory.push("/user/b/");
+	    }
+	    else{
+	      browserHistory.push("/user/d/");
+	    }
+	   
 	}
 	currentView(){
 		return(
 			<div className="my-card-container2">
 				<div className="my-push-down-10">
-
 					<h3 className="color-blue">Liked Specials</h3>
 					<BookUser deals={this.props.bookDeals} profile={this.props.profile}/>
 					<hr/>
@@ -38,7 +41,6 @@ class MainUser extends Component {
 		}
         return (
         	<div>
-        		<SubNav />
         		<DealModal deals={this.props.deals.concat(this.props.bookDeals)} did={this.props.params.dealID}/>
         		{this.currentView()}
         		<a href="#" className="floating-button color-green" onClick={this.toMap.bind(this)}>
@@ -55,9 +57,11 @@ export default createContainer((props)=>{
     Meteor.subscribe("localDeals");
     Meteor.subscribe("bookDeals");
 
-    return {profile: Profile.findOne({}), pages: Page.find({}).fetch(),
-     deals: Deal.find({upvotes: {$not:Meteor.userId()}}).fetch(),
-     bookDeals:Deal.find({upvotes:Meteor.userId() }).fetch(),
+    return {
+     profile: Profile.findOne({}), 
+     pages: Page.find({}).fetch(),
+     deals: Deal.find({upvotes: {$not:Meteor.userId()}},{reactive: false}).fetch(),
+     bookDeals:Deal.find({upvotes:Meteor.userId()},{reactive: false}).fetch(),
  	}
 
 	

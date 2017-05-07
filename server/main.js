@@ -6,6 +6,7 @@ import { Message } from '../imports/collections/message';
 import { Survey } from '../imports/collections/survey';
 import { Question } from '../imports/collections/question';
 import { Response } from '../imports/collections/response';
+import { Job } from '../imports/collections/job';
 import moment from 'moment';
 
 Meteor.startup(() => {
@@ -67,10 +68,14 @@ Meteor.startup(() => {
 		else{
 			var range = .12;
 		}
-		
-		return Deal.find({
-			long: {$gt: (profile.long-range), $lt: (profile.long+range)}, lat: {$gt: (profile.lat-range), $lt: (profile.lat+range)}
-		})
+		var pages = Page.find({
+			online: true, long: {$gt: (profile.long-range), $lt: (profile.long+range)}, lat: {$gt: (profile.lat-range), $lt: (profile.lat+range)}
+		}).fetch();
+		var par = [];
+		for(var i = 0; i<pages.length; i++){
+			par.push(pages[i]._id);
+		}
+		return Deal.find({pageID: {$in:par}});
 	});
 	Meteor.publish('singleLocalDeals', function(pageID){
 		var user = this.userId;
@@ -133,7 +138,41 @@ Meteor.startup(() => {
 		console.log(yo.length)
 		return Page.find({"pageName" : {$regex : ".*"+pageName+".*", '$options' : 'i'}});
 	});
+	Meteor.publish("ownJobs", function(){
+		var user = this.userId;
+		if(!user){
+			return;
+		}
+		var page = Page.findOne({metID: user});
+		if(!page){
+			return;
+		}
+		return Job.find({pageID: page._id});
+	});
+	Meteor.publish("localJobs", function(range){
+		var user = this.userId;
+		if(!user){
+			return;
+		}
+		var profile = Profile.findOne({metID: user});
 
+		if(range){
+			if(range > .2 || range < .05){
+				return;
+			}
+		}
+		else{
+			var range = .12;
+		}
+		var pages = Page.find({
+			online: true, long: {$gt: (profile.long-range), $lt: (profile.long+range)}, lat: {$gt: (profile.lat-range), $lt: (profile.lat+range)}
+		}).fetch();
+		var par = [];
+		for(var i = 0; i<pages.length; i++){
+			par.push(pages[i]._id);
+		}
+		return Job.find({pageID: {$in:par}});
+	});
 });
 
 

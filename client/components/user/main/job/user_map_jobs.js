@@ -1,12 +1,12 @@
 import React from 'react';
 import {createContainer} from 'meteor/react-meteor-data';
 import {browserHistory} from 'react-router';
-import SinglePage from './page/single_page';
-import {Page} from '../../../../imports/collections/page';
+import JobsList from './jobs_list';
+import {Page} from '../../../../../imports/collections/page';
 import moment from 'moment';
-import {Profile} from '../../../../imports/collections/profile';
-import {Deal} from '../../../../imports/collections/deal';
-import {Job} from '../../../../imports/collections/job';
+import {Profile} from '../../../../../imports/collections/profile';
+import {Deal} from '../../../../../imports/collections/deal';
+import {Job} from '../../../../../imports/collections/job';
 
 const myStyle = [
     {
@@ -250,7 +250,7 @@ function pinSymbol(color,border) {
    };
 }
 
-class UserMap extends React.Component {
+class UserMapJobs extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -260,7 +260,6 @@ class UserMap extends React.Component {
   }
   componentDidUpdate() {
 
-    console.log(this.state.mapLoaded)
     function initMap(myProps) {
         //@41.6971549,-87.7086321
         //"profile.newLocation"
@@ -275,25 +274,19 @@ class UserMap extends React.Component {
         });
 
         var idArray = [];
-        var d = new Date();
-        var day = moment(d).format("ll");
-        for(var i = 0; i< myProps.deals.length; i++){
-          if(myProps.deals[i].date == day){
-            idArray.push(myProps.deals[i].pageID)
+        for(var i = 0; i< myProps.jobs.length; i++){
+          if(!idArray.includes(myProps.jobs[i].pageID)){
+            idArray.push(myProps.jobs[i].pageID)
           }
-          
         }
         
         myProps.pages.map(p=>{
           var myApp = new Framework7();
  
           var color = "#aaaaaa";
-          var border = "#999";
+          var border = "#fff";
           if(idArray.includes(p._id)){
-            color = "#00ff00"
-          }
-          if(myProps.profile.favorite.includes(p._id)){
-            border = "#00bbff";
+            color = "#2196F3"
           }
           var marker = new google.maps.Marker({
             position: {lat:p.lat,lng:p.long},
@@ -301,12 +294,9 @@ class UserMap extends React.Component {
             icon: pinSymbol(color, border),
             animation: google.maps.Animation.DROP
           });
-          var fp = "/user/b/";
-          if(window.location.pathname.includes("/user/d/")){
-            fp = "/user/d/"
-          }
+          var fp = "/user/j/";
           marker.addListener('click', function() {
-            browserHistory.push(fp+p._id+"/")
+            browserHistory.push(fp+p._id+"/");
             myApp.popup('.popup-about');
           });
         })
@@ -332,7 +322,6 @@ class UserMap extends React.Component {
 
               window.map.setCenter(results[0].geometry.location);
               window.map.setZoom(13);
-              console.log(results[0].geometry.location.lat())
               var data = {
                 long: results[0].geometry.location.lng(),
                 lat: results[0].geometry.location.lat()
@@ -351,10 +340,33 @@ class UserMap extends React.Component {
 
     });
   }
+  close(){
+    var myApp = new Framework7();
+    myApp.closeModal(".popup-about");
+  }
   renderPagePop(){
+    var j = [];
+    var pageName = "";
+    for(var i = 0; i < this.props.jobs.length; i++){
+      if(this.props.pageID == this.props.jobs[i].pageID){
+        j.push(this.props.jobs[i]);
+        pageName = this.props.jobs[i].pageName;
+      }
+    }
+    var jf = "Jobs for "+pageName
     return(
       <div>
-        <SinglePage pageID={this.props.pageID} dealID={this.props.dealID} pages={this.props.pages} profile={this.props.profile} jobs={this.props.jobs}/>
+        <div className="popup popup-about">
+            <div className="navbar theme-green my-card-3">
+                <div className="navbar-inner">
+                    <div className="right my-left-5"><i onClick={this.close.bind(this)} className="fa fa-times"></i></div>
+                </div>
+            </div>
+            <div className="content-block">
+               <h1>{jf}</h1>
+               <JobsList jobs={j}/>
+            </div>
+        </div>
       </div>
     )
   }
@@ -372,34 +384,25 @@ class UserMap extends React.Component {
         Meteor.subscribe('localDeals');
         var cube3 = this.props.pages
         var idArray = [];
-        var d = new Date();
-        var day = moment(d).format("ll");
-        for(var i = 0; i< this.props.deals.length; i++){
-          if(this.props.deals[i].date == day){
-            idArray.push(this.props.deals[i].pageID)
+        for(var i = 0; i< this.props.jobs.length; i++){
+          if(!idArray.includes(this.props.jobs[i].pageID)){
+            idArray.push(this.props.jobs[i].pageID)
           }
-          
         }
         cube3.map(p=>{
           var myApp = new Framework7();
 
           var color = "#aaaaaa";
-          var border = "#999";
+          var border = "#fff";
           if(idArray.includes(p._id)){
-            color = "#00ff00"
-          }
-          if(this.props.profile.favorite.includes(p._id)){
-            border = "#00bbff";
+            color = "#2196F3"
           }
           var marker = new google.maps.Marker({
             position: {lat:p.lat,lng:p.long},
             map: window.map,
             icon: pinSymbol(color,border)
           });
-          var fp = "/user/b/";
-          if(window.location.pathname.includes("/user/d/")){
-            fp = "/user/d/"
-          }
+          var fp = "/user/j/";
           marker.addListener('click', function() {
             browserHistory.push(fp+p._id+"/");
             myApp.popup('.popup-about');
@@ -409,13 +412,7 @@ class UserMap extends React.Component {
     })
    }
    toList(){
-    var w = window.location.pathname;
-    if(w.includes("/user/b/")){
-      browserHistory.push("/user/blist/");
-    }
-    else{
-      browserHistory.push("/user/dlist/");
-    }
+    browserHistory.push("/user/jlist/");
    }
    updateChanges(){
     if(this.state.changes == 0){
@@ -490,4 +487,4 @@ export default createContainer((props)=>{
     return {pages: Page.find({}).fetch(), deals: Deal.find({}).fetch(), profile: Profile.findOne({}), jobs: Job.find({}).fetch(), pageID: props.params.pageID,dealID:props.params.dealID}
 
   
-}, UserMap);  
+}, UserMapJobs);  

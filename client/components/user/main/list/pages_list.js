@@ -15,7 +15,7 @@ class PagesList extends React.Component{
 		}
 	}
 	toMap(){
-		browserHistory.push("/user/map/");
+		browserHistory.push("/user/b/");
 		this.forceUpdate();
 	}
 	favorite(pid){
@@ -122,7 +122,6 @@ class PagesList extends React.Component{
 		}
 		return(
 			<div>
-				<SubNav />
 				<div className="my-card-container2">
 					<h3 className="color-blue">Favorite Businesses</h3>
 					{this.renderFavorites()}

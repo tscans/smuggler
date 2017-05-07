@@ -23,11 +23,11 @@ class NavBody extends Component {
 	    myApp.closePanel();
 		browserHistory.push("/page/feedback/");
 	}
-	toManage(){
+	toJobs(){
 		var myApp = new Framework7();
  
 	    myApp.closePanel();
-		browserHistory.push("/page/manage/");
+		browserHistory.push("/page/jobs/");
 	}
 	toUser(){
 		var myApp = new Framework7();
@@ -58,7 +58,7 @@ class NavBody extends Component {
     handleLogoutPush(){
     	var myApp = new Framework7();
     	browserHistory.push('/');
-        myApp.alert(``,`Logged Out`);
+        myApp.alert(`See ya later`,`Logged Out`);
     }
     render() {
 
@@ -93,7 +93,7 @@ class NavBody extends Component {
 				  <a href="#" className="button" onClick={this.toFeedback.bind(this)}>Feedback</a>
 				</p> 
 				<p className="buttons-row">
-				  <a href="#" className="button" onClick={this.toManage.bind(this)}>Manage</a>
+				  <a href="#" className="button" onClick={this.toJobs.bind(this)}>Jobs</a>
 				</p> 
 				<p className="buttons-row">
 				  <a href="#" className="button" onClick={this.toUpdate.bind(this)}>Update Info</a>

@@ -17,7 +17,6 @@ class DealsList extends React.Component{
 		var d = new Date();
 		var today = moment(d).format("ll");
 		var tomorrow = moment(d).add(1,"day").format("ll");
-		var twotomorrow = moment(d).add(2,"day").format("ll");
 		var iii = [];
 		for(var i = 0; i < jjj.length;i++){
 			if(jjj[i].date == today){
@@ -53,49 +52,28 @@ class DealsList extends React.Component{
         	)
     	})
 	}
-	renderTwoTomorrow(){
-		var jjj = this.props.deals;
-		jjj.sort(function(b,a) {
-		    return parseFloat(a.upvotes.length) - parseFloat(b.upvotes.length);
-		});
-		var d = new Date();
-		var twotomorrow = moment(d).add(2,"day").format("ll");
-		var iii = [];
-		for(var i = 0; i < jjj.length;i++){
-			if(jjj[i].date == twotomorrow){
-				iii.push(jjj[i]);
-			}
-		}
-        return iii.map(d=>{
-        	return(
-        		<div key={d._id}>
-        			<DealLi deal={d} getDeal={this.props.getDeal}/>
-        		</div>
-        	)
-    	})
-	}
 	renderDateArrows(){
 		var large = {
 			fontSize: "20px"
 		}
+		
 		if(this.state.dayPoint == 0){
 			return(
 				<div>
-					<p className="color-green" style={large}> Today <i className="fa fa-arrow-right" aria-hidden="true" onClick={()=>{this.setState({dayPoint: this.state.dayPoint+1})}}></i></p>
+					<p className="buttons-row my-btn-5 color-green">
+					  <a href="#" className="button button-raised button-fill color-green" onClick={()=>{this.setState({dayPoint: 0})}}>Today</a>
+					  <a href="#" className="button" onClick={()=>{this.setState({dayPoint: 1})}}>Tomorrow</a>
+					</p>   
 				</div>
 			)
 		}
 		else if(this.state.dayPoint == 1){
 			return(
 				<div>
-					<p className="color-green" style={large}><i className="fa fa-arrow-left" aria-hidden="true" onClick={()=>{this.setState({dayPoint: this.state.dayPoint-1})}}></i> Tomorrow <i className="fa fa-arrow-right" aria-hidden="true" onClick={()=>{this.setState({dayPoint: this.state.dayPoint+1})}}></i></p>
-				</div>
-			)
-		}
-		else{
-			return(
-				<div>
-					<p className="color-green" style={large}><i className="fa fa-arrow-left" aria-hidden="true" onClick={()=>{this.setState({dayPoint: this.state.dayPoint-1})}}></i> {moment(new Date()).add(2,"day").format("ll")} </p>
+					<p className="buttons-row my-btn-5 color-green">
+					  <a href="#" className="button" onClick={()=>{this.setState({dayPoint: 0})}}>Today</a>
+					  <a href="#" className="button button-raised button-fill color-green" onClick={()=>{this.setState({dayPoint: 1})}}>Tomorrow</a>
+					</p>   
 				</div>
 			)
 		}
@@ -121,14 +99,6 @@ class DealsList extends React.Component{
 				<div>
 					{this.renderDateArrows()}
 					{this.renderTomorrow()}
-				</div>
-			)
-		}
-		else{
-			return(
-				<div>
-					{this.renderDateArrows()}
-					{this.renderTwoTomorrow()}
 				</div>
 			)
 		}

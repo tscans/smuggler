@@ -1,6 +1,13 @@
 import React from 'react';
+import DealModal from './deal_modal';
 
 class DealList extends React.Component{
+	constructor(props) {
+		super(props);
+		this.state = {
+			did: null
+		}
+	}
 	renderDelete(d){
 		if(this.props.deleting){
 			return(
@@ -9,6 +16,11 @@ class DealList extends React.Component{
 				</div>
 			)
 		}
+	}
+	openModal(did){
+		this.setState({did: did});
+		var myApp = new Framework7();
+		myApp.popup('.popup-services');
 	}
 	handleDelete(d){
 		Meteor.call("deal.deleteDeal", d._id, (error, data)=>{
@@ -81,10 +93,10 @@ class DealList extends React.Component{
 							    <div className="card-content">
 						            <div className="row">
 									    <div className="col-30">
-									    	<img src={d.picture} style={divStyle}/>
+									    	<img src={d.pageImage} style={divStyle}/>
 									    </div>
 									    <div className="col-50">
-									    	<div className="card-content-inner" style={info}>
+									    	<div className="card-content-inner" style={info} onClick={()=>{this.openModal(d._id)}}>
 									    	  {d.title}
 									    	  <div className="color-gray my-small-gray">{d.pageName}</div>
 									    	  <div className="color-gray my-small-gray">{d.date}</div>
@@ -113,6 +125,7 @@ class DealList extends React.Component{
 		}
 		return(
 			<div>
+				<DealModal deals={this.props.deals} did={this.state.did}/>
 				{this.renderCards()}
 			</div>
 		)
