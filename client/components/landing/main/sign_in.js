@@ -1,142 +1,65 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {browserHistory} from 'react-router';
 
-class SignIn extends Component {
+class SignIn extends React.Component{
 	constructor(props) {
 		super(props);
 		this.state = {
-			user: true,
-			signText: "Sign In",
-			destination: "/user/",
-			wording: "Sign In As Business Instead",
-			loading: false
+			loader: false
 		}
 	}
-	closeModal(){
-		var myApp = new Framework7();
-		myApp.closeModal();
-	}
-	flipUser(){
-		console.log('run')
-		if(this.state.user){
-			this.setState({signText: "Sign In Business", destination: "/page/", user: false, wording: "Sign In As User"})
-		}
-		else{
-			this.setState({signText: "Sign In", destination: "/user/", user: true, wording: "Sign In As Business Instead"})
-		}
-	}
-	buttonPlace(){
-		if(!this.state.loading){
+	loadButton(){
+		if(this.state.loader){
 			return(
-			  <li>
-                <a href="#" className="item-link color-green list-button">{this.state.signText}</a>
-              </li>
+				<div className="my-loader">
+
+				</div>
 			)
 		}
 		else{
 			return(
-				<img src="/ring.gif" height="50px"/>
+				<div>
+					<button className="btn btn-positive btn-block">Sign Up</button>
+				</div>
 			)
 		}
 	}
 	signIn(event){
 		event.preventDefault();
-		console.log('signIn');
-		var myApp = new Framework7();
-		if(Meteor.userId()){
-			myApp.closeModal();
-			browserHistory.push(this.state.destination)
+		if(this.state.loader){
+			
 			return;
 		}
-        this.setState({loading: true});
+		console.log('signIn');
+		this.setState({loader: true});
 		var ema = this.refs.email.value.trim();
         var pss1 = this.refs.pass.value.trim();
 		Meteor.loginWithPassword(ema, pss1, (error, data) => {
 			if(error){
-                myApp.alert(`User/Password does not match`, `Warning!`);
         		console.log("There was an error");
-                this.setState({loading: false});
-        		console.log(error);
+                this.setState({loader: false});
+                console.log(error);
             }
             else{
             	this.refs.email.value = "";
 		        this.refs.pass.value = "";
-                
-		        myApp.closeModal();
-				browserHistory.push(this.state.destination)
+		        this.setState({loader: false});
+		        browserHistory.push("/game/");
             }
 		});
 		
 	}
-    render() {
-    	if(Meteor.userId()){
-    		return(
-    			<div>
-	    			<div className="content-block my-no-padding">
-				   	  <div className="navbar theme-green my-card-3">
-					    <div className="navbar-inner">
-					    	<div className="right my-left-5"><i onClick={this.closeModal.bind(this)} className="fa fa-times"></i></div>
-					    </div>
-					  </div>
-					  <div className="my-break-40"></div>
-				   </div>
-    				<h2>You are already signed in.</h2>
-    				<div className="list-block" onClick={this.signIn.bind(this)}>
-		                <ul>
-		                  {this.buttonPlace()}
-		                </ul>
-		            </div>
-    			</div>
-    		)
-    	}
-        return (
-        	<div>
-        		<div className="content-block my-no-padding">
-			   	  <div className="navbar theme-green my-card-3">
-				    <div className="navbar-inner">
-				    	<div className="right my-left-5"><i onClick={this.closeModal.bind(this)} className="fa fa-times"></i></div>
-				    </div>
-				  </div>
-				  <div className="my-break-40"></div>
-			   </div>
-			    <form>
-			    <h2>Sign In</h2>
-	              <div className="list-block">
-	                <ul>
-	                  <li className="item-content">
-	                    <div className="item-inner">
-	                      <div className="item-title label">Email</div>
-	                      <div className="item-input">
-	                        <input type="email" ref="email" placeholder="Email"/>
-	                      </div>
-	                      
-	                    </div>
-	                  </li>
-	                  <li className="item-content">
-	                  	<div className="item-inner">
-	                      <div className="item-title label">Password</div>
-	                      <div className="item-input">
-	                        <input type="password" ref="pass" placeholder="Password"/>
-	                      </div>
-	                      
-	                    </div>
-	                  </li>
-	                </ul>
-	              </div>
-	              <div className="list-block" onClick={this.signIn.bind(this)}>
-	                <ul>
-	                  {this.buttonPlace()}
-	                </ul>
-	                
-	              </div>
-	            </form>
-	            <div className="my-break-50">
-				      
-			    </div>
-                <div className="list-block-label"><a href="#" onClick={this.flipUser.bind(this)}>{this.state.wording}</a></div>
+	render(){
+		return(
+			<div>
+				<form onSubmit={this.signIn.bind(this)}>
+				  <input type="email" ref="email" placeholder="Email"/>
+				  <input type="password" ref="pass" placeholder="Password"/>
+				  <button className="btn btn-positive btn-block">Sign In</button>
+				</form>
 			</div>
-        );
-    }
+		)
+	}
 }
 
 export default SignIn;

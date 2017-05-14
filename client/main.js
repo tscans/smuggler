@@ -5,69 +5,23 @@ import {Router, Route, IndexRoute, browserHistory} from 'react-router';
 import Landing from './components/landing/landing';
 import MainLanding from './components/landing/main/main_landing';
 
-import Page from './components/page/page';
-import MainPage from './components/page/main/main_page';
-import DealsPage from './components/page/deals/deals_page';
-import FeedbackPage from './components/page/feedback/feedback_page';
-import Jobs from './components/page/jobs/jobs';
-import Update from './components/page/update/update';
-import PageVerify from './components/page/verify/page_verify';
+import Game from './components/game/game';
+import MainGame from './components/game/main/main_game';
 
-import User from './components/user/user';
-import PagesList from './components/user/main/list/pages_list';
-import UserMap from './components/user/main/user_map';
-import MainUser from './components/user/main/main_user';
-import MainJob from './components/user/main/job/main_job';
-import UserMapJobs from './components/user/main/job/user_map_jobs';
-
-import Admin from './components/admin/admin';
-import MainAdmin from './components/admin/main/main_admin';
+import MainActive from './components/game/active/main_active';
 
 const routes = (
 	<Router history={browserHistory}>
 		<Route path="/" component={Landing}>
 			<IndexRoute component={MainLanding} />
 		</Route>
-		<Route path="/page/" component={Page}>
-			<IndexRoute component={MainPage} />
-			<Route path="verify/" component={PageVerify}/>
-			<Route path="deals/" component={DealsPage} />
-			<Route path="feedback/" component={FeedbackPage} />
-			<Route path="jobs/" component={Jobs}/>
-			<Route path="update/" component={Update}/>
-		</Route>
-		<Route path="/user/" component={User}>
-			<IndexRoute component={UserMap} />
-			<Route path="d/" component={UserMap}/>
-			<Route path="d/:pageID/" component={UserMap}/>
-
-			<Route path="b/" component={UserMap}/>
-			<Route path="b/:pageID/" component={UserMap}/>
-
-			<Route path="j/" component={UserMapJobs}/>
-			<Route path="j/:pageID/" component={UserMapJobs}/>
-
-			<Route path="dlist/" component={MainUser}/>
-			<Route path="dlist/:dealID/" component={MainUser}/>
-
-			<Route path="blist/" component={PagesList}/>
-			<Route path="blist/:pageID/" component={PagesList}/>
-
-			<Route path="jlist/" component={MainJob}/>
-			<Route path="jlist/:pageID/" component={MainJob}/>
-		</Route>
-		<Route path="/admin/" component={Admin}>
-			<IndexRoute component={MainAdmin} />
+		<Route path="/game/" component={Game}>
+			<IndexRoute component={MainGame} />
+			<Route path=":gameID/" component={MainActive} />
 		</Route>
 	</Router>
 );
-// <IndexRoute component={MainUser} />
-// <Route path="d/" component={MainUser}/>
-// <Route path="d/:dealID/" component={MainUser}/>
-// <Route path="p/" component={PagesList}/>
-// <Route path="p/:pageID/" component={PagesList}/>
-// <Route path="map/" component={UserMap} />
-// <Route path="map/p/:pageID/" component={UserMap}/>
+
 
 Meteor.startup(() => {
 	ReactDOM.render(routes, document.querySelector('.render-target'));

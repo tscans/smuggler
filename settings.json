@@ -1,12 +1,7 @@
 {
 	"galaxy.meteor.com": {
 		"env": {
-			"MONGO_URL": "mongodb://huskiefoxtrot:*nuclear*AC39ATB@ds161640.mlab.com:61640/veer"
-			
+			"MONGO_URL": "mongodb://huskiefoxtrot:*nuclear*AC39ATB@ds047085.mlab.com:47085/smuggler"
 		}
-	},
-	"public":{
-		"StripePub": "pk_test_MERz5Ospcty9rFsrNQCZMVP1"
-	},
-	"StripePri": "sk_test_8TdNcffpGlkTzjbpbw6cUPVW"
+	}
 }

@@ -1,318 +1,85 @@
-@media screen and (min-width: 768px) {
-    .go-fucking-center{
-    	margin-left: 30%;
-    	margin-right: 30%;
-    }
+canvas{
+    border: 1px solid black;
+    width: 100%;
 }
-body{
-	text-align: center;
-	direction: ltr !important;
+.my-nav{
+	margin-bottom: 7vh;
 }
-#mapid {
-	width: 100%;
-	height:82vh;
-	background: white url("./ring.gif");
-	background-size: 200px 200px;
-    background-repeat: no-repeat;
-    background-position: center; 
-}
-.my-center{
-	text-align: center !important;
-}
-.my-footer {
-   position:fixed;
-   left:0px;
-   bottom:0px;
-   height:30px;
-   width:100%;
-   background:#999;
-}
-::-webkit-input-placeholder {
-   text-align: center;
-}
-
-:-moz-placeholder { /* Firefox 18- */
-   text-align: center;  
-}
-
-::-moz-placeholder {  /* Firefox 19+ */
-   text-align: center;  
-}
-
-:-ms-input-placeholder {  
-   text-align: center; 
-}
-input { 
-    text-align: center !important; 
-}
-textarea { 
-    text-align: left !important; 
-}
-.my-card {
-  background: #fff;
-  border-radius: 2px;
-  display: inline-block;
-  height: 300px;
-  margin: 1rem;
-  position: relative;
-  width: 300px;
-}
-.my-title-center{
-	text-align: center;
-	float: center;
-	padding-left: 0;
-}
-.my-card-1 {
-  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
-}
-
-.my-card-1:hover {
-  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
-}
-
-.my-card-2 {
-  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-}
-
-.my-card-3 {
-  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
-}
-
-.my-card-4 {
-  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
-}
-
-.my-card-5 {
-  box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
-}
-.my-left-5{
-	margin-left: 20px;
-}
-.my-nav-left{
-	text-align: left;
-	float:left;
-	margin-right: 20px;
-}
-.my-no-padding{
-	padding: 0px;
-	margin-top: 0px;
-}
-.my-clickable{
-	cursor: pointer;
-}
-.my-home-background{
-	height:100vh;
-	background: #ffffff url("/veerback.png") no-repeat fixed center;
+.my-background{
+  height: 93vh;
+  background: #000 url("/swss.png") no-repeat fixed center;
   background-size: cover;
 }
-.my-green-text{
-	color:	#4cd964;
-}
-.my-home-title{
-	font-size: 50px;
-	text-shadow: 2px 2px 5px #FFFFFF;
-}
-.my-black-text{
-	color: #cccccc;
-}
-.my-vertical-center{
-	vertical-align: middle;
-}
-.my-break-50{
-	height: 150px;
-}
-.my-break-100{
-	height: 100px;
-}
-.my-break-40{
-	height: 40;
-}
-.my-footer {
-  position: absolute !important;
-  right: 0;
-  bottom: 30px;
-  left: 0;
-}
-.my-header {
-
-
-}
-.my-input-left{
-	text-align: left;
-}
-.my-red-font{
-	color: red;
-}
-#avatar{
-	width: 80%;
-	border-style: solid;
-}
-.my-center{
-	text-align: center !important;
-}
-.ic-red{
-  color: red;
-}
-.ic-blue{
-  color: blue;
-}
-.ic-green{
-  color: green !important;
-}
-.ic-yellow{
-  color: yellow;
-}
-.ic-orange{
-  color: orange;
-}
-.ic-purple{
-  color: purple;
-}
-.ic-black{
-  color: black;
-}
-.ic-pink{
-  color: pink !important;
-}
-.ic-turquoise{
-  color: turquoise;
-}
-.my-right-push{
-	margin-right: 100px !important;
-}
-.my-invisible{
-	visibility: hidden;
-}
-.my-push-down-10{
-	margin-top: 1vh;
-}
-.demo-card-header-pic .card-header {
-height: 40vw;
-background-size: cover;
-background-position: center;
-}
-.my-vertical-bottom{
-	vertical-align: bottom !important;
-}
-.my-white-on-black{
-	color: black;
-	padding: 2px;
-	background-color: white;
-	border: 2px solid #64B5F6;
-}
-.my-title-buffer{
-	margin-top: 14vh;
-}
-.my-card-margin-bottom{
-	margin-bottom: 3vh;
-}
-.my-card-container {
-   /* Optional - You can set a  min-height : whatever px; for reserving some space*/
-   height: 91vh; /* Fix a height here */
-   overflow: auto; /* Optionally you can also use overflow: scroll; */
-}
-.my-card-container2 {
-   /* Optional - You can set a  min-height : whatever px; for reserving some space*/
-   height: 85vh; /* Fix a height here */
-   overflow: auto; /* Optionally you can also use overflow: scroll; */
-}
-.my-small-font{
-	font-size: 12px;
-}
-.my-delete-button{
-  margin-top: -2vh;
-}
-.my-float-up{
-  margin-bottom: 8vh;
-}
-.my-link-right{
-  width: 100%;
-}
-.my-button-half{
-  width: 49% !important;
-
-}
-.my-container-bottom{
-  margin-bottom: 20vh;
-}
-.my-footer-height{
-  height: 9vh;
-}
-.my-info-box{
-  margin: 0;
-  color: #6666ff;
-}
-.my-page-box{
-  padding: 0;
-
-  margin: -1vh;
-}
-.my-list-wrap {
-   /* Optional - You can set a  min-height : whatever px; for reserving some space*/
-   height: 30vh; /* Fix a height here */
-   overflow: auto; /* Optionally you can also use overflow: scroll; */
-}
-.my-double-float{
-  margin-bottom: 11vh;
-}
-.my-single-float{
-  margin-bottom: 1vh;
-}
-.my-triple-float{
-  margin-bottom: 17vh;
-}
-.my-btn-up{
-  margin-top: 0px;
-}
-.my-crunch-btn{
-  margin-left: 20%;
-  margin-right: 20%;
-}
-.my-float-top{
-  margin-bottom: 80vh;
-}
-.my-small-gray{
-  font-size:12px;
-}
-.my-nav-right{
-  margin-left: 70vw;
-}
-.my-btn-80{
-  width: 80% !important;
-}
-.my-btn-20{
-  width:20% !important;
-}
-.my-btn-5{
-  margin-left: 3%;
-
-}
-.my-question-buffer{
-  margin-top: 5vh;
-}
-.my-input-5{
-  margin-left: 5%;
-  margin-right: 5%;
-}
-.my-floating-btn-left{
-  margin-right: 75vw;
-}
-.my-float-2nd{
-  margin-right: 70px;
-}
-.my-float-3rd{
-  margin-right: 140px;
-}
-.my-font-small{
-  font-size: 12px;
-}
-.my-gray-outline{
-  color: gray !important;
-}
-.my-red-outline{
-  color: red !important;
+.my-loader {
+    border: 16px solid #f3f3f3; /* Light grey */
+    border-top: 16px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 2s linear infinite;
+    text-align: center;
+    float: center;
 }
 
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+.my-white{
+	color: white;
+}
 
+@font-face {
+    font-family: "galactic";
+    src: url(/gb.ttf) format("truetype");
+}
 
+.my-galactic{
+    font-family: "galactic"
+}
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    background-color: white;
+    color: black;
+    font-size: 12px;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #eeeeee;
+}
+
+.modal {
+position: fixed;
+top: 0;
+z-index: 11;
+width: 100%;
+min-height: 100%;
+overflow: hidden;
+background-color: #fff;
+opacity: 0;
+-webkit-transition: -webkit-transform .25s, opacity 1ms .25s;
+-moz-transition: -moz-transform .25s, opacity 1ms .25s;
+transition: transform .25s, opacity 1ms .25s;
+-webkit-transform: translate3d(0, 100%, 1px);
+-ms-transform: translate3d(0, 100%, 1px);
+transform: translate3d(0, 100%, 1px);
+}
+.modal.active {
+height: 100%;
+opacity: 1;
+-webkit-transition: -webkit-transform .25s;
+-moz-transition: -moz-transform .25s;
+transition: transform .25s;
+-webkit-transform: translate3d(0, 0, 1px);
+-ms-transform: translate3d(0, 0, 1px);
+transform: translate3d(0, 0, 1px);
+}

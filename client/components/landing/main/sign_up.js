@@ -1,190 +1,72 @@
-import React, {Component} from 'react';
-import {browserHistory} from 'react-router';
-var zipcodes = require('zipcodes');
+import React from 'react';
 
-class SignUp extends Component {
+class SignUp extends React.Component{
 	constructor(props) {
 		super(props);
 		this.state = {
-			loading: false
+			loader: false
 		}
 	}
-	closeModal(){
-		var myApp = new Framework7();
-		myApp.closeModal();
-	}
-	buttonPlace(){
-		if(!this.state.loading){
+	loadButton(){
+		if(this.state.loader){
 			return(
-			  <li onClick={this.signUp.bind(this)}>
-                <a href="#" className="item-link color-green list-button">Sign Up</a>
-              </li>
+				<div className="my-loader">
+
+				</div>
 			)
 		}
 		else{
 			return(
-				<img src="/ring.gif" height="50px"/>
+				<div>
+					<button className="btn btn-positive btn-block">Sign Up</button>
+				</div>
 			)
 		}
 	}
 	signUp(event){
 		event.preventDefault();
-		this.setState({loading: true});
-		var myApp = new Framework7();
 
+		if(this.state.loader){
+
+			return;
+		}
+		this.setState({loader: true});
 		var ema = this.refs.email.value.trim();
-        var pss1 = this.refs.password.value.trim();
-        var pss2 = this.refs.password2.value.trim();
-        var name1 = this.refs.name1.value.trim();
-        var name2 = this.refs.name2.value.trim();
-        var zip = this.refs.zip.value.trim();
-        if(ema == "" || pss1 == "" || pss2 == "" || name1 == "" || zip == "" || name2 == ""){
-            myApp.alert('Please complete all the fields','Warning!');
-            console.log("enter data");
-            this.setState({loading: false});
-            return;
+        var pss1 = this.refs.pass.value.trim();
+        var pss2 = this.refs.cpass.value.trim();
+
+        if(pss1 != pss2){
+        	console.log('no good');
+        	this.setState({loader: false});
+        	return;
         }
-        else if(pss1 != pss2){
-            myApp.alert(`Passwords don't match`, `Warning!`);
-        	console.log('mismatch passwords');
-            this.setState({loading: false});
-            return;
-        }
-        
-        else{
-            var zippy = zipcodes.lookup(zip);
-            if(!zippy){
-                myApp.alert(`Please use a real zip code`, `Warning!`);
-                this.setState({loading: false});
+		Accounts.createUser({
+            email: ema,
+            password: pss1
+        },(error)=>{
+            if(error){
+                console.log(error.reason)
+                this.setState({loader: false});
                 return;
             }
-            Accounts.createUser({
-                email: ema,
-                password: pss1
-            },(error)=>{
-                if(error){
-                    myApp.alert(error.reason, `Warning!`);
-                    this.setState({loading: false});
+        });
 
-                    console.log(error);
-                    return;
-                }
-            });
-            var name = name1 + " " + name2;
-            console.log(name);
-
-            Meteor.loginWithPassword(ema, pss1);
-
-            Meteor.call('profile.makeUser', name,zip, (error, data)=> {
-            	if(error){
-                    myApp.alert(error.reason, `Warning!`);
-            		console.log("There was an error");
-            		console.log(error);
-                    this.setState({loading: false});
-                    Meteor.logout();
-            	}
-            	else{
-            		console.log(data)
-            		
-            		this.refs.email.value = "";
-                    this.refs.password.value = "";
-                    this.refs.password2.value = "";
-                    this.refs.name1.value = "";
-                    this.refs.name2.value = "";
-                    this.refs.zip.value = "";
-                    var myApp = new Framework7();
-					myApp.closeModal();
-					browserHistory.push('/user/')
-					myApp.alert(`Be sure to check your email and confirm your account. Welcome to Veer!`, `Thanks!`);
-                    
-            	}
-            	
-            })
-	        
-        }
-
+        Meteor.loginWithPassword(ema, pss1);
+        this.setState({loader: false});
+        browserHistory.push("/game/");
 	}
-    render() {
-        return (
-        	<div>
-        		<div className="content-block my-no-padding">
-			   	  <div className="navbar theme-green my-card-3">
-				    <div className="navbar-inner">
-				    	<div className="right my-left-5"><i onClick={this.closeModal.bind(this)} className="fa fa-times"></i></div>
-				    </div>
-				  </div>
-				  <div className="my-break-40"></div>
-			   </div>
-			    <form>
-			    <h2>Sign Up</h2>
-	              <div className="list-block">
-	                <ul>
-	                  <li className="item-content">
-	                    <div className="item-inner">
-	                      <div className="item-title label">Email</div>
-	                      <div className="item-input">
-	                        <input type="email" ref="email" placeholder="Email"/>
-	                      </div>
-	                      
-	                    </div>
-	                  </li>
-	                  <li className="item-content">
-	                    <div className="item-inner">
-	                      <div className="item-title label">First Name</div>
-	                      <div className="item-input">
-	                        <input type="text" ref="name1" placeholder="First Name"/>
-	                      </div>
-	                      
-	                    </div>
-	                  </li>
-	                  <li className="item-content">
-	                    <div className="item-inner">
-	                      <div className="item-title label">Last Name</div>
-	                      <div className="item-input">
-	                        <input type="text" ref="name2" placeholder="Last Name"/>
-	                      </div>
-	                      
-	                    </div>
-	                  </li>
-	                  <li className="item-content">
-	                    <div className="item-inner">
-	                      <div className="item-title label">Zip Code</div>
-	                      <div className="item-input">
-	                        <input type="text" ref="zip" placeholder="Zip Code"/>
-	                      </div>
-	                      
-	                    </div>
-	                  </li>
-	                  <li className="item-content">
-	                  	<div className="item-inner">
-	                  	  <div className="item-title label">Password</div>
-	                      <div className="item-input">
-	                        <input type="password" ref="password" placeholder="Password"/>
-	                      </div>
-	                      
-	                    </div>
-	                  </li>
-	                  <li className="item-content">
-	                  	<div className="item-inner">
-	                  	  <div className="item-title label">Confirm</div>
-	                      <div className="item-input">
-	                        <input type="password" ref="password2" placeholder="Confirm Password"/>
-	                      </div>
-	                      
-	                    </div>
-	                  </li>
-	                </ul>
-	              </div>
-	              <div className="list-block">
-	                <ul>
-	                  {this.buttonPlace()}
-	                </ul>
-	                <div className="my-break-50"></div>
-	              </div>
-	            </form>
+	render(){
+		return(
+			<div>
+				<form onSubmit={this.signUp.bind(this)}>
+				  <input type="email" ref="email" placeholder="Email"/>
+				  <input type="password" ref="pass" placeholder="Password"/>
+				  <input type="password" ref="cpass" placeholder="Confirm Password"/>
+				  {this.loadButton()}
+				</form>
 			</div>
-        );
-    }
+		)
+	}
 }
 
 export default SignUp;
