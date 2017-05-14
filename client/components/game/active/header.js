@@ -77,8 +77,21 @@ class Header extends React.Component{
 			     if(dat.shipDamage){
 			     	$("#shipDamage").addClass('active');
 			     }
+			     if(dat.stolenCredits){
+			     	$("#newMug").addClass('active');
+			     }
 			}
 		})
+	}
+	renderWeek(){
+		if(this.props.game.gameover){
+			return(
+				<div>Game Over</div>
+			)
+		}
+		return(
+			<div>Week - {this.props.game.currentPeriod}/{this.props.game.periods}</div>
+		)
 	}
 	render(){
 		var color = {
@@ -92,12 +105,11 @@ class Header extends React.Component{
 				  </button>
 				  <a href="#planets">
 				    <h1 className="title">
-				      {this.props.game.currentLocation}
-				      <span className="icon icon-caret"></span>
+				      {this.props.game.currentLocation} <span className="fa fa-caret-down"></span>
 				    </h1>
 				  </a>
 				  <button className="btn pull-right">
-				    Week - {this.props.game.currentPeriod}/{this.props.game.periods}
+				    {this.renderWeek()}
 				  </button>
 				</header>
 				<NewTurn game={this.props.game}/>

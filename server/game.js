@@ -17,8 +17,8 @@ function randomPrice(min,max,random){
 var contrabandList = {
 	spice: {
 		name: "Spices",
-		min: 57,
-		max: 189
+		min: 110,
+		max: 240
 	},
 	ds: {
 		name: "Death Sticks",
@@ -32,13 +32,13 @@ var contrabandList = {
 	},
 	ws: {
 		name: "Wookie Slaves",
-		min: 1201,
-		max: 2360
+		min: 2700,
+		max: 3800
 	},
 	tg: {
 		name: "Tibanna Gas",
-		min: 600,
-		max: 900
+		min: 900,
+		max: 1200
 	},
 	tb: {
 		name: "Tach Brains",
@@ -52,28 +52,33 @@ var contrabandList = {
 	},
 	cr: {
 		name: "Chak-Root",
-		min: 142,
-		max: 317
+		min: 180,
+		max: 417
 	},
 	bacta: {
 		name: "Bacta",
-		min: 815,
-		max: 1391
+		min: 1111,
+		max: 1567
 	},
 	kc: {
 		name: "Kyber Crystals",
-		min: 19000,
-		max: 26000
+		min: 85000,
+		max: 120000
 	},
 	bd: {
 		name: "Battle Droids",
-		min: 181,
-		max: 300
+		min: 450,
+		max: 900
 	},
 	ma: {
 		name: "Mandalorian Armor",
-		min: 6000,
-		max: 9000
+		min: 8000,
+		max: 12000
+	},
+	pc: {
+		name: "Rare Pazaak Cards",
+		min: 19000,
+		max: 26000
 	}
 }
 
@@ -138,6 +143,11 @@ function genContraband(){
 			name: "Mandalorian Armor",
 			qty: 0,
 			price: randomPrice(contrabandList.ma.min,contrabandList.ma.max,Math.random())
+		},
+		pc: {
+			name: "Rare Pazaak Cards",
+			qty: 0,
+			price: randomPrice(contrabandList.pc.min,contrabandList.pc.max,Math.random())
 		}
 	}
 	return contraband;
@@ -146,7 +156,7 @@ function genContraband(){
 
 var ships = ["Kessel Vessel", "Bespin Shuttle", "Corellian Starship", "Nubian Yacht"];
 var shipHealth = [100,110,130,150];
-var shipSpace = [100,110,150,200];
+var shipSpace = [100,150,180,250];
 var shipDefense = [0.20,0.12,0.03,0.001];
 var shipPrice = [0,200000,1000000,10000000];
 var shipPictures = ["/kessel.png","/bespin.png","/corellian.png","/nubian.png"];
@@ -174,7 +184,8 @@ Meteor.methods({
 		}
 		var numGames = Game.find({metID: user}).fetch().length;
 		if(numGames >= 3){
-			console.log('too many games');
+			throw new Meteor.Error(504, 'Too many games. 3 max.');
+
 			return;
 		}
 		var d = new Date();
@@ -184,8 +195,8 @@ Meteor.methods({
 			createdAt: today,
 			playedLast: today,
 			gameName: data.gameName,
-			credits: 2000,
-			loan: 5000,
+			credits: 2500,
+			loan: 6000,
 			periods: data.periods,
 			currentPeriod: 1,
 			contraband: genContraband(),
@@ -267,7 +278,7 @@ Meteor.methods({
 		if(Math.floor(Math.random()*10) >=5){
 			cheap = true;
 		}
-		var singleOfDozen = Math.floor(Math.random()*12);
+		var singleOfDozen = Math.floor(Math.random()*13);
 		var countOfDozen = 0;
 		var singleOfDozenName;
 		for(c in newContraband){
@@ -309,7 +320,7 @@ Meteor.methods({
 					credits: Math.floor(game.credits/2)
 				}})
 			}
-			else if(c < 10){
+			else if(c < 60){
 				wookieLuck = true;
 				Game.update(game._id, {$set: {credits: Math.floor(game.credits*1.05)}})
 			}
@@ -325,7 +336,7 @@ Meteor.methods({
 		//dangers
 		var shipDamage = false;
 		var r = Math.random();
-		var damage = Math.floor(Math.random() * 20)+1;
+		var damage = Math.floor(Math.random() * 15)+10;
 		if(r < shipDefense[ships.indexOf(game.ship)]){
 			shipDamage = true;
 			if(game.currentHealth - damage <= 0){
@@ -337,6 +348,23 @@ Meteor.methods({
 			else{
 				Game.update(game._id, {$set: {currentHealth: game.currentHealth - damage}})
 			}
+		}
+
+		var stolenCredits = false;
+		var stolen = Math.floor(Math.random() * 100);
+		if(stolen < 10){
+			stolenCredits = true;
+			if(stolen < 5){
+				Game.update(game._id, {$set: {
+					credits: Math.floor(game.credits*0.9)
+				}})
+			}
+			else{
+				Game.update(game._id, {$set: {
+					credits: Math.floor(game.credits*0.8)
+				}})
+			}
+			
 		}
 
 
@@ -363,7 +391,8 @@ Meteor.methods({
 			wookieFlipout: wookieFlipout,
 			wookieLuck: wookieLuck,
 			newBounty: newBounty,
-			shipDamage: shipDamage
+			shipDamage: shipDamage,
+			stolenCredits: stolenCredits
 		}
 		
 

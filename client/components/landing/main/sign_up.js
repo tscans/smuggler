@@ -1,4 +1,5 @@
 import React from 'react';
+import {browserHistory} from 'react-router';
 
 class SignUp extends React.Component{
 	constructor(props) {
@@ -50,7 +51,7 @@ class SignUp extends React.Component{
                 return;
             }
         });
-
+		Bert.alert( 'Thanks for signing up', 'success', 'fixed-top');
         Meteor.loginWithPassword(ema, pss1);
         this.setState({loader: false});
         browserHistory.push("/game/");

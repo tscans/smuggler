@@ -25,6 +25,9 @@ class Header extends React.Component{
 				    Logout
 				  </button>
 				  <h1 className="title">Create a Game</h1>
+				  <button className="btn pull-right" onClick={()=>{browserHistory.push("/leaderboard/")}}>
+				    Leaderboard
+				  </button>
 				</header>
 			</div>
 		)

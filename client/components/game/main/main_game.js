@@ -53,14 +53,16 @@ class MainGame extends React.Component{
 			gameName: this.refs.captain.value.trim(),
 			periods: this.state.weeks
 		}
-		Meteor.call("game.create", data,(error,data)=>{
+		Meteor.call("game.create", data,(error,dat)=>{
 			if(error){
 				console.log(error);
+				Bert.alert( 'Cant buy nothin', 'danger', 'fixed-top', 'fa-frown-o' );
 			}
 			else{
-				console.log(data);
+				console.log(dat);
 				this.closeModal();
-				browserHistory.push("/game/"+data+"/")
+				browserHistory.push("/game/"+dat+"/")
+				Bert.alert( 'Hi Captain '+data.gameName, 'success', 'fixed-top' );
 			}
 		})
 	}

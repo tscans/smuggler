@@ -3,8 +3,8 @@ import React from 'react';
 var contrabandList = {
 	spice: {
 		name: "Spices",
-		min: 57,
-		max: 189
+		min: 110,
+		max: 240
 	},
 	ds: {
 		name: "Death Sticks",
@@ -18,13 +18,13 @@ var contrabandList = {
 	},
 	ws: {
 		name: "Wookie Slaves",
-		min: 1201,
-		max: 2360
+		min: 2700,
+		max: 3800
 	},
 	tg: {
 		name: "Tibanna Gas",
-		min: 600,
-		max: 900
+		min: 900,
+		max: 1200
 	},
 	tb: {
 		name: "Tach Brains",
@@ -38,33 +38,33 @@ var contrabandList = {
 	},
 	cr: {
 		name: "Chak-Root",
-		min: 142,
-		max: 317
+		min: 180,
+		max: 417
 	},
 	bacta: {
 		name: "Bacta",
-		min: 815,
-		max: 1391
+		min: 1111,
+		max: 1567
 	},
 	kc: {
 		name: "Kyber Crystals",
-		min: 19000,
-		max: 26000
+		min: 85000,
+		max: 120000
 	},
 	bd: {
 		name: "Battle Droids",
-		min: 181,
-		max: 300
-	},
-	mp: {
-		name: "Mysterious Passengers",
-		min: 2000,
-		max: 15000
+		min: 450,
+		max: 900
 	},
 	ma: {
 		name: "Mandalorian Armor",
-		min: 6000,
-		max: 9000
+		min: 8000,
+		max: 12000
+	},
+	pc: {
+		name: "Rare Pazaak Cards",
+		min: 19000,
+		max: 26000
 	}
 }
 
@@ -265,7 +265,7 @@ class Market extends React.Component{
 			if(value > 1){value = 1;}
 			if(value < 0){value = 0;}
 			value = 1 - value;
-			value = parseInt(value*100);
+			value = parseInt(value*130);
 			var colorWheel = {
 				color: "hsl("+value+", 50%, 50%)"
 			}

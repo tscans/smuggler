@@ -21,7 +21,7 @@ class MainActive extends React.Component{
 	renderBody(){
 		var ms = {
 			overflow: "scroll",
-			height: "75vh"
+			height: "65vh"
 		}
 		
 		if(this.state.pro){

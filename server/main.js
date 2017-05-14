@@ -1,4 +1,5 @@
 import {Game} from '../imports/collections/game';
+import {Leaderboard} from '../imports/collections/leaderboard';
 
 Meteor.startup(() => {
 	console.log('Smuggler Server Online');
@@ -22,5 +23,12 @@ Meteor.startup(() => {
 			return;
 		}
 		return Game.find({ _id: gameID });
+	});
+	Meteor.publish('leaderboards', function(){
+		const user = this.userId;
+		if(!user){
+			return;
+		}
+		return Leaderboard.find({});
 	});
 });

@@ -2,7 +2,7 @@ import React from 'react';
 
 var ships = ["Kessel Vessel", "Bespin Shuttle", "Corellian Starship", "Nubian Yacht"];
 var shipHealth = [100,110,130,150];
-var shipSpace = [100,110,150,200];
+var shipSpace = [100,150,180,250];
 var shipDefense = [0.25,0.16,0.08,0.001];
 var shipPrice = [0,200000,1000000,10000000];
 var shipPictures = ["/kessel.png","/bespin.png","/corellian.png","/nubian.png"];

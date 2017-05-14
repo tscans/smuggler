@@ -138,6 +138,22 @@ class NewTurn extends React.Component{
 			</div>
 		)
 	}
+	renderNewMug(){
+		return(
+			<div id="newMug" className="modal">
+			  <header className="bar bar-nav">
+			    <a className="btn pull-right" href="#newMug">Close</a>
+			    <h1 className="title">Credits Taken!</h1>
+			  </header>
+			  <div className="content" style={black}>
+			    <div className="content-padded">
+			    	<img src="/imperialcheckpoint.png" width="100%"/>
+			    	An imperial checkpoint has you caught. The stormtroopers find and take some of your credits.
+			    </div>
+			  </div>
+			</div>
+		)
+	}
 	renderShipDamage(){
 		if(this.props.game.currentPeriod%2 ==0){
 			return(
@@ -210,6 +226,17 @@ class NewTurn extends React.Component{
 			</div>
 		)
 	}
+	leaderboard(){
+		var gameID = this.props.game._id;
+		Meteor.call('leaderboard.enter', gameID, (error,data)=>{
+			if(error){
+				console.log(error);
+			}
+			else{
+				console.log(data);
+			}
+		})
+	}
 	renderEndGame(){
 		var w = this.calculateWorth()[0];
 		console.log(w)
@@ -234,6 +261,7 @@ class NewTurn extends React.Component{
 				    	<br/>
 				    	(Who are we kidding you crystal horder.)
 				    </div>
+				    <button className="btn btn-block" onClick={this.leaderboard.bind(this)}>Enter on Leaderboards</button>
 				  </div>
 				</div>
 			)
@@ -269,6 +297,7 @@ class NewTurn extends React.Component{
 				    	Captain {this.props.game.gameName}. You will someday lead a good retirenment
 				    	on your {w} net worth.
 				    </div>
+				    <button className="btn btn-block" onClick={this.leaderboard.bind(this)}>Enter on Leaderboards</button>
 				  </div>
 				</div>
 			)
@@ -286,6 +315,7 @@ class NewTurn extends React.Component{
 				    	You are one of the better pilots to have flown the stars. Your excellence in 
 				    	smuggling has made you exceedingly wealthy. You can retire in comfort.
 				    </div>
+				    <button className="btn btn-block" onClick={this.leaderboard.bind(this)}>Enter on Leaderboards</button>
 				  </div>
 				</div>
 			)
@@ -304,6 +334,7 @@ class NewTurn extends React.Component{
 				{this.renderShipDamage()}
 				{this.renderGameOver()}
 				{this.renderEndGame()}
+				{this.renderNewMug()}
 			</div>
 		)
 	}
