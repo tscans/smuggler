@@ -1,4 +1,6 @@
 import React from 'react';
+import {browserHistory} from 'react-router';
+
 
 function makeCheap(name){
 	var r = Math.floor(Math.random()*2);
@@ -231,9 +233,13 @@ class NewTurn extends React.Component{
 		Meteor.call('leaderboard.enter', gameID, (error,data)=>{
 			if(error){
 				console.log(error);
+				browserHistory.push("/leaderboard/");
+				Bert.alert( error.message, 'warning', 'fixed-top' );
 			}
 			else{
 				console.log(data);
+				browserHistory.push("/leaderboard/");
+				Bert.alert( "Congrats! You're on the leaderboard!!", 'success', 'fixed-top');
 			}
 		})
 	}

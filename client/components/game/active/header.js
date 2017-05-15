@@ -29,6 +29,7 @@ class Header extends React.Component{
 		})
 	}
 	nextTurn(p){
+		$("#nextPlace").removeClass('active');
 		var data = {
 			gameID: this.props.gameID,
 			newLocation: p
@@ -93,12 +94,32 @@ class Header extends React.Component{
 			<div>Week - {this.props.game.currentPeriod}/{this.props.game.periods}</div>
 		)
 	}
+	openModal(){
+		$("#nextPlace").addClass('active');
+	}
+	renderNewWookie(){
+		var black = {color: 'black'}
+		return(
+			<div id="nextPlace" className="modal">
+			  <header className="bar bar-nav">
+			    <a className="btn pull-right" href="#nextPlace">Close</a>
+			    <h1 className="title">Next Week/World</h1>
+			  </header>
+			  <div className="content" style={black}>
+			    <div className="content-padded">
+			    	{this.renderPlanets()}
+			    </div>
+			  </div>
+			</div>
+		)
+	}
 	render(){
 		var color = {
 			color: "black"
 		}
 		return(
 			<div>
+				{this.renderNewWookie()}
 				<header className="bar bar-nav">
 				  <button className="btn pull-left" onClick={this.goBack.bind(this)}>
 				    Game Menu
@@ -108,7 +129,7 @@ class Header extends React.Component{
 				      {this.props.game.currentLocation} <span className="fa fa-caret-down"></span>
 				    </h1>
 				  </a>
-				  <button className="btn pull-right">
+				  <button className="btn pull-right" onClick={this.openModal.bind(this)}>
 				    {this.renderWeek()}
 				  </button>
 				</header>

@@ -9,6 +9,9 @@ Meteor.methods({
 			return;
 		}
 		var game = Game.findOne({_id: gameID});
+		if(!game){
+			return;
+		}
 		var credits = game.credits;
 		var loan = game.loan;
 		var ships = ["Kessel Vessel", "Bespin Shuttle", "Corellian Starship", "Nubian Yacht"];
@@ -21,21 +24,35 @@ Meteor.methods({
 		var netWorth = credits + ship + hideout - loan;
 		var returnBoard = Leaderboard.find({}).fetch();
 		var newLeader = false;
-		var low = 0;
-		var j = 0;
-		for(var i = 0; i <returnBoard.length;i++){
-			if(returnBoard[i].netWorth < returnBoard[i + 1].netWorth){
-				low = returnBoard[i].netWorth;
-				j = i;
+		var allWorths = [];
+		for(var i = 0; i< returnBoard.length;i++){
+			allWorths.push(returnBoard[i].netWorth);
+		}
+		Array.min = function( array ){
+		    return Math.min.apply( Math, array );
+		};
+		var minimum = Array.min(allWorths);
+		var zz;
+
+		for(var i = 0; i < returnBoard.length;i++){
+			if(returnBoard[i].netWorth == minimum){
+				zz = returnBoard[i]._id;
 			}
 		}
-		if(low < netWorth){
-			newLeader = true;
+		console.log(zz);
+
+		if(returnBoard.length < 10){
+			Game.remove(game._id);
+			return Leaderboard.insert({
+				metID: user,
+				game: game,
+				netWorth: netWorth
+			});
 		}
-		if(returnBoard.length < 15){
-			newLeader = true;
-		}
-		if(newLeader){
+		console.log(netWorth > minimum, minimum);
+		if(netWorth > minimum){
+			Leaderboard.remove(zz);
+			Game.remove(game._id);
 			return Leaderboard.insert({
 				metID: user,
 				game: game,
@@ -43,8 +60,10 @@ Meteor.methods({
 			});
 		}
 		else{
-			Leaderboard.remove(j);
+			Game.remove(game._id);
 			throw new Meteor.Error(509, 'You did not make it to the leaderboard.');
+			return;
+
 		}
 		
 	}

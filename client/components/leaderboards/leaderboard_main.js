@@ -5,7 +5,17 @@ import {browserHistory} from 'react-router';
 
 class LeaderboardMain extends React.Component{
 	leaders(){
-		return this.props.leaders.map(l=>{
+		var myArray = this.props.leaders;
+		function compare(b,a) {
+		  if (a.netWorth < b.netWorth)
+		    return -1;
+		  if (a.netWorth > b.netWorth)
+		    return 1;
+		  return 0;
+		}
+
+		myArray.sort(compare);
+		return myArray.map(l=>{
 			return(
 				<div key={l._id}>
 					<button className="btn btn-block">
@@ -20,7 +30,7 @@ class LeaderboardMain extends React.Component{
 		if(!this.props.leaders){
 			return<div>...Loading</div>
 		}
-		var buff = {marginTop: "10vh"}
+		var buff = {marginTop: "10vh", height: "70vh", overflow: "scroll"}
 		return(
 			<div>
 				<header className="bar bar-nav">
