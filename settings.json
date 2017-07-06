@@ -1,7 +1,0 @@
-{
-	"galaxy.meteor.com": {
-		"env": {
-			"MONGO_URL": "mongodb://huskiefoxtrot:*nuclear*AC39ATB@ds047085.mlab.com:47085/smuggler"
-		}
-	}
-}
